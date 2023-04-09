@@ -6,7 +6,7 @@ mybatis:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/mydb?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://localhost:3307/mydb?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: lgs0503
     password: 0609
