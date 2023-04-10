@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class LogAspect {
 
-    @Around("within(com.gs.bbs.controller.*)")
+    @Around("within(com.gs.bbs.web.*)")
     public Object logging(ProceedingJoinPoint pjp) throws Throwable {
 
         String params = getRequestParams();
