@@ -29,6 +29,10 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0'
 
+    implementation 'com.google.guava:guava:28.2-jre'
+
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
