@@ -14,10 +14,10 @@
             UPDATE_DATE
         FROM GS_GROUP_CODE
         <where>
-            <if test="groupCodeId != null and groupCode != ''">
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(groupCodeId)">
                 AND GROUP_CODE_ID = #{coupCodeId}
             </if>
-            <if test="useYn != null and useYn != ''">
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
                 AND USE_YN = #{useYn}
             </if>
         </where>
@@ -34,7 +34,7 @@
             UPDATE_DATE
         FROM GS_GROUP_CODE
         <where>
-            <if test="groupCodeId != null and groupCode != ''">
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(groupCodeId)">
                 AND GROUP_CODE_ID = #{coupCodeId}
             </if>
         </where>
@@ -54,7 +54,7 @@
         (
             (
                 SELECT
-                    ISNULL(MAX(GROUP_CODE_ID),0) + 1
+                    IFNULL(MAX(GROUP_CODE_ID),0) + 1
                 FROM GS_GROUP_CODE GS
             ),
             #{name},
