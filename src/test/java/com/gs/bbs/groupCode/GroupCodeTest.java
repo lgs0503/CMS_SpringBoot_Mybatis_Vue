@@ -74,7 +74,9 @@ public class GroupCodeTest {
 
         groupCodeIds.add(2);
 
-        groupCodeService.deleteGroupCode(groupCodeIds);
+        int result = groupCodeService.deleteGroupCode(groupCodeIds);
+
+        log.debug("deleteGroupCode Result : " + result);
 
         getGroupCodeList();
     }
