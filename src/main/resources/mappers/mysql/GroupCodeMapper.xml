@@ -14,8 +14,8 @@
             UPDATE_DATE
         FROM GS_GROUP_CODE
         <where>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(groupCodeId)">
-                AND GROUP_CODE_ID = #{coupCodeId}
+            <if test="groupCodeId != 0">
+                AND GROUP_CODE_ID = #{groupCodeId}
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
                 AND USE_YN = #{useYn}
@@ -34,7 +34,7 @@
             UPDATE_DATE
         FROM GS_GROUP_CODE
         <where>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(groupCodeId)">
+            <if test="groupCodeId != 0">
                 AND GROUP_CODE_ID = #{coupCodeId}
             </if>
         </where>
@@ -72,11 +72,11 @@
         WHERE   GROUP_CODE_ID = #{groupCodeId}
     </update>
 
-    <delete id="deleteGroupCode" parameterType="java.util.ArrayList">
+    <delete id="deleteGroupCode" parameterType="int">
         UPDATE  GS_GROUP_CODE
         SET     USE_YN = 'N'
         WHERE   GROUP_CODE_ID IN
-        <foreach collection="groupCodeIds" item="groupCodeId" open="(" close=")" separator=",">
+        <foreach collection="list" item="groupCodeId" open="(" close=")" separator=",">
             #{groupCodeId}
         </foreach>
     </delete>

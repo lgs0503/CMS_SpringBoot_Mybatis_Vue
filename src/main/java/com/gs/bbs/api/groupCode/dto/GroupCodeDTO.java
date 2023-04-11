@@ -1,12 +1,13 @@
 package com.gs.bbs.api.groupCode.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class GroupCodeDTO {
 
     public int groupCodeId;
