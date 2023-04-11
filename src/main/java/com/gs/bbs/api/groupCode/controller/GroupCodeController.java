@@ -2,10 +2,13 @@ package com.gs.bbs.api.groupCode.controller;
 
 import com.gs.bbs.api.groupCode.dto.GroupCodeDTO;
 import com.gs.bbs.api.groupCode.service.GroupCodeService;
+import com.gs.bbs.util.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,32 +24,62 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 리스트 조회")
     @GetMapping
-    public List<GroupCodeDTO> getGroupCodeList(@RequestBody GroupCodeDTO groupCodeDTO) {
+    public ResponseEntity<ResponseDto> getGroupCodeList(@RequestBody GroupCodeDTO groupCodeDTO) {
 
-        return groupCodeService.getGroupCodeList(groupCodeDTO);
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                "getGroupCodeList Success",
+                        groupCodeService.getGroupCodeList(groupCodeDTO)
+                )
+        );
     }
 
     @Operation(summary = "그룹코드 단건 조회")
     @GetMapping("/{groupCodeId}")
-    public GroupCodeDTO getGroupCode(@PathVariable(value = "groupCodeId") int groupCodeId) {
-        return groupCodeService.getGroupCode(groupCodeId);
+    public ResponseEntity<ResponseDto> getGroupCode(@PathVariable(value = "groupCodeId") int groupCodeId) {
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                        "getGroupCodeList Success",
+                        groupCodeService.getGroupCode(groupCodeId)
+                )
+        );
     }
 
     @Operation(summary = "그룹코드 등록")
     @PostMapping
-    public int insertGroupCode(GroupCodeDTO groupCodeDTO) {
-        return groupCodeService.insertGroupCode(groupCodeDTO);
+    public ResponseEntity<ResponseDto> insertGroupCode(GroupCodeDTO groupCodeDTO) {
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                        "getGroupCodeList Success",
+                        groupCodeService.insertGroupCode(groupCodeDTO)
+                )
+        );
     }
 
     @Operation(summary = "그룹코드 수정")
     @PutMapping
-    public int updateGroupCode(GroupCodeDTO groupCodeDTO) {
-        return groupCodeService.updateGroupCode(groupCodeDTO);
+    public ResponseEntity<ResponseDto> updateGroupCode(GroupCodeDTO groupCodeDTO) {
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                        "getGroupCodeList Success",
+                        groupCodeService.updateGroupCode(groupCodeDTO)
+                )
+        );
     }
 
     @Operation(summary = "그룹코드 삭제")
     @DeleteMapping
-    public int deleteGroupCode(List<Integer> groupCodeId) {
-        return groupCodeService.deleteGroupCode(groupCodeId);
+    public ResponseEntity<ResponseDto> deleteGroupCode(List<Integer> groupCodeId) {
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                        "getGroupCodeList Success",
+                        groupCodeService.deleteGroupCode(groupCodeId)
+                )
+        );
     }
 }
