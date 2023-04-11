@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.groupCode.mapper.GroupCodeMapper">
+
+    <select id="getGroupCodeList" resultType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO" parameterType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO">
+        SELECT
+            GROUP_CODE_ID,
+            NAME,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM GS_GROUP_CODE
+        <where>
+            <if test="groupCodeId != null and groupCode != ''">
+                AND GROUP_CODE_ID = #{coupCodeId}
+            </if>
+            <if test="useYn != null and useYn != ''">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getGroupCode" parameterType="int">
+        SELECT
+            GROUP_CODE_ID,
+            NAME,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM GS_GROUP_CODE
+        <where>
+            <if test="groupCodeId != null and groupCode != ''">
+                AND GROUP_CODE_ID = #{coupCodeId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertGroupCode" parameterType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO">
+        INSERT
+        INTO GS_GROUP_CODE
+        (
+            GROUP_CODE_ID,
+            NAME,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    ISNULL(MAX(GROUP_CODE_ID),0) + 1
+                FROM GS_GROUP_CODE GS
+            ),
+            #{name},
+            'Y',
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateGroupCode" parameterType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO">
+        UPDATE  GS_GROUP_CODE
+        SET     NAME = #{name},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   GROUP_CODE_ID = #{groupCodeId}
+    </update>
+
+    <delete id="deleteGroupCode" parameterType="java.util.ArrayList">
+        UPDATE  GS_GROUP_CODE
+        SET     USE_YN = 'N'
+        WHERE   GROUP_CODE_ID IN
+        <foreach collection="groupCodeIds" item="groupCodeId" open="(" close=")" separator=",">
+            #{groupCodeId}
+        </foreach>
+    </delete>
+</mapper>
