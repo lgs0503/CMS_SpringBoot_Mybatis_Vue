@@ -10,3 +10,8 @@ spring:
     url: jdbc:log4jdbc:mysql://localhost:3307/mydb?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: lgs0503
     password: 0609
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    use-root-path: true
