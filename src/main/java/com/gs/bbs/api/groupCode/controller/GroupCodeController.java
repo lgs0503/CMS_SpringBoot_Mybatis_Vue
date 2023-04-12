@@ -3,6 +3,7 @@ package com.gs.bbs.api.groupCode.controller;
 import com.gs.bbs.api.groupCode.dto.GroupCodeDTO;
 import com.gs.bbs.api.groupCode.service.GroupCodeService;
 import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.StringUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Tag(name = "GroupCode", description = "그룹코드 api")
 @RestController
-@RequestMapping(value = "/groupCode")
+@RequestMapping("/groupCode")
 public class GroupCodeController {
 
     @Autowired
@@ -24,7 +25,17 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getGroupCodeList(@RequestBody GroupCodeDTO groupCodeDTO) {
+    public ResponseEntity<ResponseDto> getGroupCodeList(@RequestParam("groupCodeId") String groupCodeId,
+                                                        @RequestParam("name") String name,
+                                                        @RequestParam("useYn") String useYn) {
+
+        GroupCodeDTO groupCodeDTO = new GroupCodeDTO();
+
+        if (StringUtil.isNotEmpty(groupCodeId))
+            groupCodeDTO.setGroupCodeId(Integer.parseInt(groupCodeId));
+
+        groupCodeDTO.setName(name);
+        groupCodeDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
                 ResponseDto.of(
@@ -37,7 +48,7 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 단건 조회")
     @GetMapping("/{groupCodeId}")
-    public ResponseEntity<ResponseDto> getGroupCode(@PathVariable(value = "groupCodeId") int groupCodeId) {
+    public ResponseEntity<ResponseDto> getGroupCode(@PathVariable("groupCodeId") int groupCodeId) {
         return ResponseEntity.ok(
                 ResponseDto.of(
                         HttpStatus.OK,
