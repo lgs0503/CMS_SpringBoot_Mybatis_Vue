@@ -7,6 +7,12 @@
         SELECT
             CODE_ID,
             GROUP_CODE_ID,
+            NAME,
+            VALUE1,
+            VALUE2,
+            VALUE3,
+            VALUE4,
+            VALUE5,
             USE_YN,
             SORT,
             CREATE_USER,
@@ -21,6 +27,9 @@
             <if test="groupCodeId != 0">
                 AND GROUP_CODE_ID = #{groupCodeId}
             </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(name)">
+                AND NAME = #{name}
+            </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
                 AND USE_YN = #{useYn}
             </if>
@@ -31,6 +40,12 @@
         SELECT
             CODE_ID,
             GROUP_CODE_ID,
+            NAME,
+            VALUE1,
+            VALUE2,
+            VALUE3,
+            VALUE4,
+            VALUE5,
             USE_YN,
             SORT,
             CREATE_USER,
@@ -51,6 +66,12 @@
         (
             CODE_ID,
             GROUP_CODE_ID,
+            NAME,
+            VALUE1,
+            VALUE2,
+            VALUE3,
+            VALUE4,
+            VALUE5,
             USE_YN,
             SORT,
             CREATE_USER,
@@ -64,6 +85,12 @@
                 FROM GS_CODE GS
             ),
             #{groupCodeId},
+            #{name},
+            #{value1},
+            #{value2},
+            #{value3},
+            #{value4},
+            #{value5},
             'Y',
             #{sort},
             #{createUser},
@@ -75,7 +102,13 @@
         UPDATE  GS_CODE
         SET     SORT = #{sort},
                 UPDATE_USER = #{updateUser},
-                UPDATE_DATE = NOW()
+                UPDATE_DATE = NOW(),
+                NAME = #{name},
+                VALUE1 = #{value1},
+                VALUE2 = #{value2},
+                VALUE3 = #{value3},
+                VALUE4 = #{value4},
+                VALUE5 = #{value5}
         WHERE   CODE_ID = #{codeId}
     </update>
 

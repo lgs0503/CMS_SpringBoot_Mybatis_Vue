@@ -25,6 +25,7 @@ public class CodeController {
     @GetMapping
     public ResponseEntity<ResponseDto> getCodeList(@RequestParam("codeId") String codeId,
                                                    @RequestParam("groupCodeId") String groupCodeId,
+                                                   @RequestParam("name") String name,
                                                    @RequestParam("useYn") String useYn) {
 
         CodeDTO codeDTO = new CodeDTO();
@@ -35,6 +36,7 @@ public class CodeController {
         if (StringUtil.isNotEmpty(groupCodeId))
             codeDTO.setGroupCodeId(Integer.parseInt(groupCodeId));
 
+        codeDTO.setName(name);
         codeDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
