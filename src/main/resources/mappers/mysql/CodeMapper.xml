@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.code.mapper.CodeMapper">
+
+    <select id="getCodeList" resultType="com.gs.bbs.api.code.dto.CodeDTO" parameterType="com.gs.bbs.api.code.dto.CodeDTO">
+        SELECT
+            CODE_ID,
+            GROUP_CODE_ID,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM GS_CODE
+        <where>
+            <if test="codeId != 0">
+                AND CODE_ID = #{codeId}
+            </if>
+            <if test="groupCodeId != 0">
+                AND GROUP_CODE_ID = #{groupCodeId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCode" parameterType="int" resultType="com.gs.bbs.api.code.dto.CodeDTO">
+        SELECT
+            CODE_ID,
+            GROUP_CODE_ID,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM GS_CODE
+        <where>
+            <if test="codeId != 0">
+                AND CODE_ID = #{codeId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertCode" parameterType="com.gs.bbs.api.code.dto.CodeDTO">
+        INSERT
+        INTO GS_CODE
+        (
+            CODE_ID,
+            GROUP_CODE_ID,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(CODE_ID),0) + 1
+                FROM GS_CODE GS
+            ),
+            #{groupCodeId},
+            'Y',
+            #{sort},
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateCode" parameterType="com.gs.bbs.api.code.dto.CodeDTO">
+        UPDATE  GS_CODE
+        SET     SORT = #{sort},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   CODE_ID = #{codeId}
+    </update>
+
+    <delete id="deleteCode" parameterType="int">
+        UPDATE  GS_CODE
+        SET     USE_YN = 'N'
+        WHERE   CODE_ID IN
+        <foreach collection="list" item="codeId" open="(" close=")" separator=",">
+            #{codeId}
+        </foreach>
+    </delete>
+</mapper>
