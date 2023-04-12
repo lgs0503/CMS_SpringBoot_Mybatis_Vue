@@ -18,7 +18,7 @@ public class DBTest {
 
     @Test
     @DisplayName("My Sql 연결 테스트")
-    public void mySQLConnection()throws Exception{
+    public void mySQLConnection() throws Exception{
 
         try (Connection con = dataSource.getConnection()) {
             log.info("MySQL Connection Success :" + con.toString());
