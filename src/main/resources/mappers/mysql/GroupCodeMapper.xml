@@ -17,13 +17,16 @@
             <if test="groupCodeId != 0">
                 AND GROUP_CODE_ID = #{groupCodeId}
             </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(name)">
+                AND NAME = #{name}
+            </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
                 AND USE_YN = #{useYn}
             </if>
         </where>
     </select>
 
-    <select id="getGroupCode" parameterType="int">
+    <select id="getGroupCode" parameterType="int" resultType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO">
         SELECT
             GROUP_CODE_ID,
             NAME,
