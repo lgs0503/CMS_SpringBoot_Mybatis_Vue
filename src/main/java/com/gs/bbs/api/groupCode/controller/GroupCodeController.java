@@ -3,6 +3,7 @@ package com.gs.bbs.api.groupCode.controller;
 import com.gs.bbs.api.groupCode.dto.GroupCodeDTO;
 import com.gs.bbs.api.groupCode.service.GroupCodeService;
 import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.StringUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +25,15 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getGroupCodeList(@RequestParam("groupCodeId") int groupCodeId,
+    public ResponseEntity<ResponseDto> getGroupCodeList(@RequestParam("groupCodeId") String groupCodeId,
                                                         @RequestParam("name") String name,
                                                         @RequestParam("useYn") String useYn) {
 
         GroupCodeDTO groupCodeDTO = new GroupCodeDTO();
-        groupCodeDTO.setGroupCodeId(groupCodeId);
+
+        if (StringUtil.isNotEmpty(groupCodeId))
+            groupCodeDTO.setGroupCodeId(Integer.parseInt(groupCodeId));
+
         groupCodeDTO.setName(name);
         groupCodeDTO.setUseYn(useYn);
 
