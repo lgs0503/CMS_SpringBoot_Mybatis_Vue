@@ -34,6 +34,7 @@ public class FileController {
         return ResponseEntity.ok(fileService.fileUpload(files));
     }
 
+    @Operation(summary = "파일 다운로드")
     @GetMapping
     public ResponseEntity<Resource> downloadFile(@RequestParam("fileId") int fileId) throws IOException {
 
@@ -53,6 +54,7 @@ public class FileController {
                 .body(fileDownloadDTO.getResource());
     }
 
+    @Operation(summary = "이미지 파일 인코딩 (섬네일)")
     @GetMapping("/imageEncoder")
     public ResponseEntity<ResponseDto> imageEncoder(@RequestParam("fileId") int fileId) {
         return ResponseEntity.ok(
