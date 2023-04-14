@@ -13,6 +13,11 @@ spring:
     username: lgs0503
     password: 0609
 
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 20MB
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
