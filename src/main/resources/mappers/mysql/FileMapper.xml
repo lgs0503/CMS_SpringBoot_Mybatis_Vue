@@ -25,12 +25,11 @@
         )
     </insert>
 
-    <select id="getMaxMasterFileId" resultType="intO">
+    <select id="getMaxMasterFileId" resultType="int">
         SELECT MAX(MASTER_FILE_ID) AS MASTER_FILE_ID
         FROM GS_FILE_MASTER
         WHERE USE_YN ='Y'
     </select>
-
 
     <insert id="insertFileDetail" parameterType="com.gs.bbs.api.file.dto.FileDTO">
         INSERT
