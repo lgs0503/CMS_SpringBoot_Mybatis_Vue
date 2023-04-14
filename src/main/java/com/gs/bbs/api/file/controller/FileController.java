@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,5 +51,16 @@ public class FileController {
                 .contentLength(fileDownloadDTO.getResource().contentLength())
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(fileDownloadDTO.getResource());
+    }
+
+    @GetMapping("/imageEncoder")
+    public ResponseEntity<ResponseDto> imageEncoder(@RequestParam("fileId") int fileId) {
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                        "imageEncoder Success",
+                        fileService.imageEncoder(fileId)
+                )
+        );
     }
 }

@@ -14,14 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -79,7 +77,7 @@ public class FileServiceImpl implements FileService{
 
             responseDto = ResponseDto.of(HttpStatus.OK, "fileUpload Success", result);
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error("fileUpload Exception: " + e.getMessage());
             responseDto = ResponseDto.of(HttpStatus.NOT_FOUND, "fileUpload Fail");
         }
 
@@ -98,7 +96,7 @@ public class FileServiceImpl implements FileService{
     }
 
     @Override
-    public FileDownloadDTO downloadFile(int fileId) throws MalformedURLException {
+    public FileDownloadDTO downloadFile(int fileId) {
 
         FileDownloadDTO fileDownloadDTO = new FileDownloadDTO();
 
@@ -113,9 +111,35 @@ public class FileServiceImpl implements FileService{
             fileDownloadDTO.setResource(resource);
 
         } catch (MalformedURLException e) {
-            log.error(e.getMessage());
+            log.error("downloadFile Exception: " + e.getMessage());
         }
 
         return fileDownloadDTO;
+    }
+
+    @Override
+    public String imageEncoder(int fileId) {
+
+        String encodedImage = "";
+
+        try {
+            FileDTO fileDTO = fileMapper.getFileDetail(fileId);
+
+            String imagePath = fileDTO.getPath() + File.separator + fileDTO.getUuidName();
+
+            File file = new File(imagePath);
+
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+
+            fis.read(data);
+            fis.close();
+
+            encodedImage = Base64.getEncoder().encodeToString(data);
+        } catch (IOException e) {
+            log.error("imageEncoder Exception: " + e.getMessage());
+        }
+
+        return encodedImage;
     }
 }
