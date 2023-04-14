@@ -81,7 +81,6 @@ public class FileController {
                 .body(fileDownloadDTO.getResource());
     }
 
-    // 브라우저 별로 체크
     private String getBrowser(HttpServletRequest request) {
         String header = request.getHeader("User-Agent");
 
@@ -91,9 +90,9 @@ public class FileController {
             return "Chrome";
         } else if (header.contains("Opera")) {
             return "Opera";
-        } else if (header.contains("Trident/7.0")){
+        } else if (header.contains("Trident/7.0")) {
             return "MSIE";
-        } else{
+        } else {
             return "Firefox";
         }
     }
