@@ -30,4 +30,41 @@
         FROM GS_FILE_MASTER
         WHERE USE_YN ='Y'
     </select>
+
+
+    <insert id="insertFileDetail" parameterType="com.gs.bbs.api.file.dto.FileDTO">
+        INSERT
+        INTO GS_FILE_DETAIL
+        (
+            FILE_ID,
+            MASTER_FILE_ID,
+            NAME,
+            UUID_NAME,
+            PATH,
+            SIZE,
+            EXTEN,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(FILE_ID),0) + 1
+                FROM GS_FILE_DETAIL GFD
+            ),
+            #{masterFileId},
+            #{name},
+            #{uuidName},
+            #{path},
+            #{size},
+            #{exten},
+            'Y',
+            #{sort},
+            #{createUser},
+            NOW()
+        )
+    </insert>
 </mapper>
