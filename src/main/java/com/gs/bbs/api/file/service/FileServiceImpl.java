@@ -57,6 +57,7 @@ public class FileServiceImpl implements FileService{
                 String extension = getExtension(Objects.requireNonNull(fileName));
                 long fileSize = file.getSize();
                 String uploadDir = "c://uploads";
+
                 String filePath = uploadDir + File.separator + uuid;
                 File dest = new File(filePath);
 
@@ -71,6 +72,8 @@ public class FileServiceImpl implements FileService{
 
                 int insertFileDetailResult = fileMapper.insertFileDetail(fileDTO);
                 log.info("insertFileDetailResult :" + insertFileDetailResult);
+
+                makeFolder(uploadDir);
 
                 file.transferTo(dest);
             }
@@ -95,6 +98,25 @@ public class FileServiceImpl implements FileService{
         return extension;
     }
 
+    private void makeFolder(String path){
+
+        File Folder = new File(path);
+
+        // 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+        if (!Folder.exists()) {
+            try {
+                Folder.mkdirs(); //폴더 생성합니다.
+                log.info("makeFolder Success");
+            }
+            catch (Exception e) {
+                e.getStackTrace();
+            }
+        } else {
+            log.error("A folder has already been created.");
+        }
+
+    }
+
     @Override
     public FileDownloadDTO downloadFile(int fileId) {
 
@@ -116,6 +138,7 @@ public class FileServiceImpl implements FileService{
 
         return fileDownloadDTO;
     }
+
 
     @Override
     public String imageEncoder(int fileId) {

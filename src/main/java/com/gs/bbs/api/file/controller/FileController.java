@@ -15,7 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 @RestController
@@ -36,11 +39,35 @@ public class FileController {
 
     @Operation(summary = "파일 다운로드")
     @GetMapping
-    public ResponseEntity<Resource> downloadFile(@RequestParam("fileId") int fileId) throws IOException {
+    public ResponseEntity<Resource> downloadFile(@RequestParam("fileId") int fileId, HttpServletRequest request) throws IOException {
 
         FileDownloadDTO fileDownloadDTO = fileService.downloadFile(fileId);
 
         HttpHeaders headers = new HttpHeaders();
+
+        if (!getBrowser(request).contains("Firefox")) {
+                    fileDownloadDTO.getFileDTO().setName(
+                            URLEncoder.encode(
+                                    fileDownloadDTO.getFileDTO().getName(),
+                                        StandardCharsets.UTF_8
+                                    )
+                            .replaceAll("\\+", "%20")
+                            .replaceAll("%2B", "+")
+                            .replaceAll("%28", "(")
+                            .replaceAll("%29", ")")
+                            .replaceAll("%40", "@")
+                    );
+        } else {
+            fileDownloadDTO.getFileDTO().setName(
+                    new String(
+                            fileDownloadDTO
+                                    .getFileDTO()
+                                    .getName()
+                                    .getBytes(StandardCharsets.UTF_8)
+                            , "8859_1"
+                    )
+            );
+        }
 
         headers.add(
                 HttpHeaders.CONTENT_DISPOSITION,
@@ -52,6 +79,23 @@ public class FileController {
                 .contentLength(fileDownloadDTO.getResource().contentLength())
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(fileDownloadDTO.getResource());
+    }
+
+    // 브라우저 별로 체크
+    private String getBrowser(HttpServletRequest request) {
+        String header = request.getHeader("User-Agent");
+
+        if (header.contains("MSIE")) {
+            return "MSIE";
+        } else if (header.contains("Chrome")) {
+            return "Chrome";
+        } else if (header.contains("Opera")) {
+            return "Opera";
+        } else if (header.contains("Trident/7.0")){
+            return "MSIE";
+        } else{
+            return "Firefox";
+        }
     }
 
     @Operation(summary = "이미지 파일 인코딩 (섬네일)")
