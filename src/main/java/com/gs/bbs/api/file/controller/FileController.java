@@ -29,9 +29,9 @@ public class FileController {
 
     @Operation(summary = "파일 업로드")
     @PostMapping
-    public ResponseEntity<ResponseDto> fileUpload(@RequestParam("files") MultipartFile[] files) {
+    public ResponseEntity<ResponseDto> uploadFile(@RequestParam("files") MultipartFile[] files) {
 
-        return ResponseEntity.ok(fileService.fileUpload(files));
+        return ResponseEntity.ok(fileService.uploadFile(files));
     }
 
     @Operation(summary = "파일 다운로드")

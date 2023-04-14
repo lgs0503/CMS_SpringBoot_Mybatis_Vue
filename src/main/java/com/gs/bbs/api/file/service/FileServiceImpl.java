@@ -30,7 +30,7 @@ public class FileServiceImpl implements FileService{
 
     @Transactional
     @Override
-    public ResponseDto fileUpload(MultipartFile[] files) {
+    public ResponseDto uploadFile(MultipartFile[] files) {
         ResponseDto responseDto;
 
         List<FileDTO> result = new ArrayList<FileDTO>();

@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
 
-    ResponseDto fileUpload(MultipartFile[] files);
+    ResponseDto uploadFile(MultipartFile[] files);
 
     FileDownloadDTO downloadFile(int fileId);
 
