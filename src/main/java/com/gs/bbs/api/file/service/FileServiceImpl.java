@@ -1,24 +1,21 @@
 package com.gs.bbs.api.file.service;
 
 import com.gs.bbs.api.file.dto.FileDTO;
+import com.gs.bbs.api.file.dto.FileDownloadDTO;
 import com.gs.bbs.api.file.mapper.FileMapper;
 import com.gs.bbs.util.ResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -100,21 +97,25 @@ public class FileServiceImpl implements FileService{
         return extension;
     }
 
-    @GetMapping
-    public ResponseEntity<Resource> downloadFile(@RequestParam int fileId) throws IOException {
+    @Override
+    public FileDownloadDTO downloadFile(int fileId) throws MalformedURLException {
 
-        FileDTO fileDTO = fileMapper.getFileDetail(fileId);
+        FileDownloadDTO fileDownloadDTO = new FileDownloadDTO();
 
-        Path path = Paths.get(fileDTO.getPath(), fileDTO.getUuidName());
-        Resource resource = new UrlResource(path.toUri());
+        try {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDTO.getName() + "\"");
+            FileDTO fileDTO = fileMapper.getFileDetail(fileId);
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentLength(resource.contentLength())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
+            Path path = Paths.get(fileDTO.getPath(), fileDTO.getUuidName());
+            Resource resource = new UrlResource(path.toUri());
+
+            fileDownloadDTO.setFileDTO(fileDTO);
+            fileDownloadDTO.setResource(resource);
+
+        } catch (MalformedURLException e) {
+            log.error(e.getMessage());
+        }
+
+        return fileDownloadDTO;
     }
 }
