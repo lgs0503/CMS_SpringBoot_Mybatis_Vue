@@ -11,10 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -36,7 +33,8 @@ public class FileController {
         return ResponseEntity.ok(fileService.fileUpload(files));
     }
 
-    public ResponseEntity<Resource> downloadFile(@RequestParam int fileId) throws IOException {
+    @GetMapping
+    public ResponseEntity<Resource> downloadFile(@RequestParam("fileId") int fileId) throws IOException {
 
         FileDownloadDTO fileDownloadDTO = fileService.downloadFile(fileId);
 
