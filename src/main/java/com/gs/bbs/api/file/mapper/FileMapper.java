@@ -12,5 +12,5 @@ public interface FileMapper {
 
     int insertFileDetail(FileDTO fileDTO);
 
-    FileDTO getFileDetail(FileDTO fileDTO);
+    FileDTO getFileDetail(int fileId);
 }

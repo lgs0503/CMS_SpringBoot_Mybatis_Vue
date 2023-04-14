@@ -67,4 +67,23 @@
             NOW()
         )
     </insert>
+
+    <select id="getFileDetail" parameterType="int" resultType="com.gs.bbs.api.file.dto.FileDTO">
+        SELECT
+            FILE_ID,
+            MASTER_FILE_ID,
+            NAME,
+            UUID_NAME,
+            PATH,
+            SIZE,
+            EXTEN,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_FILE_DETAIL
+        WHERE   FILE_ID = #{fileId}
+    </select>
 </mapper>
