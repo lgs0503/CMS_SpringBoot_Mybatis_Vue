@@ -11,7 +11,7 @@ import java.util.List;
 public class GroupCodeServiceImpl implements GroupCodeService {
 
     @Autowired
-    GroupCodeMapper groupCodeMapper;
+    private GroupCodeMapper groupCodeMapper;
 
     @Override
     public List<GroupCodeDTO> getGroupCodeList(GroupCodeDTO groupCodeDTO) {
