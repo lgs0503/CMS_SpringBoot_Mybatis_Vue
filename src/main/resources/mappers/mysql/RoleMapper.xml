@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.role.mapper.RoleMapper">
+
+    <select id="getRoleList" resultType="com.gs.bbs.api.role.dto.RoleDTO" parameterType="com.gs.bbs.api.role.dto.RoleDTO">
+        SELECT
+            ROLE_ID,
+            NAME,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_ROLE
+        <where>
+            <if test="roleId != 0">
+                AND ROLE_ID = #{roleId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(name)">
+                AND NAME = #{name}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getRole" parameterType="int" resultType="com.gs.bbs.api.role.dto.RoleDTO">
+        SELECT
+            ROLE_ID,
+            NAME,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_ROLE
+        <where>
+            <if test="roleId != 0">
+                AND ROLE_ID = #{roleId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertRole" parameterType="com.gs.bbs.api.role.dto.RoleDTO">
+        INSERT
+        INTO GS_ROLE
+        (
+            ROLE_ID,
+            NAME,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(ROLE_ID),0) + 1
+                FROM GS_ROLE GR
+            ),
+            #{name},
+            'Y',
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateRole" parameterType="com.gs.bbs.api.role.dto.RoleDTO">
+        UPDATE  GS_ROLE
+        SET     NAME = #{name},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   ROLE_ID = #{roleId}
+    </update>
+
+    <delete id="deleteRole" parameterType="int">
+        UPDATE  GS_ROLE
+        SET     USE_YN = 'N'
+        WHERE   ROLE_ID IN
+        <foreach collection="list" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </delete>
+</mapper>
