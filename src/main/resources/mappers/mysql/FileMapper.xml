@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.file.mapper.FileMapper">
+
+    <insert id="insertFileMaster" parameterType="com.gs.bbs.api.file.dto.FileDTO">
+        INSERT
+        INTO GS_FILE_MASTER
+        (
+            MASTER_FILE_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(MASTER_FILE_ID),0) + 1
+                FROM GS_FILE_MASTER GFM
+            ),
+            'Y',
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <select id="getMaxMasterFileId" resultType="int">
+        SELECT MAX(MASTER_FILE_ID) AS MASTER_FILE_ID
+        FROM GS_FILE_MASTER
+        WHERE USE_YN ='Y'
+    </select>
+
+    <insert id="insertFileDetail" parameterType="com.gs.bbs.api.file.dto.FileDTO">
+        INSERT
+        INTO GS_FILE_DETAIL
+        (
+            FILE_ID,
+            MASTER_FILE_ID,
+            NAME,
+            UUID_NAME,
+            PATH,
+            SIZE,
+            EXTEN,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(FILE_ID),0) + 1
+                FROM GS_FILE_DETAIL GFD
+            ),
+            #{masterFileId},
+            #{name},
+            #{uuidName},
+            #{path},
+            #{size},
+            #{exten},
+            'Y',
+            #{sort},
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <select id="getFileDetail" parameterType="int" resultType="com.gs.bbs.api.file.dto.FileDTO">
+        SELECT
+            FILE_ID,
+            MASTER_FILE_ID,
+            NAME,
+            UUID_NAME,
+            PATH,
+            SIZE,
+            EXTEN,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_FILE_DETAIL
+        WHERE   FILE_ID = #{fileId}
+    </select>
+</mapper>
