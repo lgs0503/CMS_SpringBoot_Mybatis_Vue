@@ -21,7 +21,7 @@ import java.util.List;
 public class GroupCodeController {
 
     @Autowired
-    GroupCodeService groupCodeService;
+    private GroupCodeService groupCodeService;
 
     @Operation(summary = "그룹코드 리스트 조회")
     @GetMapping
