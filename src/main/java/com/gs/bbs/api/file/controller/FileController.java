@@ -27,8 +27,12 @@ import java.nio.charset.StandardCharsets;
 @Tag(name = "File", description = "파일 api")
 public class FileController {
 
+    private final FileService fileService;
+
     @Autowired
-    private FileService fileService;
+    public FileController(FileService fileService) {
+        this.fileService = fileService;
+    }
 
     @Operation(summary = "파일 업로드")
     @PostMapping
@@ -39,7 +43,10 @@ public class FileController {
 
     @Operation(summary = "파일 다운로드")
     @GetMapping
-    public ResponseEntity<Resource> downloadFile(@RequestParam("fileId") int fileId, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Resource> downloadFile(
+            @RequestParam("fileId") int fileId,
+            HttpServletRequest request
+    ) throws IOException {
 
         FileDownloadDTO fileDownloadDTO = fileService.downloadFile(fileId);
 
