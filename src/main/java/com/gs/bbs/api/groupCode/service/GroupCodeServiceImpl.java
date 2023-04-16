@@ -10,8 +10,13 @@ import java.util.List;
 @Service
 public class GroupCodeServiceImpl implements GroupCodeService {
 
+
+    private final GroupCodeMapper groupCodeMapper;
+
     @Autowired
-    private GroupCodeMapper groupCodeMapper;
+    public GroupCodeServiceImpl(GroupCodeMapper groupCodeMapper) {
+        this.groupCodeMapper = groupCodeMapper;
+    }
 
     @Override
     public List<GroupCodeDTO> getGroupCodeList(GroupCodeDTO groupCodeDTO) {

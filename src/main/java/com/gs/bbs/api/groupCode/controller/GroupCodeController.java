@@ -20,14 +20,20 @@ import java.util.List;
 @RequestMapping("/groupCode")
 public class GroupCodeController {
 
+    private final GroupCodeService groupCodeService;
+
     @Autowired
-    private GroupCodeService groupCodeService;
+    public GroupCodeController(GroupCodeService groupCodeService) {
+        this.groupCodeService = groupCodeService;
+    }
 
     @Operation(summary = "그룹코드 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getGroupCodeList(@RequestParam("groupCodeId") String groupCodeId,
-                                                        @RequestParam("name") String name,
-                                                        @RequestParam("useYn") String useYn) {
+    public ResponseEntity<ResponseDto> getGroupCodeList(
+            @RequestParam("groupCodeId") String groupCodeId,
+            @RequestParam("name") String name,
+            @RequestParam("useYn") String useYn
+    ) {
 
         GroupCodeDTO groupCodeDTO = new GroupCodeDTO();
 
@@ -60,7 +66,7 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 등록")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertGroupCode(GroupCodeDTO groupCodeDTO) {
+    public ResponseEntity<ResponseDto> insertGroupCode(@RequestBody GroupCodeDTO groupCodeDTO) {
         return ResponseEntity.ok(
                 ResponseDto.of(
                         HttpStatus.OK,
@@ -72,7 +78,7 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateGroupCode(GroupCodeDTO groupCodeDTO) {
+    public ResponseEntity<ResponseDto> updateGroupCode(@RequestBody GroupCodeDTO groupCodeDTO) {
         return ResponseEntity.ok(
                 ResponseDto.of(
                         HttpStatus.OK,
@@ -84,7 +90,7 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteGroupCode(List<Integer> groupCodeId) {
+    public ResponseEntity<ResponseDto> deleteGroupCode(@RequestBody List<Integer> groupCodeId) {
         return ResponseEntity.ok(
                 ResponseDto.of(
                         HttpStatus.OK,
