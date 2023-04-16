@@ -17,14 +17,20 @@ import java.util.List;
 @Tag(name = "Role", description = "권한 api")
 public class RoleController {
 
+    private final RoleService roleService;
+
     @Autowired
-    private RoleService roleService;
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @Operation(summary = "권한 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getRoleList(@RequestParam("roleId") int roleId,
-                                                   @RequestParam("name") String name,
-                                                   @RequestParam("useYn") String useYn) {
+    public ResponseEntity<ResponseDto> getRoleList(
+            @RequestParam("roleId") int roleId,
+            @RequestParam("name") String name,
+            @RequestParam("useYn") String useYn
+    ) {
 
         RoleDTO roleDTO = new RoleDTO();
         roleDTO.setRoleId(roleId);
@@ -53,7 +59,7 @@ public class RoleController {
 
     @Operation(summary = "권한 추가")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertRole(RoleDTO roleDTO) {
+    public ResponseEntity<ResponseDto> insertRole(@RequestBody RoleDTO roleDTO) {
         return ResponseEntity.ok(
                 ResponseDto.of(
                         HttpStatus.OK,
@@ -65,7 +71,7 @@ public class RoleController {
 
     @Operation(summary = "권한 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateRole(RoleDTO roleDTO) {
+    public ResponseEntity<ResponseDto> updateRole(@RequestBody RoleDTO roleDTO) {
         return ResponseEntity.ok(
                 ResponseDto.of(
                         HttpStatus.OK,
@@ -77,7 +83,7 @@ public class RoleController {
 
     @Operation(summary = "권한 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteRole(List<Integer> roleIds) {
+    public ResponseEntity<ResponseDto> deleteRole(@RequestBody List<Integer> roleIds) {
         return ResponseEntity.ok(
                 ResponseDto.of(
                         HttpStatus.OK,

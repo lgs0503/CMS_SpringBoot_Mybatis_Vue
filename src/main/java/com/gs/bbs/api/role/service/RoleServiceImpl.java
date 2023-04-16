@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService{
 
+    private final RoleMapper roleMapper;
+
     @Autowired
-    private RoleMapper roleMapper;
+    public RoleServiceImpl(RoleMapper roleMapper) {
+        this.roleMapper = roleMapper;
+    }
 
     @Override
     public List<RoleDTO> getRoleList(RoleDTO roleDTO) {
