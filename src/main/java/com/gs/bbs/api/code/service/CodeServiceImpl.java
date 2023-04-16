@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class CodeServiceImpl implements CodeService{
 
+    private final CodeMapper codeMapper;
+
     @Autowired
-    private CodeMapper codeMapper;
+    public CodeServiceImpl(CodeMapper codeMapper) {
+        this.codeMapper = codeMapper;
+    }
 
     @Override
     public List<CodeDTO> getCodeList(CodeDTO codeDTO) {
