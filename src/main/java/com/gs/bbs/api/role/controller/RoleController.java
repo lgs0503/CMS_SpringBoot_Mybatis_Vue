@@ -40,7 +40,7 @@ public class RoleController {
                 ResponseDto.of(
                         HttpStatus.OK,
                         "getRole Success",
-                        roleService.getRole(roleId)
+                        roleService.getRoleList(roleDTO)
                 )
         );
     }
