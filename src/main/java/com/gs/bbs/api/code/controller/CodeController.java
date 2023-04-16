@@ -20,15 +20,21 @@ import java.util.List;
 @RequestMapping("/code")
 public class CodeController {
 
+    private final CodeService codeService;
+
     @Autowired
-    private CodeService codeService;
+    public CodeController(CodeService codeService) {
+        this.codeService = codeService;
+    }
 
     @Operation(summary = "코드 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getCodeList(@RequestParam("codeId") String codeId,
-                                                   @RequestParam("groupCodeId") String groupCodeId,
-                                                   @RequestParam("name") String name,
-                                                   @RequestParam("useYn") String useYn) {
+    public ResponseEntity<ResponseDto> getCodeList(
+            @RequestParam("codeId") String codeId,
+            @RequestParam("groupCodeId") String groupCodeId,
+            @RequestParam("name") String name,
+            @RequestParam("useYn") String useYn
+    ) {
 
         CodeDTO codeDTO = new CodeDTO();
 
