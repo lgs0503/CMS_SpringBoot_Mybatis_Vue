@@ -25,8 +25,12 @@ import java.util.*;
 @Slf4j
 public class FileServiceImpl implements FileService{
 
+    private final FileMapper fileMapper;
+
     @Autowired
-    private FileMapper fileMapper;
+    public FileServiceImpl(FileMapper fileMapper) {
+        this.fileMapper = fileMapper;
+    }
 
     @Transactional
     @Override
