@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class StringUtil {
-    public static boolean isEmpty(Object obj){
+    public static boolean isEmpty(Object obj) {
         if (obj instanceof String)
             return obj==null || "".equals(obj.toString().trim());
         else if (obj instanceof List)
@@ -20,5 +20,9 @@ public class StringUtil {
 
     public static boolean isNotEmpty(String s){
         return !isEmpty(s);
+    }
+
+    public static String nvl(String string) {
+        return string == null ? "" : string;
     }
 }
