@@ -10,7 +10,7 @@ public interface UserService {
 
     UserDTO getUser(int userNo);
 
-    boolean login(UserDTO userDTO);
+    String login(UserDTO userDTO);
 
     int insertUser(UserDTO userDTO);
 

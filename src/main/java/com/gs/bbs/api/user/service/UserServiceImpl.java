@@ -2,8 +2,12 @@ package com.gs.bbs.api.user.service;
 
 import com.gs.bbs.api.user.dto.UserDTO;
 import com.gs.bbs.api.user.mapper.UserMapper;
+import com.gs.bbs.jwt.TokenProvider;
 import com.gs.bbs.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +19,15 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
+    private final TokenProvider tokenProvider;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.tokenProvider = tokenProvider;
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
     @Override
@@ -32,7 +41,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean login(UserDTO userDTO) {
+    public String login(UserDTO userDTO) {
+
+        String jwt = "";
 
         boolean loginResult = false;
 
@@ -44,11 +55,17 @@ public class UserServiceImpl implements UserService {
             loginResult =  passwordEncoder.matches(inputPassword, savePassword);
         }
 
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(userDTO.getUserId(), userDTO.getPassword());
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
         if (loginResult) {
             /* JWT 토큰 발급 */
+            jwt = tokenProvider.createToken(authentication);
         }
 
-        return loginResult;
+        return jwt;
     }
 
     @Override

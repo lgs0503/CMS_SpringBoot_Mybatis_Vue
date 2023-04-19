@@ -36,8 +36,10 @@ public class TokenProvider implements InitializingBean {
     private final long tokenValidityInMilliseconds;
     private Key key;
 
-    public TokenProvider(@Value("${jwt.secret}") String secret,
-                         @Value("${jwt.token-validity-in-seconds}") long tokenValidityInMilliseconds){
+    public TokenProvider(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInMilliseconds
+    ){
         this.secret = secret;
         this.tokenValidityInMilliseconds = tokenValidityInMilliseconds;
     }
@@ -75,7 +77,7 @@ public class TokenProvider implements InitializingBean {
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-        User principal =new User(claims.getSubject(), "", authorities);
+        User principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
@@ -84,13 +86,13 @@ public class TokenProvider implements InitializingBean {
         try{
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        }catch(io.jsonwebtoken.security.SecurityException | MalformedJwtException e){
+        } catch(io.jsonwebtoken.security.SecurityException | MalformedJwtException e){
             LOGGER.info("잘못된 JWT 서명입니다.");
-        }catch(ExpiredJwtException e){
+        } catch(ExpiredJwtException e) {
             LOGGER.info("만료된 JWT 토큰입니다.");
-        }catch(UnsupportedJwtException e){
+        } catch(UnsupportedJwtException e) {
             LOGGER.info("지원하지 않는 JWT 토큰입니다.");
-        }catch(IllegalArgumentException e){
+        } catch(IllegalArgumentException e) {
             LOGGER.info("JWT 토큰이 잘못되었습니다.");
         }
         return false;
