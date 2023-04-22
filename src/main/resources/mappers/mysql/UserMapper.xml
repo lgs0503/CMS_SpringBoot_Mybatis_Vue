@@ -7,7 +7,7 @@
         SELECT
             GU.USER_NO,
             GU.ROLE_ID,
-            GR.NAME AS ROLE_NAME
+            GR.NAME AS ROLE_NAME,
             GU.USER_ID,
             GU.KOR_NAME,
             GU.ENG_NAME,
@@ -56,7 +56,7 @@
         SELECT
             GU.USER_NO,
             GU.ROLE_ID,
-            GR.NAME AS ROLE_NAME
+            GR.NAME AS ROLE_NAME,
             GU.USER_ID,
             GU.KOR_NAME,
             GU.ENG_NAME,
@@ -86,11 +86,21 @@
             <if test="userNo != 0">
                 AND GU.USER_NO = #{userNo}
             </if>
+            AND AND GU.USE_YN = 'Y'
         </where>
     </select>
 
-    <select id="login" parameterType="String" resultType="String">
+    <select id="getUserPassword" parameterType="String" resultType="String">
+        SELECT  PASSWORD
+        FROM    GS_USER
+        WHERE   USER_ID = #{userId}
+        AND     USE_YN = 'Y'
+    </select>
 
+    <select id="getUserCount" parameterType="String" resultType="int">
+        SELECT  COUNT(*) AS CNT
+        FROM    GS_USER
+        WHERE   USER_ID = #{userId}
     </select>
 
     <insert id="insertUser" parameterType="com.gs.bbs.api.user.dto.UserDTO">
@@ -140,44 +150,25 @@
 
     <update id="updateUser" parameterType="com.gs.bbs.api.user.dto.UserDTO">
         UPDATE  GS_USER
-        <set>
-            <if test="roleId != 0">
-                ROLE_ID = #{roleId},
-            </if>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(password)">
-                PASSWORD = #{password},
-            </if>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(korName)">
+        SET     ROLE_ID = #{roleId},
                 KOR_NAME = #{korName},
-            </if>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(engName)">
                 ENG_NAME = #{engName},
-            </if>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(birthday)">
                 BIRTHDAY = #{birthday},
-            </if>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(gender)">
                 GENDER = #{gender},
-            </if>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(address)">
                 ADDRESS = #{address},
-            </if>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(addressDtl)">
                 ADDRESS_DTL = #{addressDtl},
-            </if>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(phoneNum)">
                 PHONENUM = #{phoneNum},
-            </if>
-            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(email)">
                 EMAIL = #{email},
-            </if>
-            <if test="fileId != 0">
                 FILE_ID = #{fileId},
-            </if>
-            UPDATE_USER = #{updateUser},
-            UPDATE_DATE = NOW()
-        </set>
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
         WHERE   USER_NO = #{userNo}
+    </update>
+
+    <update id="updatePassword" parameterType="com.gs.bbs.api.user.dto.LoginDTO">
+        UPDATE  GS_USER
+        SET     PASSWORD = #{password}
+        WHERE   USER_ID = #{userId}
     </update>
 
     <delete id="deleteUser" parameterType="int">

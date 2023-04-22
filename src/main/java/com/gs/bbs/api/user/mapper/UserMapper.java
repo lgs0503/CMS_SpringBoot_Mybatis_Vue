@@ -1,5 +1,6 @@
 package com.gs.bbs.api.user.mapper;
 
+import com.gs.bbs.api.user.dto.LoginDTO;
 import com.gs.bbs.api.user.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,11 +13,15 @@ public interface UserMapper {
 
     UserDTO getUser(int userNo);
 
-    String login(String userId);
+    String getUserPassword(String userId);
+
+    int getUserCount(String userId);
 
     int insertUser(UserDTO userDTO);
 
     int updateUser(UserDTO userDTO);
+
+    int updatePassword(LoginDTO loginDTO);
 
     int deleteUser(List<Integer> userNos);
 }

@@ -1,7 +1,9 @@
 package com.gs.bbs.api.user.service;
 
+import com.gs.bbs.api.user.dto.LoginDTO;
 import com.gs.bbs.api.user.dto.UserDTO;
 import com.gs.bbs.api.user.mapper.UserMapper;
+import com.gs.bbs.jwt.TokenProvider;
 import com.gs.bbs.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,10 +17,13 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
+    private final TokenProvider tokenProvider;
+
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.tokenProvider = tokenProvider;
     }
 
     @Override
@@ -32,23 +37,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean login(UserDTO userDTO) {
+    public String login(LoginDTO loginDTO) {
+
+        String jwt = "";
 
         boolean loginResult = false;
 
-        String savePassword = StringUtil.nvl(userMapper.login(userDTO.getUserId()));
+        String savePassword = StringUtil.nvl(userMapper.getUserPassword(loginDTO.getUserId()));
 
         if (StringUtil.isNotEmpty(savePassword)) {
-            String inputPassword = userDTO.getPassword();
+            String inputPassword = loginDTO.getPassword();
 
             loginResult =  passwordEncoder.matches(inputPassword, savePassword);
         }
 
         if (loginResult) {
             /* JWT 토큰 발급 */
+            jwt = tokenProvider.createToken(loginDTO);
         }
 
-        return loginResult;
+        return jwt;
+    }
+
+    @Override
+    public boolean userIdCheck(String userId) {
+        return userMapper.getUserCount(userId) == 0;
     }
 
     @Override
@@ -63,15 +76,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUser(UserDTO userDTO) {
-
-        if (StringUtil.isNotEmpty(userDTO.getPassword())) {
-
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-
-            userDTO.setPassword(encryptedPassword);
-        }
-
         return userMapper.updateUser(userDTO);
+    }
+
+    @Override
+    public int updatePassword(LoginDTO loginDTO) {
+
+        String encryptedPassword = passwordEncoder.encode(loginDTO.getPassword());
+
+        loginDTO.setPassword(encryptedPassword);
+
+        return userMapper.updatePassword(loginDTO);
     }
 
     @Override

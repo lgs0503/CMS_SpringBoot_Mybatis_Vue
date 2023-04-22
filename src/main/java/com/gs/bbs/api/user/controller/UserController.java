@@ -1,5 +1,6 @@
 package com.gs.bbs.api.user.controller;
 
+import com.gs.bbs.api.user.dto.LoginDTO;
 import com.gs.bbs.api.user.dto.UserDTO;
 import com.gs.bbs.api.user.service.UserService;
 import com.gs.bbs.util.ResponseDto;
@@ -27,11 +28,11 @@ public class UserController {
     @Operation(summary = "회원 리스트 조회")
     @GetMapping
     public ResponseEntity<ResponseDto> getUserList(
-            @RequestParam("userNo") int userNo,
-            @RequestParam("userId") String userId,
-            @RequestParam("korName") String korName,
-            @RequestParam("roleId") int roleId,
-            @RequestParam("useYn") String useYn
+            @RequestParam(value = "userNo", defaultValue = "0") int userNo,
+            @RequestParam(value = "userId", defaultValue = "") String userId,
+            @RequestParam(value = "korName", defaultValue = "") String korName,
+            @RequestParam(value = "roleId", defaultValue = "0") int roleId,
+            @RequestParam(value = "useYn", defaultValue = "Y") String useYn
     ) {
 
         UserDTO userDTO = new UserDTO();
@@ -64,20 +65,41 @@ public class UserController {
     }
 
     @Operation(summary = "회원 조회 ( 로그인 )")
-    @GetMapping("/login/{userId}")
-    public ResponseEntity<ResponseDto> login(@PathVariable("userId") String userId,
-                                             @RequestParam("password") String password) {
+    @PostMapping("/login")
+    public ResponseEntity<ResponseDto> login(@RequestBody LoginDTO loginDTO) {
 
-        UserDTO userDTO = new UserDTO();
+        String token = userService.login(loginDTO);
 
-        userDTO.setUserId(userId);
-        userDTO.setPassword(password);
+        if (token.equals("")) {
+
+            return ResponseEntity.ok(
+                    ResponseDto.of(
+                            HttpStatus.NOT_FOUND,
+                            "login Fail"
+                    )
+            );
+        } else {
+            return ResponseEntity.ok(
+                    ResponseDto.of(
+                            HttpStatus.OK,
+                            "login Success",
+                            token
+                    )
+            );
+        }
+    }
+
+    @Operation(summary = "아이디 중복체크 사용가능 true 사용불가 false")
+    @GetMapping("/userIdCheck")
+    public ResponseEntity<ResponseDto> userIdCheck(
+            @RequestParam(value = "userId", defaultValue = "") String userId
+    ) {
 
         return ResponseEntity.ok(
                 ResponseDto.of(
                         HttpStatus.OK,
                         "login Success",
-                        userService.login(userDTO)
+                        userService.userIdCheck(userId)
                 )
         );
     }
@@ -104,6 +126,20 @@ public class UserController {
                         HttpStatus.OK,
                         "updateUser Success",
                         userService.updateUser(userDTO)
+                )
+        );
+    }
+
+
+    @Operation(summary = "비밀번호 변경")
+    @PatchMapping
+    public ResponseEntity<ResponseDto> updatePassword(@RequestBody LoginDTO loginDTO) {
+
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                        "updatePassword Success",
+                        userService.updatePassword(loginDTO)
                 )
         );
     }
