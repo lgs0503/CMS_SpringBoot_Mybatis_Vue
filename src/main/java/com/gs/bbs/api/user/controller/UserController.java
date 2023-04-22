@@ -1,5 +1,6 @@
 package com.gs.bbs.api.user.controller;
 
+import com.gs.bbs.annotation.Auth;
 import com.gs.bbs.api.user.dto.LoginDTO;
 import com.gs.bbs.api.user.dto.UserDTO;
 import com.gs.bbs.api.user.service.UserService;
@@ -51,6 +52,7 @@ public class UserController {
         );
     }
 
+    @Auth
     @Operation(summary = "회원 조회")
     @GetMapping("/{userNo}")
     public ResponseEntity<ResponseDto> getUser(@PathVariable("userNo") int userNo) {

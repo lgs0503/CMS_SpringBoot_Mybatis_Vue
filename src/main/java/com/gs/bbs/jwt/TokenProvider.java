@@ -59,7 +59,7 @@ public class TokenProvider implements InitializingBean {
     /**
      * 인증 정보 조회
      * **/
-    public String getAuthentication(String token) {
+    public String validateAndGetUserId(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
