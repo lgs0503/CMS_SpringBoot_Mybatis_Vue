@@ -1,5 +1,6 @@
 package com.gs.bbs.api.user.service;
 
+import com.gs.bbs.api.user.dto.LoginDTO;
 import com.gs.bbs.api.user.dto.UserDTO;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface UserService {
 
     UserDTO getUser(int userNo);
 
-    String login(UserDTO userDTO);
+    String login(LoginDTO loginDTO);
 
     int insertUser(UserDTO userDTO);
 

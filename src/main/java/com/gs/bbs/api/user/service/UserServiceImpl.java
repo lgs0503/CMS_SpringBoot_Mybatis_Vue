@@ -1,5 +1,6 @@
 package com.gs.bbs.api.user.service;
 
+import com.gs.bbs.api.user.dto.LoginDTO;
 import com.gs.bbs.api.user.dto.UserDTO;
 import com.gs.bbs.api.user.mapper.UserMapper;
 import com.gs.bbs.jwt.TokenProvider;
@@ -41,28 +42,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(UserDTO userDTO) {
+    public String login(LoginDTO loginDTO) {
 
         String jwt = "";
 
         boolean loginResult = false;
 
-        String savePassword = StringUtil.nvl(userMapper.login(userDTO.getUserId()));
+        String savePassword = StringUtil.nvl(userMapper.getUserPassword(loginDTO.getUserId()));
 
         if (StringUtil.isNotEmpty(savePassword)) {
-            String inputPassword = userDTO.getPassword();
+            String inputPassword = loginDTO.getPassword();
 
             loginResult =  passwordEncoder.matches(inputPassword, savePassword);
         }
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userDTO.getUserId(), userDTO.getPassword());
-
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
         if (loginResult) {
             /* JWT 토큰 발급 */
-            jwt = tokenProvider.createToken(authentication);
+            jwt = tokenProvider.createToken(loginDTO);
         }
 
         return jwt;

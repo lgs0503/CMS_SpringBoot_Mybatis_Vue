@@ -12,7 +12,7 @@ public interface UserMapper {
 
     UserDTO getUser(int userNo);
 
-    String login(String userId);
+    String getUserPassword(String userId);
 
     int insertUser(UserDTO userDTO);
 

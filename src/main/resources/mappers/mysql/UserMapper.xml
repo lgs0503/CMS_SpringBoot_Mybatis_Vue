@@ -89,8 +89,10 @@
         </where>
     </select>
 
-    <select id="login" parameterType="String" resultType="String">
-
+    <select id="getUserPassword" parameterType="String" resultType="String">
+        SELECT  PASSWORD
+        FROM    GS_USER
+        WHERE   USER_ID = #{userId}
     </select>
 
     <insert id="insertUser" parameterType="com.gs.bbs.api.user.dto.UserDTO">

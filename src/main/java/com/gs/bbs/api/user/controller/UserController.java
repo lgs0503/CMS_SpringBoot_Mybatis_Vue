@@ -1,5 +1,6 @@
 package com.gs.bbs.api.user.controller;
 
+import com.gs.bbs.api.user.dto.LoginDTO;
 import com.gs.bbs.api.user.dto.UserDTO;
 import com.gs.bbs.api.user.service.UserService;
 import com.gs.bbs.util.ResponseDto;
@@ -64,22 +65,28 @@ public class UserController {
     }
 
     @Operation(summary = "회원 조회 ( 로그인 )")
-    @GetMapping("/login/{userId}")
-    public ResponseEntity<ResponseDto> login(@PathVariable("userId") String userId,
-                                             @RequestParam("password") String password) {
+    @PostMapping("/login")
+    public ResponseEntity<ResponseDto> login(@RequestBody LoginDTO loginDTO) {
 
-        UserDTO userDTO = new UserDTO();
+        String token = userService.login(loginDTO);
 
-        userDTO.setUserId(userId);
-        userDTO.setPassword(password);
+        if (token.equals("")) {
 
-        return ResponseEntity.ok(
-                ResponseDto.of(
-                        HttpStatus.OK,
-                        "login Success",
-                        userService.login(userDTO)
-                )
-        );
+            return ResponseEntity.ok(
+                    ResponseDto.of(
+                            HttpStatus.NOT_FOUND,
+                            "login Fail"
+                    )
+            );
+        } else {
+            return ResponseEntity.ok(
+                    ResponseDto.of(
+                            HttpStatus.OK,
+                            "login Success",
+                            token
+                    )
+            );
+        }
     }
 
     @Operation(summary = "회원 추가 ( 회원가입 )")
