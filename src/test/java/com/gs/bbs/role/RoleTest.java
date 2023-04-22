@@ -15,8 +15,12 @@ import java.util.List;
 @Slf4j
 public class RoleTest {
 
+    private final RoleService roleService;
+
     @Autowired
-    RoleService roleService;
+    public RoleTest(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @Test
     @DisplayName("권한 리스트 조회")
@@ -25,18 +29,13 @@ public class RoleTest {
         RoleDTO roleDTO = new RoleDTO();
         roleDTO.setUseYn("Y");
 
-        List<RoleDTO> roleList = roleService.getRoleList(roleDTO);
-
-        for (RoleDTO role : roleList) {
-            log.debug(role.toString());
-        }
+        roleService.getRoleList(roleDTO);
     }
 
     @Test
     @DisplayName("권한 조회")
     public void getRole() {
-        RoleDTO roleDTO = roleService.getRole(1);
-        log.debug(roleDTO.toString());
+        roleService.getRole(1);
     }
 
     @Test
@@ -47,8 +46,7 @@ public class RoleTest {
         roleDTO.setName("TESTER");
         roleDTO.setCreateUser("admin");
 
-        int result = roleService.insertRole(roleDTO);
-        log.debug("insertGroupCode Result : " + result);
+        roleService.insertRole(roleDTO);
 
         getRoleList();
     }
@@ -62,8 +60,7 @@ public class RoleTest {
         roleDTO.setName("TESTER_UPDATE");
         roleDTO.setUpdateUser("admin");
 
-        int result = roleService.updateRole(roleDTO);
-        log.debug("updateRole Result : " + result);
+        roleService.updateRole(roleDTO);
 
         getRoleList();
     }
@@ -76,8 +73,7 @@ public class RoleTest {
 
         roleIds.add(3);
 
-        int result = roleService.deleteRole(roleIds);
-        log.debug("deleteRole Result : " + result);
+        roleService.deleteRole(roleIds);
 
         getRoleList();
     }
