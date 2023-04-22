@@ -30,10 +30,10 @@ public class CodeController {
     @Operation(summary = "코드 리스트 조회")
     @GetMapping
     public ResponseEntity<ResponseDto> getCodeList(
-            @RequestParam("codeId") String codeId,
-            @RequestParam("groupCodeId") String groupCodeId,
-            @RequestParam("name") String name,
-            @RequestParam("useYn") String useYn
+            @RequestParam(value = "codeId", defaultValue = "0") String codeId,
+            @RequestParam(value = "groupCodeId", defaultValue = "0") String groupCodeId,
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "useYn", defaultValue = "Y") String useYn
     ) {
 
         CodeDTO codeDTO = new CodeDTO();

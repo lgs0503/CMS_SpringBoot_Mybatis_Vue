@@ -15,8 +15,12 @@ import java.util.List;
 @Slf4j
 public class CodeTest {
 
+    private final CodeService codeService;
+
     @Autowired
-    CodeService codeService;
+    public CodeTest(CodeService codeService) {
+        this.codeService = codeService;
+    }
 
     @Test
     @DisplayName("코드 리스트 조회")
@@ -24,13 +28,14 @@ public class CodeTest {
 
         CodeDTO codeDTO = new CodeDTO();
         codeDTO.setUseYn("Y");
-        codeDTO.setName("남자");
 
-        List<CodeDTO> codeList = codeService.getCodeList(codeDTO);
+        codeService.getCodeList(codeDTO);
+    }
 
-        for (CodeDTO code : codeList) {
-            log.debug(code.toString());
-        }
+    @Test
+    @DisplayName("코드  조회")
+    public void getCode(){
+        codeService.getCode(1);
     }
 
     @Test
@@ -45,9 +50,7 @@ public class CodeTest {
         codeDTO.setSort(1);
         codeDTO.setCreateUser("JunitTest");
 
-        int result = codeService.insertCode(codeDTO);
-
-        log.debug("insertCode Result : " + result);
+        codeService.insertCode(codeDTO);
 
         getCodeList();
 
@@ -64,9 +67,7 @@ public class CodeTest {
         codeDTO.setUseYn("Y");
         codeDTO.setUpdateUser("JunitTest");
 
-        int result = codeService.updateCode(codeDTO);
-
-        log.debug("updateCode Result : " + result);
+        codeService.updateCode(codeDTO);
 
         getCodeList();
     }
@@ -80,9 +81,7 @@ public class CodeTest {
 
         codeIds.add(3);
 
-        int result = codeService.deleteCode(codeIds);
-
-        log.debug("deleteCode Result : " + result);
+        codeService.deleteCode(codeIds);
 
         getCodeList();
     }
