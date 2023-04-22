@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.menuRole.mapper.MenuRoleMapper">
+
+    <select id="getMenuRoleList" resultType="com.gs.bbs.api.menuRole.dto.MenuRoleDTO" parameterType="com.gs.bbs.api.menuRole.dto.MenuRoleDTO">
+        SELECT
+            ROLE_ID,
+            MENU_ID,
+            SELECT_YN,
+            INSERT_YN,
+            UPDATE_YN,
+            DELETE_YN,
+            DOWNLOAD_YN,
+            UPLOAD_YN,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_MENU_ROLE
+        <where>
+            <if test="roleId != 0">
+                AND ROLE_ID = #{roleId}
+            </if>
+            <if test="menuId != 0">
+                AND MENU_ID = #{menuId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getMenuRole" parameterType="int" resultType="com.gs.bbs.api.menuRole.dto.MenuRoleDTO">
+        SELECT
+            ROLE_ID,
+            MENU_ID,
+            SELECT_YN,
+            INSERT_YN,
+            UPDATE_YN,
+            DELETE_YN,
+            DOWNLOAD_YN,
+            UPLOAD_YN,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_MENU_ROLE
+        <where>
+            <if test="roleId != 0">
+                AND ROLE_ID = #{roleId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertMenuRole" parameterType="com.gs.bbs.api.menuRole.dto.MenuRoleDTO">
+        INSERT
+        INTO GS_MENU_ROLE
+        (
+            ROLE_ID,
+            MENU_ID,
+            SELECT_YN,
+            INSERT_YN,
+            UPDATE_YN,
+            DELETE_YN,
+            DOWNLOAD_YN,
+            UPLOAD_YN,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(ROLE_ID),0) + 1
+                FROM GS_MENU_ROLE GMR
+            ),
+            #{menuId},
+            #{selectYn},
+            #{insertYn},
+            #{updateYn},
+            #{deleteYn},
+            #{downloadYn},
+            #{uploadYn},
+            'Y',
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateMenuRole" parameterType="com.gs.bbs.api.menuRole.dto.MenuRoleDTO">
+        UPDATE  GS_MENU_ROLE
+        SET     MENU_ID = #{menuId},
+                SELECT_YN = #{selectYn},
+                INSERT_YN = #{insertYn},
+                UPDATE_YN = #{updateYn},
+                DELETE_YN = #{deleteYn},
+                DOWNLOAD_YN = #{downloadYn},
+                UPLOAD_YN = #{uploadYn},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   ROLE_ID = #{roleId}
+    </update>
+
+    <delete id="deleteMenuRole" parameterType="int">
+        UPDATE  GS_MENU_ROLE
+        SET     USE_YN = 'N'
+        WHERE   ROLE_ID IN
+        <foreach collection="list" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </delete>
+</mapper>
