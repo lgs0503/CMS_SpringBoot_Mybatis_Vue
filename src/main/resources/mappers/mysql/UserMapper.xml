@@ -162,7 +162,7 @@
     <update id="updatePassword" parameterType="com.gs.bbs.api.user.dto.LoginDTO">
         UPDATE  GS_USER
         SET     PASSWORD = #{password}
-        WHERE   USER_NO = #{userNo}
+        WHERE   USER_ID = #{userId}
     </update>
 
     <delete id="deleteUser" parameterType="int">
