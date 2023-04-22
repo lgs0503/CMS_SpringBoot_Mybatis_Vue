@@ -7,7 +7,7 @@
         SELECT
             GU.USER_NO,
             GU.ROLE_ID,
-            GR.NAME AS ROLE_NAME
+            GR.NAME AS ROLE_NAME,
             GU.USER_ID,
             GU.KOR_NAME,
             GU.ENG_NAME,
@@ -56,7 +56,7 @@
         SELECT
             GU.USER_NO,
             GU.ROLE_ID,
-            GR.NAME AS ROLE_NAME
+            GR.NAME AS ROLE_NAME,
             GU.USER_ID,
             GU.KOR_NAME,
             GU.ENG_NAME,

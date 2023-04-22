@@ -25,6 +25,6 @@ public class UserDTO extends CommonDTO {
     private int fileId;
 
     private int roleId;
-    private int roleName;
+    private String roleName;
 
 }
