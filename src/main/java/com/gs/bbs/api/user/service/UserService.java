@@ -17,5 +17,7 @@ public interface UserService {
 
     int updateUser(UserDTO userDTO);
 
+    int updatePassword(LoginDTO loginDTO);
+
     int deleteUser(List<Integer> userNos);
 }

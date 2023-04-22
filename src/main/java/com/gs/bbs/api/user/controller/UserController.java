@@ -1,6 +1,5 @@
 package com.gs.bbs.api.user.controller;
 
-import com.gs.bbs.annotation.Auth;
 import com.gs.bbs.api.user.dto.LoginDTO;
 import com.gs.bbs.api.user.dto.UserDTO;
 import com.gs.bbs.api.user.service.UserService;
@@ -29,11 +28,11 @@ public class UserController {
     @Operation(summary = "회원 리스트 조회")
     @GetMapping
     public ResponseEntity<ResponseDto> getUserList(
-            @RequestParam("userNo") int userNo,
-            @RequestParam("userId") String userId,
-            @RequestParam("korName") String korName,
-            @RequestParam("roleId") int roleId,
-            @RequestParam("useYn") String useYn
+            @RequestParam(value = "userNo", defaultValue = "0") int userNo,
+            @RequestParam(value = "userId", defaultValue = "") String userId,
+            @RequestParam(value = "korName", defaultValue = "") String korName,
+            @RequestParam(value = "roleId", defaultValue = "0") int roleId,
+            @RequestParam(value = "useYn", defaultValue = "Y") String useYn
     ) {
 
         UserDTO userDTO = new UserDTO();
@@ -52,7 +51,6 @@ public class UserController {
         );
     }
 
-    @Auth
     @Operation(summary = "회원 조회")
     @GetMapping("/{userNo}")
     public ResponseEntity<ResponseDto> getUser(@PathVariable("userNo") int userNo) {
@@ -113,6 +111,20 @@ public class UserController {
                         HttpStatus.OK,
                         "updateUser Success",
                         userService.updateUser(userDTO)
+                )
+        );
+    }
+
+
+    @Operation(summary = "비밀번호 변경")
+    @PatchMapping
+    public ResponseEntity<ResponseDto> updatePassword(@RequestBody LoginDTO loginDTO) {
+
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                        "updatePassword Success",
+                        userService.updatePassword(loginDTO)
                 )
         );
     }

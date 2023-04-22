@@ -6,9 +6,6 @@ import com.gs.bbs.api.user.mapper.UserMapper;
 import com.gs.bbs.jwt.TokenProvider;
 import com.gs.bbs.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +18,12 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final TokenProvider tokenProvider;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
     @Override
@@ -76,15 +71,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUser(UserDTO userDTO) {
-
-        if (StringUtil.isNotEmpty(userDTO.getPassword())) {
-
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-
-            userDTO.setPassword(encryptedPassword);
-        }
-
         return userMapper.updateUser(userDTO);
+    }
+
+    @Override
+    public int updatePassword(LoginDTO loginDTO) {
+
+        String encryptedPassword = passwordEncoder.encode(loginDTO.getPassword());
+
+        loginDTO.setPassword(encryptedPassword);
+
+        return userMapper.updatePassword(loginDTO);
     }
 
     @Override
