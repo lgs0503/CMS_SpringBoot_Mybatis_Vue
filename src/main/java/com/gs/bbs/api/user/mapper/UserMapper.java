@@ -15,6 +15,8 @@ public interface UserMapper {
 
     String getUserPassword(String userId);
 
+    int getUserCount(String userId);
+
     int insertUser(UserDTO userDTO);
 
     int updateUser(UserDTO userDTO);

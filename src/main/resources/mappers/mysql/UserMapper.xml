@@ -97,6 +97,12 @@
         AND     USE_YN = 'Y'
     </select>
 
+    <select id="getUserCount" parameterType="String" resultType="int">
+        SELECT  COUNT(*) AS CNT
+        FROM    GS_USER
+        WHERE   USER_ID = #{userId}
+    </select>
+
     <insert id="insertUser" parameterType="com.gs.bbs.api.user.dto.UserDTO">
         INSERT
         INTO GS_USER

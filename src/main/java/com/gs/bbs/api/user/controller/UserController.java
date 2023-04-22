@@ -89,6 +89,21 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "아이디 중복체크 사용가능 true 사용불가 false")
+    @GetMapping("/userIdCheck")
+    public ResponseEntity<ResponseDto> userIdCheck(
+            @RequestParam(value = "userId", defaultValue = "") String userId
+    ) {
+
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                        "login Success",
+                        userService.userIdCheck(userId)
+                )
+        );
+    }
+
     @Operation(summary = "회원 추가 ( 회원가입 )")
     @PostMapping
     public ResponseEntity<ResponseDto> insertUser(@RequestBody UserDTO userDTO) {

@@ -60,6 +60,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean userIdCheck(String userId) {
+        return userMapper.getUserCount(userId) == 0;
+    }
+
+    @Override
     public int insertUser(UserDTO userDTO) {
 
         String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());

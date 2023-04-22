@@ -13,6 +13,8 @@ public interface UserService {
 
     String login(LoginDTO loginDTO);
 
+    boolean userIdCheck(String userId);
+
     int insertUser(UserDTO userDTO);
 
     int updateUser(UserDTO userDTO);
