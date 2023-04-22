@@ -30,7 +30,6 @@ public class MenuController {
     @GetMapping
     public ResponseEntity<ResponseDto> getMenuList(){
 
-
         return ResponseEntity.ok(
                 ResponseDto.of(
                         HttpStatus.OK,
