@@ -30,9 +30,9 @@ public class GroupCodeController {
     @Operation(summary = "그룹코드 리스트 조회")
     @GetMapping
     public ResponseEntity<ResponseDto> getGroupCodeList(
-            @RequestParam("groupCodeId") String groupCodeId,
-            @RequestParam("name") String name,
-            @RequestParam("useYn") String useYn
+            @RequestParam(value = "groupCodeId", defaultValue = "0") String groupCodeId,
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "useYn", defaultValue = "Y") String useYn
     ) {
 
         GroupCodeDTO groupCodeDTO = new GroupCodeDTO();

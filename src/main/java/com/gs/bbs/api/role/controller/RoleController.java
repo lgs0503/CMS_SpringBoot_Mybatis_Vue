@@ -27,9 +27,9 @@ public class RoleController {
     @Operation(summary = "권한 리스트 조회")
     @GetMapping
     public ResponseEntity<ResponseDto> getRoleList(
-            @RequestParam("roleId") int roleId,
-            @RequestParam("name") String name,
-            @RequestParam("useYn") String useYn
+            @RequestParam(value = "roleId", defaultValue = "0") int roleId,
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "useYn", defaultValue = "Y") String useYn
     ) {
 
         RoleDTO roleDTO = new RoleDTO();

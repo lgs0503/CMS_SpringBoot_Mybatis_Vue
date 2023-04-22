@@ -14,8 +14,12 @@ import java.util.List;
 @Slf4j
 public class GroupCodeTest {
 
+    private final GroupCodeService groupCodeService;
+
     @Autowired
-    GroupCodeService groupCodeService;
+    public GroupCodeTest(GroupCodeService groupCodeService) {
+        this.groupCodeService = groupCodeService;
+    }
 
     @Test
     @DisplayName("그룹코드 리스트 조회")
@@ -24,11 +28,13 @@ public class GroupCodeTest {
         GroupCodeDTO groupCodeDTO = new GroupCodeDTO();
         groupCodeDTO.setUseYn("Y");
 
-        List<GroupCodeDTO> groupCodeList = groupCodeService.getGroupCodeList(groupCodeDTO);
+        groupCodeService.getGroupCodeList(groupCodeDTO);
+    }
 
-        for (GroupCodeDTO groupCode : groupCodeList) {
-            log.debug(groupCode.toString());
-        }
+    @Test
+    @DisplayName("그룹코드 조회")
+    public void getGroupCode(){
+        groupCodeService.getGroupCode(1);
     }
 
     @Test
@@ -40,12 +46,9 @@ public class GroupCodeTest {
         groupCodeDTO.setUseYn("Y");
         groupCodeDTO.setCreateUser("JunitTest");
 
-        int result = groupCodeService.insertGroupCode(groupCodeDTO);
+        groupCodeService.insertGroupCode(groupCodeDTO);
 
         getGroupCodeList();
-
-        log.debug("insertGroupCode Result : " + result);
-
     }
 
     @Test
@@ -58,9 +61,7 @@ public class GroupCodeTest {
         groupCodeDTO.setUseYn("Y");
         groupCodeDTO.setUpdateUser("JunitTest");
 
-        int result = groupCodeService.updateGroupCode(groupCodeDTO);
-
-        log.debug("updateGroupCode Result : " + result);
+        groupCodeService.updateGroupCode(groupCodeDTO);
 
         getGroupCodeList();
     }
@@ -74,9 +75,7 @@ public class GroupCodeTest {
 
         groupCodeIds.add(2);
 
-        int result = groupCodeService.deleteGroupCode(groupCodeIds);
-
-        log.debug("deleteGroupCode Result : " + result);
+        groupCodeService.deleteGroupCode(groupCodeIds);
 
         getGroupCodeList();
     }

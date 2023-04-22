@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.menu.mapper.MenuMapper">
+
+    <select id="getMenuList" resultType="com.gs.bbs.api.menu.dto.MenuDTO" parameterType="com.gs.bbs.api.menu.dto.MenuDTO">
+        WITH RECURSIVE TREE_MENU AS
+        (
+            SELECT
+            GM1.MENU_ID,
+            GM1.NAME,
+            GM1.UPPER_MENU_ID,
+            GM1.TYPE,
+            GM1.BOARD_ID,
+            GM1.CONTENT_ID,
+            GM1.URL,
+            GM1.USE_YN,
+            GM1.SORT,
+            GM1.CREATE_USER,
+            GM1.CREATE_DATE,
+            GM1.UPDATE_USER,
+            GM1.UPDATE_DATE,
+            1 AS DEPTH,
+            CONVERT(MENU_ID, CHAR(100)) AS PATH
+        FROM    GS_MENU GM1
+        WHERE   GM1.NAME = 'TOP_MENU'
+        UNION ALL
+        SELECT
+            GM2.MENU_ID,
+            GM2.NAME,
+            GM2.UPPER_MENU_ID,
+            GM2.TYPE,
+            GM2.BOARD_ID,
+            GM2.CONTENT_ID,
+            GM2.URL,
+            GM2.USE_YN,
+            GM2.SORT,
+            GM2.CREATE_USER,
+            GM2.CREATE_DATE,
+            GM2.UPDATE_USER,
+            GM2.UPDATE_DATE,
+            TM.DEPTH + 1 AS DEPTH,
+            CONCAT(TM.PATH, '-', GM2.MENU_ID) AS PATH
+        FROM        GS_MENU GM2
+        INNER JOIN  TREE_MENU TM
+        ON          GM2.UPPER_MENU_ID = TM.MENU_ID
+        )
+        SELECT
+            MENU_ID,
+            NAME,
+            UPPER_MENU_ID,
+            TYPE,
+            BOARD_ID,
+            CONTENT_ID,
+            URL, USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE,
+            DEPTH,
+            PATH
+        FROM    TREE_MENU
+        ORDER BY PATH, SORT
+    </select>
+
+    <select id="getMenu" parameterType="int" resultType="com.gs.bbs.api.menu.dto.MenuDTO">
+        SELECT
+            MENU_ID,
+            NAME,
+            UPPER_MENU_ID,
+            TYPE,
+            BOARD_ID,
+            CONTENT_ID,
+            URL,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM GS_MENU
+        <where>
+            <if test="menuId != 0">
+                AND MENU_ID = #{menuId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertMenu" parameterType="com.gs.bbs.api.menu.dto.MenuDTO">
+        INSERT
+        INTO GS_MENU
+        (
+            MENU_ID,
+            NAME,
+            UPPER_MENU_ID,
+            TYPE,
+            BOARD_ID,
+            CONTENT_ID,
+            URL,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(MENU_ID),0) + 1
+                FROM GS_MENU GS
+            ),
+            #{name},
+            #{upperMenuId},
+            #{type},
+            #{boardId},
+            #{contentId},
+            #{url},
+            'Y',
+            #{sort},
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateMenu" parameterType="com.gs.bbs.api.menu.dto.MenuDTO">
+        UPDATE  GS_MENU
+        SET     NAME = #{name},
+                TYPE = #{type},
+                BOARD_ID = #{boardId},
+                CONTENT_ID = #{contentId},
+                URL = #{url},
+                sort = #{sort},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   MENU_ID = #{menuId}
+    </update>
+
+    <delete id="deleteMenu" parameterType="int">
+        UPDATE  GS_MENU
+        SET     USE_YN = 'N'
+        WHERE   MENU_ID IN
+        <foreach collection="list" item="menuId" open="(" close=")" separator=",">
+            #{menuId}
+        </foreach>
+    </delete>
+</mapper>

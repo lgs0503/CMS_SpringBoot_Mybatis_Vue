@@ -22,3 +22,9 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     use-root-path: true
+
+
+jwt:
+  header: Authorization
+  secret: and0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdp
+  token-validity-in-seconds: 86400
