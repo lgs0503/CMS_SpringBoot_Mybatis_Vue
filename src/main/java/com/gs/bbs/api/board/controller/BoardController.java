@@ -28,10 +28,10 @@ public class BoardController {
     @Operation(summary = "게시판 리스트 조회")
     @GetMapping
     private ResponseEntity<ResponseDto> getBoardList(
-            @RequestParam(value = "boardId",defaultValue = "0") int boardId,
-            @RequestParam(value = "name",defaultValue = "") String name,
-            @RequestParam(value = "type",defaultValue = "") String type,
-            @RequestParam(value = "useYn",defaultValue = "Y") String useYn
+            @RequestParam(value = "boardId", defaultValue = "0") int boardId,
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "type", defaultValue = "") String type,
+            @RequestParam(value = "useYn", defaultValue = "Y") String useYn
     ){
 
         BoardDto boardDto = new BoardDto();
