@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/menuRole")
 @Slf4j
 @Tag(name = "Menu Role", description = "메뉴 권한 api")
 public class MenuRoleController {
