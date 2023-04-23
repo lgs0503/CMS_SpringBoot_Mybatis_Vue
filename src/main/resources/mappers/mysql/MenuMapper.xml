@@ -44,6 +44,7 @@
         FROM        GS_MENU GM2
         INNER JOIN  TREE_MENU TM
         ON          GM2.UPPER_MENU_ID = TM.MENU_ID
+        WHERE       GM2.USE_YN = 'Y'
         )
         SELECT
             MENU_ID,
@@ -126,6 +127,7 @@
     <update id="updateMenu" parameterType="com.gs.bbs.api.menu.dto.MenuDTO">
         UPDATE  GS_MENU
         SET     NAME = #{name},
+                UPPER_MENU_ID = #{upperMenuId},
                 TYPE = #{type},
                 BOARD_ID = #{boardId},
                 CONTENT_ID = #{contentId},
