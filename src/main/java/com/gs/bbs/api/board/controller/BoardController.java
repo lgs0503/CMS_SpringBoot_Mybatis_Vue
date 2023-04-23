@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/board")
 @Slf4j
 @Tag(name = "Board", description = "게시판 api")
 public class BoardController {
