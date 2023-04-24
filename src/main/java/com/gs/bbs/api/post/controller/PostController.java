@@ -72,6 +72,18 @@ public class PostController {
         );
     }
 
+    @PatchMapping("/{postId}")
+    @Operation(summary = "조회수 1 증가")
+    public ResponseEntity<ResponseDto> updateViewCount(@PathVariable("postId") int postId){
+        return ResponseEntity.ok(
+                ResponseDto.of(
+                        HttpStatus.OK,
+                        "updateViewCount Success",
+                        postService.updateViewCount(postId)
+                )
+        );
+    }
+
     @PutMapping
     @Operation(summary = "게시글 수정")
     public ResponseEntity<ResponseDto> updatePost(@RequestBody PostDTO postDTO){

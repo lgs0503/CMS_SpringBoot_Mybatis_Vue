@@ -90,13 +90,18 @@
         )
     </insert>
 
+    <update id="updateViewCount" parameterType="int">
+        UPDATE  GS_POST
+        SET     VIEW_CNT = VIEW_CNT + 1
+        WHERE   POST_ID = #{postId}
+    </update>
+
     <update id="updatePost" parameterType="com.gs.bbs.api.post.dto.PostDTO">
         UPDATE  GS_POST
         SET     BOARD_ID = #{boardId},
                 TITLE = #{title},
                 CONTENT = #{content},
                 FILE_YN = #{fileYn},
-                VIEW_CNT = #{viewCnt},
                 FILE_ID = #{fileId},
                 UPDATE_USER = #{updateUser},
                 UPDATE_DATE = NOW()

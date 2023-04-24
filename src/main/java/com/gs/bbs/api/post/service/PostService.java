@@ -12,6 +12,8 @@ public interface PostService {
 
     int insertPost(PostDTO postDTO);
 
+    int updateViewCount(int postId);
+
     int updatePost(PostDTO postDTO);
 
     int deletePost(List<Integer> postIds);

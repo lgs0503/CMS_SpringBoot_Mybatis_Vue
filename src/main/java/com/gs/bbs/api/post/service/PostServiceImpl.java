@@ -33,6 +33,11 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
+    public int updateViewCount(int postId) {
+        return postMapper.updateViewCount(postId);
+    }
+
+    @Override
     public int updatePost(PostDTO postDTO) {
         return postMapper.updatePost(postDTO);
     }
