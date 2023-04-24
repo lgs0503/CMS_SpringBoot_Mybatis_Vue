@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.post.mapper.PostMapper">
+
+    <select id="getPostList" resultType="com.gs.bbs.api.post.dto.PostDTO" parameterType="com.gs.bbs.api.post.dto.PostDTO">
+        SELECT
+            POST_ID,
+            BOARD_ID,
+            TITLE,
+            CONTENT,
+            USE_YN,
+            FILE_YN,
+            VIEW_CNT,
+            FILE_ID,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_POST
+        <where>
+            <if test="postId != 0">
+                AND POST_ID = #{postId}
+            </if>
+            <if test="boardId != 0">
+                AND BOARD_ID = #{boardId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(title)">
+                AND TITLE = #{title}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getPost" parameterType="int" resultType="com.gs.bbs.api.post.dto.PostDTO">
+        SELECT
+            POST_ID,
+            BOARD_ID,
+            TITLE,
+            CONTENT,
+            USE_YN,
+            FILE_YN,
+            VIEW_CNT,
+            FILE_ID,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_POST
+        <where>
+            <if test="postId != 0">
+                AND POST_ID = #{postId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertPost" parameterType="com.gs.bbs.api.post.dto.PostDTO">
+        INSERT
+        INTO GS_POST
+        (
+            POST_ID,
+            BOARD_ID,
+            TITLE,
+            CONTENT,
+            USE_YN,
+            FILE_YN,
+            VIEW_CNT,
+            FILE_ID,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(POST_ID),0) + 1
+                FROM GS_POST GP
+            ),
+            #{boardId},
+            #{title},
+            #{content},
+            'Y',
+            #{fileYn},
+            0,
+            #{fileId},
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updatePost" parameterType="com.gs.bbs.api.post.dto.PostDTO">
+        UPDATE  GS_POST
+        SET     BOARD_ID = #{boardId},
+                TITLE = #{title},
+                CONTENT = #{content},
+                FILE_YN = #{fileYn},
+                VIEW_CNT = #{viewCnt},
+                FILE_ID = #{fileId},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   POST_ID = #{postId}
+    </update>
+
+    <delete id="deletePost" parameterType="int">
+        UPDATE  GS_POST
+        SET     USE_YN = 'N'
+        WHERE   POST_ID IN
+        <foreach collection="list" item="postId" open="(" close=")" separator=",">
+            #{postId}
+        </foreach>
+    </delete>
+</mapper>
