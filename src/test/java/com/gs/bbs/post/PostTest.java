@@ -54,6 +54,15 @@ public class PostTest {
     }
 
     @Test
+    @DisplayName("조회수 1 증가")
+    public void updateViewCount() {
+
+        postService.updateViewCount(2);
+
+        getPostList();
+    }
+
+    @Test
     @DisplayName("게시글 수정")
     public void updatePost() {
         PostDTO postDTO = new PostDTO();
