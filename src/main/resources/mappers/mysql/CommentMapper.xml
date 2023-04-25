@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.comment.mapper.CommentMapper">
+
+    <select id="getCommentList" resultType="com.gs.bbs.api.comment.dto.CommentDTO" parameterType="com.gs.bbs.api.comment.dto.CommentDTO">
+        WITH RECURSIVE TREE_COMMENT AS
+        (
+            SELECT
+                GC1.COMMENT_ID,
+                GC1.POST_ID,
+                GC1.TITLE,
+                GC1.COMMENT,
+                GC1.UPPER_COMMENT_ID,
+                GC1.USE_YN,
+                GC1.CREATE_USER,
+                GC1.CREATE_DATE,
+                GC1.UPDATE_USER,
+                GC1.UPDATE_DATE,
+                1 AS DEPTH,
+                CONVERT(COMMENT_ID, CHAR(100)) AS PATH
+            FROM    GS_COMMENT GC1
+            WHERE   GC1.TITLE = 'TOP_COMMENT'
+            UNION
+            SELECT
+                GC2.COMMENT_ID,
+                GC2.POST_ID,
+                GC2.TITLE,
+                GC2.COMMENT,
+                GC2.UPPER_COMMENT_ID,
+                GC2.USE_YN,
+                GC2.CREATE_USER,
+                GC2.CREATE_DATE,
+                GC2.UPDATE_USER,
+                GC2.UPDATE_DATE,
+                TC.DEPTH + 1 AS DEPTH,
+                CONCAT(TC.PATH, '-', GC2.COMMENT_ID) AS PATH
+            FROM        GS_COMMENT GC2
+            INNER JOIN  TREE_COMMENT TC
+            ON          GC2.UPPER_COMMENT_ID = TC.COMMENT_ID
+            WHERE       GC2.USE_YN = 'Y'
+            AND         GC2.POST_ID = #{postId}
+        )
+        SELECT
+            COMMENT_ID,
+            POST_ID,
+            TITLE,
+            COMMENT,
+            UPPER_COMMENT_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE,
+            DEPTH,
+            PATH
+        FROM    TREE_COMMENT
+        WHERE NOT COMMENT_ID = 1
+        ORDER BY PATH, COMMENT_ID
+    </select>
+
+    <select id="getComment" parameterType="int" resultType="com.gs.bbs.api.comment.dto.CommentDTO">
+        SELECT
+            COMMENT_ID,
+            POST_ID,
+            TITLE,
+            COMMENT,
+            UPPER_COMMENT_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM GS_COMMENT
+        <where>
+            <if test="commentId != 0">
+                AND COMMENT_ID = #{commentId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertComment" parameterType="com.gs.bbs.api.comment.dto.CommentDTO">
+        INSERT
+        INTO GS_COMMENT
+        (
+            COMMENT_ID,
+            POST_ID,
+            TITLE,
+            COMMENT,
+            UPPER_COMMENT_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(COMMENT_ID),0) + 1
+                FROM GS_COMMENT GC
+            ),
+            #{postId},
+            #{title},
+            #{comment},
+            #{upperCommentId},
+            'Y',
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateComment" parameterType="com.gs.bbs.api.comment.dto.CommentDTO">
+        UPDATE  GS_COMMENT
+        SET     TITLE = #{title},
+                COMMENT = #{comment},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   COMMENT_ID = #{commentId}
+    </update>
+
+    <delete id="deleteComment" parameterType="int">
+        UPDATE  GS_COMMENT
+        SET     USE_YN = 'N'
+        WHERE   COMMENT_ID IN
+        <foreach collection="list" item="commentId" open="(" close=")" separator=",">
+            #{commentId}
+        </foreach>
+    </delete>
+</mapper>
