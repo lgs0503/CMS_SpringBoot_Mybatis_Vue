@@ -38,8 +38,14 @@
             FROM        GS_COMMENT GC2
             INNER JOIN  TREE_COMMENT TC
             ON          GC2.UPPER_COMMENT_ID = TC.COMMENT_ID
-            WHERE       GC2.USE_YN = 'Y'
-            AND         GC2.POST_ID = #{postId}
+            <where>
+                <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                    AND GC2.USE_YN = #{useYn}
+                </if>
+                <if test="postId != 0">
+                    AND GC2.POST_ID = #{postId}
+                </if>
+            </where>
         )
         SELECT
             COMMENT_ID,
