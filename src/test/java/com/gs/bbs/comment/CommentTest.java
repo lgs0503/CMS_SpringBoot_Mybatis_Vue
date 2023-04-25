@@ -2,8 +2,8 @@ package com.gs.bbs.comment;
 
 import com.gs.bbs.api.comment.dto.CommentDTO;
 import com.gs.bbs.api.comment.service.CommentService;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +23,7 @@ public class CommentTest {
     }
 
     @Test
-    @Operation(summary = "댓글 리스트 조회")
+    @DisplayName("댓글 리스트 조회")
     public void getCommentList() {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setUseYn("Y");
@@ -32,13 +32,13 @@ public class CommentTest {
     }
 
     @Test
-    @Operation(summary = "댓글 조회")
+    @DisplayName("댓글 조회")
     public void getComment() {
         commentService.getComment(1);
     }
 
     @Test
-    @Operation(summary = "댓글 추가")
+    @DisplayName("댓글 추가")
     public void insertComment() {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setPostId(1);
@@ -53,7 +53,7 @@ public class CommentTest {
     }
 
     @Test
-    @Operation(summary = "댓글 수정")
+    @DisplayName("댓글 수정")
     public void updateComment() {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setCommentId(15);
@@ -69,7 +69,7 @@ public class CommentTest {
     }
 
     @Test
-    @Operation(summary = "댓글 삭제")
+    @DisplayName("댓글 삭제")
     public void deleteComment() {
 
         List<Integer> commentIds = new ArrayList<Integer>();
