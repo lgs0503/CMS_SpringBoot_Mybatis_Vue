@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.like.mapper.LikeMapper">
+
+    <select id="getLikeList" resultType="com.gs.bbs.api.like.dto.LikeDTO" parameterType="com.gs.bbs.api.like.dto.LikeDTO">
+        SELECT
+            LIKE_ID,
+            TYPE,
+            POST_ID,
+            COMMENT_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_LIKE
+        <where>
+            <if test="likeId != 0">
+                AND LIKE_ID = #{likeId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(type)">
+                AND TYPE = #{type}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getLike" parameterType="int" resultType="com.gs.bbs.api.like.dto.LikeDTO">
+        SELECT
+            LIKE_ID,
+            TYPE,
+            POST_ID,
+            COMMENT_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_LIKE
+        <where>
+            <if test="likeId != 0">
+                AND LIKE_ID = #{likeId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertLike" parameterType="com.gs.bbs.api.like.dto.LikeDTO">
+        INSERT
+        INTO GS_LIKE
+        (
+            LIKE_ID,
+            TYPE,
+            POST_ID,
+            COMMENT_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(LIKE_ID),0) + 1
+                FROM GS_LIKE GL
+            ),
+            #{type},
+            #{postId},
+            #{commentId},
+            'Y',
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateLike" parameterType="com.gs.bbs.api.like.dto.LikeDTO">
+        UPDATE  GS_LIKE
+        SET     TYPE = #{type},
+                POST_ID = #{postId},
+                USE_YN = #{useYn},
+                COMMENT_ID = #{commentId},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   LIKE_ID = #{likeId}
+    </update>
+
+    <delete id="deleteLike" parameterType="int">
+        UPDATE  GS_LIKE
+        SET     USE_YN = 'N'
+        WHERE   LIKE_ID IN
+        <foreach collection="list" item="likeId" open="(" close=")" separator=",">
+            #{likeId}
+        </foreach>
+    </delete>
+</mapper>
