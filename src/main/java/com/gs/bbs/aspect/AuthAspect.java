@@ -39,6 +39,10 @@ public class AuthAspect {
 
                 String userId = tokenProvider.validateAndGetUserId(accessToken);
 
+                if (StringUtil.isEmpty(userId)) {
+                    throw new Exception("유효하지 않은 토큰");
+                }
+
                 AbstractAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userId,
                         null,
@@ -49,7 +53,7 @@ public class AuthAspect {
                 securityContext.setAuthentication(authentication); // 인증 정보 넣기
                 SecurityContextHolder.setContext(securityContext); // 다시 등록
             } else {
-                throw new Exception("유효하지 않은 토큰");
+                throw new Exception("헤더 정보에 토근이 없습니다.");
             }
             return pjp.proceed();
         } catch (
