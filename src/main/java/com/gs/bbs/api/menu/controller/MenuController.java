@@ -54,7 +54,7 @@ public class MenuController {
 
     @Operation(summary = "메뉴 추가")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertMenu(MenuDTO menuDTO){
+    public ResponseEntity<ResponseDto> insertMenu(@RequestBody MenuDTO menuDTO){
 
         return ResponseEntity.ok(
                 ResponseDto.of(
@@ -67,7 +67,7 @@ public class MenuController {
 
     @Operation(summary = "메뉴 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateMenu(MenuDTO menuDTO){
+    public ResponseEntity<ResponseDto> updateMenu(@RequestBody MenuDTO menuDTO){
 
         return ResponseEntity.ok(
                 ResponseDto.of(
@@ -80,7 +80,7 @@ public class MenuController {
 
     @Operation(summary = "메뉴 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteMenu(List<Integer> menuIds){
+    public ResponseEntity<ResponseDto> deleteMenu(@RequestBody List<Integer> menuIds){
 
         return ResponseEntity.ok(
                 ResponseDto.of(

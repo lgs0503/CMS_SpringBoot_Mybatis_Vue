@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.board.mapper.BoardMapper">
+
+    <select id="getBoardList" resultType="com.gs.bbs.api.board.dto.BoardDto" parameterType="com.gs.bbs.api.board.dto.BoardDto">
+        SELECT
+            BOARD_ID,
+            NAME,
+            TYPE,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_BOARD
+        <where>
+            <if test="boardId != 0">
+                AND BOARD_ID = #{boardId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(name)">
+                AND NAME = #{name}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(type)">
+                AND TYPE = #{type}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getBoard" parameterType="int" resultType="com.gs.bbs.api.board.dto.BoardDto">
+        SELECT
+            BOARD_ID,
+            NAME,
+            TYPE,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_BOARD
+        <where>
+            <if test="boardId != 0">
+                AND BOARD_ID = #{boardId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertBoard" parameterType="com.gs.bbs.api.board.dto.BoardDto">
+        INSERT
+        INTO GS_BOARD
+        (
+            BOARD_ID,
+            NAME,
+            TYPE,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(BOARD_ID),0) + 1
+                FROM GS_BOARD GB
+            ),
+            #{name},
+            #{type},
+            'Y',
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateBoard" parameterType="com.gs.bbs.api.board.dto.BoardDto">
+        UPDATE  GS_BOARD
+        SET     NAME = #{name},
+                TYPE = #{type},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   BOARD_ID = #{boardId}
+    </update>
+
+    <delete id="deleteBoard" parameterType="int">
+        UPDATE  GS_BOARD
+        SET     USE_YN = 'N'
+        WHERE   BOARD_ID IN
+        <foreach collection="list" item="boardId" open="(" close=")" separator=",">
+            #{boardId}
+        </foreach>
+    </delete>
+</mapper>
