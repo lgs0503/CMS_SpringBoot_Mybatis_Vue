@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.content.mapper.ContentMapper">
+
+    <select id="getContentList" resultType="com.gs.bbs.api.content.dto.ContentDTO" parameterType="com.gs.bbs.api.content.dto.ContentDTO">
+        SELECT
+            CONTENT_ID,
+            NAME,
+            CONTENT,
+            USE_YN,
+            FILE_ID,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDAET_DATE
+        FROM GS_CONTENT
+        <where>
+            <if test="contentId != 0">
+                AND CONTENT_ID = #{contentId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(name)">
+                AND NAME = #{name}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getContent" parameterType="int" resultType="com.gs.bbs.api.content.dto.ContentDTO">
+        SELECT
+            CONTENT_ID,
+            NAME,
+            CONTENT,
+            USE_YN,
+            FILE_ID,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDAET_DATE
+        FROM GS_CONTENT
+        <where>
+            <if test="contentId != 0">
+                AND CONTENT_ID = #{contentId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertContent" parameterType="com.gs.bbs.api.content.dto.ContentDTO">
+        INSERT
+        INTO GS_CONTENT
+        (
+            CONTENT_ID,
+            NAME,
+            CONTENT,
+            USE_YN,
+            FILE_ID,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(CONTENT_ID),0) + 1
+                FROM GS_CONTENT GC
+            ),
+            #{name},
+            #{content},
+            'Y',
+            #{fileId},
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateContent" parameterType="com.gs.bbs.api.content.dto.ContentDTO">
+        UPDATE  GS_CONTENT
+        SET     NAME = #{name},
+                CONTENT = #{content},
+                FILE_ID = #{fileId}
+        WHERE   CONTENT_ID = #{contentId}
+    </update>
+
+    <delete id="deleteContent" parameterType="int">
+        UPDATE  GS_CONTENT
+        SET     USE_YN = 'N'
+        WHERE   CONTENT_ID IN
+        <foreach collection="list" item="contentId" open="(" close=")" separator=",">
+            #{contentId}
+        </foreach>
+    </delete>
+</mapper>
