@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.popup.mapper.PopupMapper">
+
+    <select id="getPopupList" resultType="com.gs.bbs.api.popup.dto.PopupDTO" parameterType="com.gs.bbs.api.popup.dto.PopupDTO">
+        SELECT
+            POPUP_ID,
+            NAME,
+            X_POS,
+            Y_POS,
+            WIDTH,
+            HEIGHT,
+            Z_INDEX,
+            TYPE,
+            FILE_ID,
+            CONTENT_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_POPUP
+        <where>
+            <if test="popupId != 0">
+                AND POPUP_ID = #{popupId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(name)">
+                AND NAME = #{name}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(type)">
+                AND TYPE = #{type}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getPopup" parameterType="int" resultType="com.gs.bbs.api.popup.dto.PopupDTO">
+        SELECT
+            POPUP_ID,
+            NAME,
+            X_POS,
+            Y_POS,
+            WIDTH,
+            HEIGHT,
+            Z_INDEX,
+            TYPE,
+            FILE_ID,
+            CONTENT_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_POPUP
+        <where>
+            <if test="popupId != 0">
+                AND POPUP_ID = #{popupId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertPopup" parameterType="com.gs.bbs.api.popup.dto.PopupDTO">
+        INSERT
+        INTO GS_POPUP
+        (
+            POPUP_ID,
+            NAME,
+            X_POS,
+            Y_POS,
+            WIDTH,
+            HEIGHT,
+            Z_INDEX,
+            TYPE,
+            FILE_ID,
+            CONTENT_ID,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(POPUP_ID),0) + 1
+                FROM GS_POPUP GP
+            ),
+            #{name},
+            #{xPos},
+            #{yPos},
+            #{width},
+            #{height},
+            #{zIndex},
+            #{type},
+            #{fileId},
+            #{contentId},
+            'Y',
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updatePopup" parameterType="com.gs.bbs.api.popup.dto.PopupDTO">
+        UPDATE  GS_POPUP
+        SET     NAME = #{name},
+                X_POS = #{xPos},
+                Y_POS = #{yPos},
+                WIDTH = #{width},
+                HEIGHT = #{height},
+                Z_INDEX = #{zIndex},
+                TYPE = #{type},
+                FILE_ID = #{fileId},
+                CONTENT_ID = #{contentId},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   POPUP_ID = #{popupId}
+    </update>
+
+    <delete id="deletePopup" parameterType="int">
+        UPDATE  GS_POPUP
+        SET     USE_YN = 'N'
+        WHERE   POPUP_ID IN
+        <foreach collection="list" item="popupId" open="(" close=")" separator=",">
+            #{popupId}
+        </foreach>
+    </delete>
+</mapper>
