@@ -26,7 +26,7 @@
                 AND BOARD_ID = #{boardId}
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(title)">
-                AND TITLE = #{title}
+                AND TITLE LIKE CONCAT('%', #{title}, '%')
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
                 AND USE_YN = #{useYn}

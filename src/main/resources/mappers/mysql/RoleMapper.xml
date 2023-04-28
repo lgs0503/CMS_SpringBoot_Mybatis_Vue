@@ -18,7 +18,7 @@
                 AND ROLE_ID = #{roleId}
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(name)">
-                AND NAME = #{name}
+                AND NAME LIKE CONCAT('%', #{name}, '%')
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
                 AND USE_YN = #{useYn}

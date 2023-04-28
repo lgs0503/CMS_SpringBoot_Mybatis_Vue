@@ -26,7 +26,7 @@
                 AND POPUP_ID = #{popupId}
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(name)">
-                AND NAME = #{name}
+                AND NAME LIKE CONCAT('%', #{name}, '%')
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(type)">
                 AND TYPE = #{type}
