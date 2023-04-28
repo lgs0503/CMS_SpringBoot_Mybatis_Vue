@@ -40,7 +40,7 @@ Spring Boot MySQL를 사용해보고자 시작한 프로젝트
  - nginX (고민중)
  
 ## ERD
-
+![readme/img.png](readme/erd.png)
 
 ## CI/CD, Server 구성
 
@@ -64,7 +64,7 @@ Spring Boot MySQL를 사용해보고자 시작한 프로젝트
  - Banner
  - Popup
  
-### Histroy Api
+### History Api
  - LoginHistory
  - FileUpDownHistory
  - MenuUseHistory
