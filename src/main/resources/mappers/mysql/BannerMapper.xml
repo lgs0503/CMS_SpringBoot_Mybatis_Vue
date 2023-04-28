@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.bbs.api.banner.mapper.BannerMapper">
+
+    <select id="getBannerList" resultType="com.gs.bbs.api.banner.dto.BannerDTO" parameterType="com.gs.bbs.api.banner.dto.BannerDTO">
+        SELECT
+            BANNER_ID,
+            TYPE,
+            FILE_ID,
+            CONTENT_ID,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_BANNER
+        <where>
+            <if test="bannerId != 0">
+                AND BANNER_ID = #{bannerId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(type)">
+                AND TYPE = #{type}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
+                AND USE_YN = #{useYn}
+            </if>
+        </where>
+    </select>
+
+    <select id="getBanner" parameterType="int" resultType="com.gs.bbs.api.banner.dto.BannerDTO">
+        SELECT
+            BANNER_ID,
+            TYPE,
+            FILE_ID,
+            CONTENT_ID,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM    GS_BANNER
+        <where>
+            <if test="bannerId != 0">
+                AND BANNER_ID = #{bannerId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertBanner" parameterType="com.gs.bbs.api.banner.dto.BannerDTO">
+        INSERT
+        INTO GS_BANNER
+        (
+            BANNER_ID,
+            TYPE,
+            FILE_ID,
+            CONTENT_ID,
+            USE_YN,
+            SORT,
+            CREATE_USER,
+            CREATE_DATE
+        )
+        VALUES
+        (
+            (
+                SELECT
+                    IFNULL(MAX(BANNER_ID),0) + 1
+                FROM GS_BANNER GB
+            ),
+            #{type},
+            #{fileId},
+            #{contentId},
+            'Y',
+            #{sort},
+            #{createUser},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateBanner" parameterType="com.gs.bbs.api.banner.dto.BannerDTO">
+        UPDATE  GS_BANNER
+        SET     TYPE = #{type},
+                FILE_ID = #{fileId},
+                CONTENT_ID = #{contentId},
+                SORT = #{sort},
+                UPDATE_USER = #{updateUser},
+                UPDATE_DATE = NOW()
+        WHERE   BANNER_ID = #{bannerId}
+    </update>
+
+    <delete id="deleteBanner" parameterType="int">
+        UPDATE  GS_BANNER
+        SET     USE_YN = 'N'
+        WHERE   BANNER_ID IN
+        <foreach collection="list" item="bannerId" open="(" close=")" separator=",">
+            #{bannerId}
+        </foreach>
+    </delete>
+</mapper>
