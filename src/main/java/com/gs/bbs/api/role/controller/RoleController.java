@@ -2,7 +2,7 @@ package com.gs.bbs.api.role.controller;
 
 import com.gs.bbs.api.role.dto.RoleDTO;
 import com.gs.bbs.api.role.service.RoleService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class RoleController {
 
     @Operation(summary = "권한 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getRoleList(
+    public ResponseEntity<ResponseDTO> getRoleList(
             @RequestParam(value = "roleId", defaultValue = "0") int roleId,
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "useYn", defaultValue = "Y") String useYn
@@ -37,7 +37,7 @@ public class RoleController {
         roleDTO.setName(name);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getRole Success",
                         roleService.getRoleList(roleDTO)
@@ -47,9 +47,9 @@ public class RoleController {
 
     @Operation(summary = "권한 조회")
     @GetMapping("/{roleId}")
-    public ResponseEntity<ResponseDto> getRole(@PathVariable("roleId") int roleId) {
+    public ResponseEntity<ResponseDTO> getRole(@PathVariable("roleId") int roleId) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getRole Success",
                         roleService.getRole(roleId)
@@ -59,9 +59,9 @@ public class RoleController {
 
     @Operation(summary = "권한 추가")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertRole(@RequestBody RoleDTO roleDTO) {
+    public ResponseEntity<ResponseDTO> insertRole(@RequestBody RoleDTO roleDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertRole Success",
                         roleService.insertRole(roleDTO)
@@ -71,9 +71,9 @@ public class RoleController {
 
     @Operation(summary = "권한 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateRole(@RequestBody RoleDTO roleDTO) {
+    public ResponseEntity<ResponseDTO> updateRole(@RequestBody RoleDTO roleDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updateRole Success",
                         roleService.updateRole(roleDTO)
@@ -83,9 +83,9 @@ public class RoleController {
 
     @Operation(summary = "권한 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteRole(@RequestBody List<Integer> roleIds) {
+    public ResponseEntity<ResponseDTO> deleteRole(@RequestBody List<Integer> roleIds) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deleteRole Success",
                         roleService.deleteRole(roleIds)

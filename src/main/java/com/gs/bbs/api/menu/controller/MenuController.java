@@ -2,7 +2,7 @@ package com.gs.bbs.api.menu.controller;
 
 import com.gs.bbs.api.menu.dto.MenuDTO;
 import com.gs.bbs.api.menu.service.MenuService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -28,10 +28,10 @@ public class MenuController {
 
     @Operation(summary = "메뉴 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getMenuList(){
+    public ResponseEntity<ResponseDTO> getMenuList(){
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getMenuList Success",
                         menuService.getMenuList()
@@ -41,10 +41,10 @@ public class MenuController {
 
     @Operation(summary = "메뉴 조회")
     @GetMapping("/{menuId}")
-    public ResponseEntity<ResponseDto> getMenu(@PathVariable("menuId") int menuId){
+    public ResponseEntity<ResponseDTO> getMenu(@PathVariable("menuId") int menuId){
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getMenu Success",
                         menuService.getMenu(menuId)
@@ -54,10 +54,10 @@ public class MenuController {
 
     @Operation(summary = "메뉴 추가")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertMenu(@RequestBody MenuDTO menuDTO){
+    public ResponseEntity<ResponseDTO> insertMenu(@RequestBody MenuDTO menuDTO){
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertMenu Success",
                         menuService.insertMenu(menuDTO)
@@ -67,10 +67,10 @@ public class MenuController {
 
     @Operation(summary = "메뉴 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateMenu(@RequestBody MenuDTO menuDTO){
+    public ResponseEntity<ResponseDTO> updateMenu(@RequestBody MenuDTO menuDTO){
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "Success",
                         menuService.updateMenu(menuDTO)
@@ -80,10 +80,10 @@ public class MenuController {
 
     @Operation(summary = "메뉴 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteMenu(@RequestBody List<Integer> menuIds){
+    public ResponseEntity<ResponseDTO> deleteMenu(@RequestBody List<Integer> menuIds){
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deleteMenu Success",
                         menuService.deleteMenu(menuIds)

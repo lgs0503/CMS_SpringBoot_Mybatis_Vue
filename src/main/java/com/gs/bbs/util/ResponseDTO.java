@@ -11,28 +11,28 @@ import java.util.Optional;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ResponseDto {
+public class ResponseDTO {
 
     private int status;
     private String message;
     private Object data;
 
-    public ResponseDto(int status, String message) {
+    public ResponseDTO(int status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    public static ResponseDto of(HttpStatus httpStatus, String message) {
+    public static ResponseDTO of(HttpStatus httpStatus, String message) {
         int status = Optional.ofNullable(httpStatus)
                 .orElse(HttpStatus.OK)
                 .value();
-        return new ResponseDto(status, message);
+        return new ResponseDTO(status, message);
     }
 
-    public static ResponseDto of(HttpStatus httpStatus, String message, Object data) {
+    public static ResponseDTO of(HttpStatus httpStatus, String message, Object data) {
         int status = Optional.ofNullable(httpStatus)
                 .orElse(HttpStatus.OK)
                 .value();
-        return new ResponseDto(status, message, data);
+        return new ResponseDTO(status, message, data);
     }
 }

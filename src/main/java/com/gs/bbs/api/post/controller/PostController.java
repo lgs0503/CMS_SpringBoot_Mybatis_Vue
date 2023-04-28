@@ -2,7 +2,7 @@ package com.gs.bbs.api.post.controller;
 
 import com.gs.bbs.api.post.dto.PostDTO;
 import com.gs.bbs.api.post.service.PostService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PostController {
 
     @GetMapping
     @Operation(summary = "게시글 리스트 조회")
-    public ResponseEntity<ResponseDto> getPostList(
+    public ResponseEntity<ResponseDTO> getPostList(
             @RequestParam(value = "postId", defaultValue = "0") int postId,
             @RequestParam(value = "boardId", defaultValue = "0") int boardId,
             @RequestParam(value = "title", defaultValue = "") String title,
@@ -40,7 +40,7 @@ public class PostController {
         postDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getPostList Success",
                         postService.getPostList(postDTO)
@@ -50,9 +50,9 @@ public class PostController {
 
     @GetMapping("/{postId}")
     @Operation(summary = "게시글 조회")
-    public ResponseEntity<ResponseDto> getList(@PathVariable("postId") int postId){
+    public ResponseEntity<ResponseDTO> getList(@PathVariable("postId") int postId){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getList Success",
                         postService.getPost(postId)
@@ -62,9 +62,9 @@ public class PostController {
 
     @PostMapping
     @Operation(summary = "게시글 추가")
-    public ResponseEntity<ResponseDto> insertPost(@RequestBody PostDTO postDTO){
+    public ResponseEntity<ResponseDTO> insertPost(@RequestBody PostDTO postDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertPost Success",
                         postService.insertPost(postDTO)
@@ -74,9 +74,9 @@ public class PostController {
 
     @PatchMapping("/{postId}")
     @Operation(summary = "조회수 1 증가")
-    public ResponseEntity<ResponseDto> updateViewCount(@PathVariable("postId") int postId){
+    public ResponseEntity<ResponseDTO> updateViewCount(@PathVariable("postId") int postId){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updateViewCount Success",
                         postService.updateViewCount(postId)
@@ -86,9 +86,9 @@ public class PostController {
 
     @PutMapping
     @Operation(summary = "게시글 수정")
-    public ResponseEntity<ResponseDto> updatePost(@RequestBody PostDTO postDTO){
+    public ResponseEntity<ResponseDTO> updatePost(@RequestBody PostDTO postDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updatePost Success",
                         postService.updatePost(postDTO)
@@ -98,9 +98,9 @@ public class PostController {
 
     @DeleteMapping
     @Operation(summary = "게시글 삭제")
-    public ResponseEntity<ResponseDto> deletePost(@RequestBody List<Integer> postIds){
+    public ResponseEntity<ResponseDTO> deletePost(@RequestBody List<Integer> postIds){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deletePost Success",
                         postService.deletePost(postIds)

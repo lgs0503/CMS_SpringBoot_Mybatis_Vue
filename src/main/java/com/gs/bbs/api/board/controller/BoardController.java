@@ -2,7 +2,7 @@ package com.gs.bbs.api.board.controller;
 
 import com.gs.bbs.api.board.dto.BoardDto;
 import com.gs.bbs.api.board.service.BoardService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class BoardController {
 
     @Operation(summary = "게시판 리스트 조회")
     @GetMapping
-    private ResponseEntity<ResponseDto> getBoardList(
+    private ResponseEntity<ResponseDTO> getBoardList(
             @RequestParam(value = "boardId", defaultValue = "0") int boardId,
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "type", defaultValue = "") String type,
@@ -42,7 +42,7 @@ public class BoardController {
         boardDto.setUseYn(useYn);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getBoardList Success",
                         boardService.getBoardList(boardDto)
@@ -52,9 +52,9 @@ public class BoardController {
 
     @Operation(summary = "게시판 조회")
     @GetMapping("/{boardId}")
-    private ResponseEntity<ResponseDto> getBoard(@PathVariable("boardId") int boardId){
+    private ResponseEntity<ResponseDTO> getBoard(@PathVariable("boardId") int boardId){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getBoard Success",
                         boardService.getBoard(boardId)
@@ -64,9 +64,9 @@ public class BoardController {
 
     @Operation(summary = "게시판 추가")
     @PostMapping
-    private ResponseEntity<ResponseDto> insertBoard(@RequestBody BoardDto boardDto){
+    private ResponseEntity<ResponseDTO> insertBoard(@RequestBody BoardDto boardDto){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertBoard Success",
                         boardService.insertBoard(boardDto)
@@ -76,9 +76,9 @@ public class BoardController {
 
     @Operation(summary = "게시판 수정")
     @PutMapping
-    private ResponseEntity<ResponseDto> updateBoard(@RequestBody BoardDto boardDto){
+    private ResponseEntity<ResponseDTO> updateBoard(@RequestBody BoardDto boardDto){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updateBoard Success",
                         boardService.updateBoard(boardDto)
@@ -88,9 +88,9 @@ public class BoardController {
 
     @Operation(summary = "게시판 삭제")
     @DeleteMapping
-    private ResponseEntity<ResponseDto> deleteBoard(@RequestBody List<Integer> boardIds){
+    private ResponseEntity<ResponseDTO> deleteBoard(@RequestBody List<Integer> boardIds){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deleteBoard Success",
                         boardService.deleteBoard(boardIds)

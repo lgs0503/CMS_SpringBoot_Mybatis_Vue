@@ -41,7 +41,7 @@
                 AND USER_ID = #{userId}
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(korName)">
-                AND KOR_NAME = #{korName}
+                AND KOR_NAME LIKE CONCAT('%', #{korName}, '%')
             </if>
             <if test="roleId != 0">
                 AND GR.ROLE_ID = #{roleId}

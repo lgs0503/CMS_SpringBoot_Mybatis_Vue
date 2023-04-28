@@ -2,7 +2,7 @@ package com.gs.bbs.api.file.controller;
 
 import com.gs.bbs.api.file.dto.FileDownloadDTO;
 import com.gs.bbs.api.file.service.FileService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class FileController {
 
     @Operation(summary = "파일 업로드")
     @PostMapping
-    public ResponseEntity<ResponseDto> uploadFile(@RequestParam("files") MultipartFile[] files) {
+    public ResponseEntity<ResponseDTO> uploadFile(@RequestParam("files") MultipartFile[] files) {
 
         return ResponseEntity.ok(fileService.uploadFile(files));
     }
@@ -106,9 +106,9 @@ public class FileController {
 
     @Operation(summary = "이미지 파일 인코딩 (섬네일)")
     @GetMapping("/imageEncoder")
-    public ResponseEntity<ResponseDto> imageEncoder(@RequestParam("fileId") int fileId) {
+    public ResponseEntity<ResponseDTO> imageEncoder(@RequestParam("fileId") int fileId) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "imageEncoder Success",
                         fileService.imageEncoder(fileId)

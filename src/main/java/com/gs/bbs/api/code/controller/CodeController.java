@@ -2,7 +2,7 @@ package com.gs.bbs.api.code.controller;
 
 import com.gs.bbs.api.code.dto.CodeDTO;
 import com.gs.bbs.api.code.service.CodeService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import com.gs.bbs.util.StringUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +29,7 @@ public class CodeController {
 
     @Operation(summary = "코드 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getCodeList(
+    public ResponseEntity<ResponseDTO> getCodeList(
             @RequestParam(value = "codeId", defaultValue = "0") String codeId,
             @RequestParam(value = "groupCodeId", defaultValue = "0") String groupCodeId,
             @RequestParam(value = "name", defaultValue = "") String name,
@@ -48,7 +48,7 @@ public class CodeController {
         codeDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getCodeList Success",
                         codeService.getCodeList(codeDTO)
@@ -58,9 +58,9 @@ public class CodeController {
 
     @Operation(summary = "코드 조회")
     @GetMapping("/{code}")
-    public ResponseEntity<ResponseDto> getCode(@PathVariable("code") int codeId) {
+    public ResponseEntity<ResponseDTO> getCode(@PathVariable("code") int codeId) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getCode Success",
                         codeService.getCode(codeId)
@@ -70,9 +70,9 @@ public class CodeController {
 
     @Operation(summary = "코드 추가")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertCode(@RequestBody CodeDTO codeDTO) {
+    public ResponseEntity<ResponseDTO> insertCode(@RequestBody CodeDTO codeDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertCode Success",
                         codeService.insertCode(codeDTO)
@@ -82,9 +82,9 @@ public class CodeController {
 
     @Operation(summary = "코드 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateCode(@RequestBody CodeDTO codeDTO) {
+    public ResponseEntity<ResponseDTO> updateCode(@RequestBody CodeDTO codeDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updateCode Success",
                         codeService.updateCode(codeDTO)
@@ -94,9 +94,9 @@ public class CodeController {
 
     @Operation(summary = "코드 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteCode(@RequestBody List<Integer> codeIds) {
+    public ResponseEntity<ResponseDTO> deleteCode(@RequestBody List<Integer> codeIds) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deleteCode Success",
                         codeService.deleteCode(codeIds)

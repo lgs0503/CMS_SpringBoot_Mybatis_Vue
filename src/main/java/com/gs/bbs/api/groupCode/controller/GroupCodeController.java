@@ -2,7 +2,7 @@ package com.gs.bbs.api.groupCode.controller;
 
 import com.gs.bbs.api.groupCode.dto.GroupCodeDTO;
 import com.gs.bbs.api.groupCode.service.GroupCodeService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import com.gs.bbs.util.StringUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +29,7 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getGroupCodeList(
+    public ResponseEntity<ResponseDTO> getGroupCodeList(
             @RequestParam(value = "groupCodeId", defaultValue = "0") String groupCodeId,
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "useYn", defaultValue = "Y") String useYn
@@ -44,7 +44,7 @@ public class GroupCodeController {
         groupCodeDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                 "getGroupCodeList Success",
                         groupCodeService.getGroupCodeList(groupCodeDTO)
@@ -54,9 +54,9 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 단건 조회")
     @GetMapping("/{groupCodeId}")
-    public ResponseEntity<ResponseDto> getGroupCode(@PathVariable("groupCodeId") int groupCodeId) {
+    public ResponseEntity<ResponseDTO> getGroupCode(@PathVariable("groupCodeId") int groupCodeId) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getGroupCodeList Success",
                         groupCodeService.getGroupCode(groupCodeId)
@@ -66,9 +66,9 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 등록")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertGroupCode(@RequestBody GroupCodeDTO groupCodeDTO) {
+    public ResponseEntity<ResponseDTO> insertGroupCode(@RequestBody GroupCodeDTO groupCodeDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getGroupCodeList Success",
                         groupCodeService.insertGroupCode(groupCodeDTO)
@@ -78,9 +78,9 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateGroupCode(@RequestBody GroupCodeDTO groupCodeDTO) {
+    public ResponseEntity<ResponseDTO> updateGroupCode(@RequestBody GroupCodeDTO groupCodeDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getGroupCodeList Success",
                         groupCodeService.updateGroupCode(groupCodeDTO)
@@ -90,9 +90,9 @@ public class GroupCodeController {
 
     @Operation(summary = "그룹코드 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteGroupCode(@RequestBody List<Integer> groupCodeId) {
+    public ResponseEntity<ResponseDTO> deleteGroupCode(@RequestBody List<Integer> groupCodeId) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getGroupCodeList Success",
                         groupCodeService.deleteGroupCode(groupCodeId)
