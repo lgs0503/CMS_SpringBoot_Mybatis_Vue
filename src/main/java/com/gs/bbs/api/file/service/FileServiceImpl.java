@@ -3,7 +3,7 @@ package com.gs.bbs.api.file.service;
 import com.gs.bbs.api.file.dto.FileDTO;
 import com.gs.bbs.api.file.dto.FileDownloadDTO;
 import com.gs.bbs.api.file.mapper.FileMapper;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -34,8 +34,8 @@ public class FileServiceImpl implements FileService{
 
     @Transactional
     @Override
-    public ResponseDto uploadFile(MultipartFile[] files) {
-        ResponseDto responseDto;
+    public ResponseDTO uploadFile(MultipartFile[] files) {
+        ResponseDTO responseDto;
 
         List<FileDTO> result = new ArrayList<FileDTO>();
 
@@ -82,10 +82,10 @@ public class FileServiceImpl implements FileService{
                 file.transferTo(dest);
             }
 
-            responseDto = ResponseDto.of(HttpStatus.OK, "fileUpload Success", result);
+            responseDto = ResponseDTO.of(HttpStatus.OK, "fileUpload Success", result);
         } catch (IOException e) {
             log.error("fileUpload Exception: " + e.getMessage());
-            responseDto = ResponseDto.of(HttpStatus.NOT_FOUND, "fileUpload Fail");
+            responseDto = ResponseDTO.of(HttpStatus.NOT_FOUND, "fileUpload Fail");
         }
 
         return responseDto;

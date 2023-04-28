@@ -2,7 +2,7 @@ package com.gs.bbs.api.popup.controller;
 
 import com.gs.bbs.api.popup.dto.PopupDTO;
 import com.gs.bbs.api.popup.service.PopupService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class PopupController {
 
     @GetMapping
     @Operation(summary = "팝업 리스트 조회")
-    public ResponseEntity<ResponseDto> getPopupList(
+    public ResponseEntity<ResponseDTO> getPopupList(
             @RequestParam(value = "popupId", defaultValue = "0") int popupId,
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "type", defaultValue = "") String type,
@@ -42,7 +42,7 @@ public class PopupController {
         popupDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getPopupList Success",
                         popupService.getPopupList(popupDTO)
@@ -52,9 +52,9 @@ public class PopupController {
 
     @GetMapping("/{popupId}")
     @Operation(summary = "팝업 조회")
-    public ResponseEntity<ResponseDto> getPopup(@PathVariable int popupId) {
+    public ResponseEntity<ResponseDTO> getPopup(@PathVariable int popupId) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getPopup Success",
                         popupService.getPopup(popupId)
@@ -64,9 +64,9 @@ public class PopupController {
 
     @PostMapping
     @Operation(summary = "팝업 추가")
-    public ResponseEntity<ResponseDto> insertPopup(@RequestBody PopupDTO popupDTO) {
+    public ResponseEntity<ResponseDTO> insertPopup(@RequestBody PopupDTO popupDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertPopup Success",
                         popupService.insertPopup(popupDTO)
@@ -76,9 +76,9 @@ public class PopupController {
 
     @PutMapping
     @Operation(summary = "팝업 수정")
-    public ResponseEntity<ResponseDto> updatePopup(@RequestBody PopupDTO popupDTO) {
+    public ResponseEntity<ResponseDTO> updatePopup(@RequestBody PopupDTO popupDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updatePopup Success",
                         popupService.updatePopup(popupDTO)
@@ -88,9 +88,9 @@ public class PopupController {
 
     @DeleteMapping
     @Operation(summary = "팝업 삭제")
-    public ResponseEntity<ResponseDto> deletePopup(@RequestBody List<Integer> popupIds) {
+    public ResponseEntity<ResponseDTO> deletePopup(@RequestBody List<Integer> popupIds) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deletePopup Success",
                         popupService.deletePopup(popupIds)

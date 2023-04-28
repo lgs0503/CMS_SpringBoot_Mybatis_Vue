@@ -2,7 +2,7 @@ package com.gs.bbs.api.like.controller;
 
 import com.gs.bbs.api.like.dto.LikeDTO;
 import com.gs.bbs.api.like.service.LikeService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class LikeController {
 
     @Operation(summary = "좋아요 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getLikeList(
+    public ResponseEntity<ResponseDTO> getLikeList(
             @RequestParam(value = "likeId", defaultValue = "0") int likeId,
             @RequestParam(value = "type", defaultValue = "") String type,
             @RequestParam(value = "useYn", defaultValue = "Y") String useYn
@@ -40,7 +40,7 @@ public class LikeController {
         likeDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getLikeList Success",
                         likeService.getLikeList(likeDTO)
@@ -50,9 +50,9 @@ public class LikeController {
 
     @Operation(summary = "좋아요 조회")
     @GetMapping("/{likeId}")
-    public ResponseEntity<ResponseDto> getLike(@PathVariable("likeId") int likeId) {
+    public ResponseEntity<ResponseDTO> getLike(@PathVariable("likeId") int likeId) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getLike Success",
                         likeService.getLike(likeId)
@@ -62,9 +62,9 @@ public class LikeController {
 
     @Operation(summary = "좋아요 추가")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertLike(@RequestBody LikeDTO likeDTO) {
+    public ResponseEntity<ResponseDTO> insertLike(@RequestBody LikeDTO likeDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertLike Success",
                         likeService.insertLike(likeDTO)
@@ -74,9 +74,9 @@ public class LikeController {
 
     @Operation(summary = "좋아요 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateLike(@RequestBody LikeDTO likeDTO) {
+    public ResponseEntity<ResponseDTO> updateLike(@RequestBody LikeDTO likeDTO) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updateLike Success",
                         likeService.updateLike(likeDTO)
@@ -86,9 +86,9 @@ public class LikeController {
 
     @Operation(summary = "좋아요 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteLike(@RequestBody List<Integer> likeIds) {
+    public ResponseEntity<ResponseDTO> deleteLike(@RequestBody List<Integer> likeIds) {
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deleteLike Success",
                         likeService.deleteLike(likeIds)

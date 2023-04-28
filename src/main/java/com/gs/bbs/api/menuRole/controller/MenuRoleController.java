@@ -2,7 +2,7 @@ package com.gs.bbs.api.menuRole.controller;
 
 import com.gs.bbs.api.menuRole.dto.MenuRoleDTO;
 import com.gs.bbs.api.menuRole.service.MenuRoleService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class MenuRoleController {
 
     @Operation(summary = "메뉴 권한 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getMenuRoleList(
+    public ResponseEntity<ResponseDTO> getMenuRoleList(
             @RequestParam(value = "roleId", defaultValue = "0") int roleId,
             @RequestParam(value = "menuId", defaultValue = "0") int menuId,
             @RequestParam(value = "useYn", defaultValue = "Y") String useYn
@@ -39,7 +39,7 @@ public class MenuRoleController {
         menuRoleDTO.setMenuId(menuId);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getMenuRoleList Success",
                         menuRoleService.getMenuRoleList(menuRoleDTO)
@@ -49,9 +49,9 @@ public class MenuRoleController {
 
     @Operation(summary = "메뉴 권한 조회")
     @GetMapping("/{roleId}")
-    public ResponseEntity<ResponseDto> getMenuRole(@PathVariable("roleId") int roleId){
+    public ResponseEntity<ResponseDTO> getMenuRole(@PathVariable("roleId") int roleId){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getMenuRole Success",
                         menuRoleService.getMenuRole(roleId)
@@ -61,9 +61,9 @@ public class MenuRoleController {
 
     @Operation(summary = "메뉴 권한 추가")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertMenuRole(@RequestBody MenuRoleDTO menuRoleDTO){
+    public ResponseEntity<ResponseDTO> insertMenuRole(@RequestBody MenuRoleDTO menuRoleDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertMenuRole Success",
                         menuRoleService.insertMenuRole(menuRoleDTO)
@@ -73,9 +73,9 @@ public class MenuRoleController {
 
     @Operation(summary = "메뉴 권한 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateMenuRole(@RequestBody MenuRoleDTO menuRoleDTO){
+    public ResponseEntity<ResponseDTO> updateMenuRole(@RequestBody MenuRoleDTO menuRoleDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updateMenuRole Success",
                         menuRoleService.updateMenuRole(menuRoleDTO)
@@ -85,9 +85,9 @@ public class MenuRoleController {
 
     @Operation(summary = "메뉴 권한 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteMenuRole(@RequestBody List<Integer> roleIds){
+    public ResponseEntity<ResponseDTO> deleteMenuRole(@RequestBody List<Integer> roleIds){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deleteMenuRole Success",
                         menuRoleService.deleteMenuRole(roleIds)

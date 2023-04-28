@@ -2,7 +2,7 @@ package com.gs.bbs.api.comment.controller;
 
 import com.gs.bbs.api.comment.dto.CommentDTO;
 import com.gs.bbs.api.comment.service.CommentService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class CommentController {
 
     @Operation(summary = "댓글 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getCommentList(
+    public ResponseEntity<ResponseDTO> getCommentList(
             @RequestParam(value = "commentId", defaultValue = "0") int commentId,
             @RequestParam(value = "postId", defaultValue = "0") int postId,
             @RequestParam(value = "title", defaultValue = "") String title,
@@ -44,7 +44,7 @@ public class CommentController {
         commentDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getCommentList Success",
                         commentService.getCommentList(commentDTO)
@@ -54,9 +54,9 @@ public class CommentController {
 
     @Operation(summary = "댓글 조회")
     @GetMapping("/{commentId}")
-    public ResponseEntity<ResponseDto> getComment(@PathVariable int commentId){
+    public ResponseEntity<ResponseDTO> getComment(@PathVariable int commentId){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getComment Success",
                         commentService.getComment(commentId)
@@ -66,9 +66,9 @@ public class CommentController {
 
     @Operation(summary = "댓글 추가")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertComment(@RequestBody CommentDTO commentDTO){
+    public ResponseEntity<ResponseDTO> insertComment(@RequestBody CommentDTO commentDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertComment Success",
                         commentService.insertComment(commentDTO)
@@ -78,9 +78,9 @@ public class CommentController {
 
     @Operation(summary = "댓글 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updateComment(@RequestBody CommentDTO commentDTO){
+    public ResponseEntity<ResponseDTO> updateComment(@RequestBody CommentDTO commentDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updateComment Success",
                         commentService.updateComment(commentDTO)
@@ -90,9 +90,9 @@ public class CommentController {
 
     @Operation(summary = "댓글 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteComment(@RequestBody List<Integer> commentIds){
+    public ResponseEntity<ResponseDTO> deleteComment(@RequestBody List<Integer> commentIds){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deleteComment Success",
                         commentService.deleteComment(commentIds)

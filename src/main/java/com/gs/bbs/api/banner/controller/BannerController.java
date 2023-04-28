@@ -2,7 +2,7 @@ package com.gs.bbs.api.banner.controller;
 
 import com.gs.bbs.api.banner.dto.BannerDTO;
 import com.gs.bbs.api.banner.service.BannerService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class BannerController {
 
     @Operation(summary = "배너 리스트 조회")
     @GetMapping
-    public ResponseEntity<ResponseDto> getBannerList(
+    public ResponseEntity<ResponseDTO> getBannerList(
             @RequestParam(value = "bannerId", defaultValue = "0") int bannerId,
             @RequestParam(value = "type", defaultValue = "") String type,
             @RequestParam(value = "useYn", defaultValue = "Y") String useYn
@@ -40,7 +40,7 @@ public class BannerController {
         bannerDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getBannerList Success",
                         bannerService.getBannerList(bannerDTO)
@@ -50,9 +50,9 @@ public class BannerController {
 
     @Operation(summary = "배너 조회")
     @GetMapping("/{bannerId}")
-    public ResponseEntity<ResponseDto> getBanner(@PathVariable("bannerId") int bannerId){
+    public ResponseEntity<ResponseDTO> getBanner(@PathVariable("bannerId") int bannerId){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getBanner Success",
                         bannerService.getBanner(bannerId)
@@ -62,9 +62,9 @@ public class BannerController {
 
     @Operation(summary = "배너 추가")
     @PostMapping
-    public ResponseEntity<ResponseDto> insertBanner(@RequestBody BannerDTO bannerDTO){
+    public ResponseEntity<ResponseDTO> insertBanner(@RequestBody BannerDTO bannerDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertBanner Success",
                         bannerService.insertBanner(bannerDTO)
@@ -74,9 +74,9 @@ public class BannerController {
 
     @Operation(summary = "배너 수정")
     @PutMapping
-    public ResponseEntity<ResponseDto> updaterBanner(@RequestBody BannerDTO bannerDTO){
+    public ResponseEntity<ResponseDTO> updaterBanner(@RequestBody BannerDTO bannerDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updaterBanner Success",
                         bannerService.updateBanner(bannerDTO)
@@ -86,9 +86,9 @@ public class BannerController {
 
     @Operation(summary = "배너 삭제")
     @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteBanner(@RequestBody List<Integer> bannerIds){
+    public ResponseEntity<ResponseDTO> deleteBanner(@RequestBody List<Integer> bannerIds){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deleteBanner Success",
                         bannerService.deleteBanner(bannerIds)
