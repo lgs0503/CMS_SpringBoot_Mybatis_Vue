@@ -66,6 +66,6 @@ Spring Boot MySQL를 사용해보고자 시작한 프로젝트
  
 ### Histroy Api
  - LoginHistory
- - FileUpDonwHistory
+ - FileUpDownHistory
  - MenuUseHistory
  
