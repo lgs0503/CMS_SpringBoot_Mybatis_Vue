@@ -12,7 +12,13 @@ Spring Boot MySQL를 사용해보고자 시작한 프로젝트
 - HTML
 - CSS
 - JavaScript
-  - Vue.js
+  - Vue3
+  - VueRouter
+  - Pinia
+  - Axios
+  - TypeScript
+  - Vuetity
+  - React(추후 따로 구성할지 고민중)
 
 ### Back
 - Java11
