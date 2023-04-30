@@ -13,7 +13,7 @@ public interface UserMapper {
 
     UserDTO getUser(int userNo);
 
-    String getUserPassword(String userId);
+    String getUserPassword(LoginDTO loginDTO);
 
     int getUserCount(String userId);
 
