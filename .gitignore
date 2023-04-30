@@ -46,6 +46,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+.vite
 node_modules
 .DS_Store
 dist
