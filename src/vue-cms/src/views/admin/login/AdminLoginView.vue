@@ -2,6 +2,8 @@
   import {useUserStore} from "@/stores/user/userStore";
   import type {Login} from "@/model/user/userModel";
   import router from "@/router";
+  import AlertConfirm from "@/components/common/AlertConfirm.vue";
+  import {useAlertConfirmStore} from "@/stores/common/alertConfirmStore";
 
   let loginModel: Login = {
     userId : "",
@@ -9,18 +11,21 @@
   }
 
   const user = useUserStore();
+  const alertConfirm = useAlertConfirmStore();
 
   const login = async () => {
     const loginResult = await user.login(loginModel);
-    const loginStatus = loginResult.data.status;
+
+    const loginStatus = loginResult.status;
 
     if (loginStatus === 404) {
-      alert("아이디와 비밀번호를 확인해주세요.");
+      alertConfirm.alert("아이디와 비밀번호를 확인해주세요.");
     } else {
       const token = loginResult.data.data;
       sessionStorage.setItem("loginToken", token);
-      alert("로그인 성공");
-      await router.push("/admin/home");
+      alertConfirm.alert("로그인 성공.", () => {
+        router.push("/admin/home");
+      });
     }
   }
 </script>
@@ -38,6 +43,7 @@
       <button>회원가입</button>
     </div>
   </div>
+  <AlertConfirm/>
 </template>
 <style>
 </style>
