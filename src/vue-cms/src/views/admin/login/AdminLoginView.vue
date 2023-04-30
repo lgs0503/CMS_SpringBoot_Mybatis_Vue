@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import {useUserStore} from "@/stores/user/userStore";
   import type {Login} from "@/model/user/userModel";
+  import router from "@/router";
 
   let loginModel: Login = {
     userId : "",
@@ -19,9 +20,9 @@
       const token = loginResult.data.data;
       sessionStorage.setItem("loginToken", token);
       alert("로그인 성공");
+      await router.push("/admin/home");
     }
   }
-
 </script>
 
 <template>
