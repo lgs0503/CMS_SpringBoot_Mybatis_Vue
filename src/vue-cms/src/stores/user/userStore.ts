@@ -1,29 +1,41 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import {LOGIN} from "@/api/user/userApi";
-import type {Login, UserModel} from "@/model/user/userModel";
+import {DELETE_USER, GET_USER, GET_USER_LIST, INSERT_USER, LOGIN, UPDATE_USER} from "@/api/user/userApi";
+import type {LoginModel, UserModel} from "@/model/user/userModel";
 
 export const useUserStore = defineStore('user', () => {
-  const userList = ref([])
+  const userList = ref([]);
 
-  const getUserList = computed(() =>
-      userList.value
-  );
-
-  const login = async (login: Login) => {
-    return await LOGIN(login);
+  const getUserList = async (
+      userNo?: number,
+      userId?: string,
+      korName?: string,
+      roleId?: number,
+      useYn?: string
+  ) => {
+    return await GET_USER_LIST(userNo, userId, korName, roleId, useYn);
   }
 
-  const insertUser = (user : UserModel) => {
-
+  const getUser = async (
+      userNo: number
+  ) => {
+    return await GET_USER(userNo);
   }
 
-  const updateUser = (user : UserModel) => {
-
+  const login = async (loginModel: LoginModel) => {
+    return await LOGIN(loginModel);
   }
 
-  const deleteUser = (userIds : Array<number>) => {
+  const insertUser = async (userModel : UserModel) => {
+    return await INSERT_USER(userModel);
+  }
 
+  const updateUser = async (userModel : UserModel) => {
+    return await UPDATE_USER(userModel);
+  }
+
+  const deleteUser = async (userIds : Array<number>) => {
+    return await DELETE_USER(userIds);
   }
 
   return { userList, getUserList, login, insertUser, updateUser, deleteUser }
