@@ -1,11 +1,10 @@
 <script setup lang="ts">
   import {useUserStore} from "@/stores/user/userStore";
-  import type {Login} from "@/model/user/userModel";
+  import type {LoginModel} from "@/model/user/userModel";
   import router from "@/router";
-  import AlertConfirm from "@/components/common/AlertConfirm.vue";
   import {useAlertConfirmStore} from "@/stores/common/alertConfirmStore";
 
-  let loginModel: Login = {
+  let loginModel: LoginModel = {
     userId : "",
     password: ""
   }
@@ -23,15 +22,19 @@
     } else {
       const token = loginResult.data.data;
       sessionStorage.setItem("loginToken", token);
-      alertConfirm.alert("로그인 성공.", () => {
+      alertConfirm.alert("로그인 성공", () => {
         router.push("/admin/home");
       });
     }
   }
+
+  const signupPage = () => {
+    router.push("/admin/signup");
+  }
 </script>
 
 <template>
-    <div class="loginForm">
+  <div class="loginForm">
     <div class="loginForm-row">
       <input placeholder="아이디 입력" v-model="loginModel.userId"/>
     </div>
@@ -39,11 +42,10 @@
       <input placeholder="비밀번호 입력" v-model="loginModel.password"/>
     </div>
     <div class="loginForm-row">
-      <button @click="login()">로그인</button>
-      <button>회원가입</button>
+      <button @click="login">로그인</button>
+      <button @click="signupPage">회원가입</button>
     </div>
   </div>
-  <AlertConfirm/>
 </template>
 <style>
 </style>
