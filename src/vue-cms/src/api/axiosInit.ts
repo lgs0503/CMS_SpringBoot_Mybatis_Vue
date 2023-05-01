@@ -1,4 +1,5 @@
 import axios from "axios";
+import {useAlertConfirmStore} from "@/stores/common/alertConfirmStore";
 
 /** axios 설정 **/
 const config = {
@@ -25,6 +26,8 @@ axiosInstance.interceptors.response.use(
         return response.data;
     },
     error => {
+        const alertConfirm = useAlertConfirmStore();
+        alertConfirm.alert("서버 응답 에러 : 관리자에게 문의하세요");
         console.log(error);
         return Promise.reject(error);
     }
