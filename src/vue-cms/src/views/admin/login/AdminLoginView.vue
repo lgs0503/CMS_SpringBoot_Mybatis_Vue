@@ -35,17 +35,76 @@
 
 <template>
   <div class="loginForm">
+    <h1 class="loginFrom-title">CMS ADMIN LOGIN</h1>
     <div class="loginForm-row">
-      <input placeholder="아이디 입력" v-model="loginModel.userId"/>
+      <input placeholder="아이디 입력" type="text" v-model="loginModel.userId"/>
     </div>
     <div class="loginForm-row">
-      <input placeholder="비밀번호 입력" v-model="loginModel.password"/>
+      <input placeholder="비밀번호 입력" type="password" v-model="loginModel.password"/>
     </div>
     <div class="loginForm-row">
-      <button @click="login">로그인</button>
-      <button @click="signupPage">회원가입</button>
+      <button @click="login">LOGIN</button>
+      <button @click="signupPage">SIGNUP</button>
     </div>
   </div>
 </template>
-<style>
+<style lang="scss" scoped>
+  @import "../src/assets/mixin.scss";
+
+  .loginForm {
+    position: absolute;
+    padding: 25px 70px 20px 70px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #{$white-color};
+    border: 1px solid #{$blue-dark-color};
+    display: inline-block;
+    border-radius: 10px;
+
+    .loginFrom-title {
+      color: #{$blue-dark-color};
+      margin-bottom: 15px;
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .loginForm-row {
+      margin-bottom: 5px;
+
+      input {
+        padding : 7px 10px;
+        width: 220px;
+        border: 0.5px solid #{$sliver-light-color};
+        border-radius: 5px;
+        color: #{$sliver-dark-color};
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #{$blue-dark-color};
+      }
+
+      input::placeholder {
+        color: #a6a6a6;
+      }
+
+      button {
+        width: 241px;
+        display: block;
+        margin-top: 10px;
+        padding: 7px 7px;
+        background: #{$blue-dark-color};
+        border: none;
+        border-radius: 5px;
+        color: #{$white-color};
+        font-size: 15px;
+      }
+
+      button:hover {
+        cursor: pointer;
+        background: #{$blue-deep-dark-color};
+      }
+    }
+  }
 </style>
