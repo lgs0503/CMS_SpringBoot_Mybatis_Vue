@@ -17,6 +17,8 @@ export const useAlertConfirmStore = defineStore('alertConfirm', () => {
 
     if (callbackParam) {
       callback.value = callbackParam;
+    } else {
+      callback.value = () => {};
     }
 
     isHidden.value = true;
@@ -31,6 +33,8 @@ export const useAlertConfirmStore = defineStore('alertConfirm', () => {
 
     if (callbackParam) {
       callback.value = callbackParam;
+    } else {
+      callback.value = () => {};
     }
 
     isHidden.value = true;
