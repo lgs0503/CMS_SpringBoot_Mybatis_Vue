@@ -11,13 +11,15 @@ Spring Boot MySQL를 사용해보고자 시작한 프로젝트
 ### Front 
 - HTML
 - CSS
+  - SCSS
 - JavaScript
   - Vue3
+  - Composition API
   - VueRouter
-  - Pinia
+  - Pinia (상태관리 Vuex 대신 사용)
   - Axios
   - TypeScript
-  - Vuetity
+  - Vuetity(고민중)
   - React(추후 따로 구성할지 고민중)
 
 ### Back
