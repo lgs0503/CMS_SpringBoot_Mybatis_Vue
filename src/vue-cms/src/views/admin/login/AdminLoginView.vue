@@ -37,10 +37,10 @@
   <div class="loginForm">
     <h1 class="loginFrom-title">CMS ADMIN LOGIN</h1>
     <div class="loginForm-row">
-      <input placeholder="아이디 입력" type="text" v-model="loginModel.userId"/>
+      <input placeholder="아이디 입력" type="text" v-model="loginModel.userId" @keyup.enter="login"/>
     </div>
     <div class="loginForm-row">
-      <input placeholder="비밀번호 입력" type="password" v-model="loginModel.password"/>
+      <input placeholder="비밀번호 입력" type="password" v-model="loginModel.password"  @keyup.enter="login"/>
     </div>
     <div class="loginForm-row">
       <button @click="login">LOGIN</button>
