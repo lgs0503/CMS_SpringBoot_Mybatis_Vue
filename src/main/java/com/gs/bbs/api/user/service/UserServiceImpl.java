@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
         boolean loginResult = false;
 
-        String savePassword = StringUtil.nvl(userMapper.getUserPassword(loginDTO.getUserId()));
+        String savePassword = StringUtil.nvl(userMapper.getUserPassword(loginDTO));
 
         if (StringUtil.isNotEmpty(savePassword)) {
             String inputPassword = loginDTO.getPassword();
