@@ -29,7 +29,6 @@ import AdminMenuUseHisView from '../views/admin/menuUseHis/AdminMenuUseHisView.v
 const loginTokenCheck = () : string => {
 
   const token = sessionStorage.getItem("loginToken");
-  console.log(token);
 
   let redirectURL = "";
 
