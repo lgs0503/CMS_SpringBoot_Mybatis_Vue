@@ -25,8 +25,8 @@
       {{ alertConfirm.message }}
     </div>
     <div class="footer">
-      <button @click="alertConfirmOk">확인</button>
-      <button v-if="alertConfirm.isConfirm" @click="confirmCancel">취소</button>
+      <button @click="alertConfirmOk">{{ $t("common.alert_confirm.ok") }}</button>
+      <button v-if="alertConfirm.isConfirm" @click="confirmCancel">{{ $t("common.alert_confirm.cancel") }}</button>
     </div>
   </div>
   <div v-if="alertConfirm.isHidden" class="commonAlertConfirm-Background"></div>
