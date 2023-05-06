@@ -19,9 +19,7 @@ import {onMounted, ref} from "vue";
     }
   });
 
-  const emit = defineEmits([
-    'searchEvent', 'update:modelValue'
-  ]);
+  const emit = defineEmits(['update:modelValue']);
 
   const comboBoxOption = ref([]);
 
@@ -48,17 +46,18 @@ import {onMounted, ref} from "vue";
 </template>
 <style lang="scss" scoped>
   @import "../src/assets/variables.scss";
-    select {
-      padding : 7px 10px;
-      width: 150px;
-      border: 0.5px solid #{$sliver-light-color};
-      border-radius: 5px;
-      color: #{$sliver-dark-color};
-      margin-right: 10px;
-    }
 
-    select:focus {
-      outline: none;
-      border-color: #{$blue-dark-color};
-    }
+  select {
+    padding : 7px 10px;
+    width: 150px;
+    border: 0.5px solid #{$sliver-light-color};
+    border-radius: 5px;
+    color: #{$sliver-dark-color};
+    margin-right: 10px;
+  }
+
+  select:focus {
+    outline: none;
+    border-color: #{$blue-dark-color};
+  }
 </style>
