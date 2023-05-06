@@ -26,6 +26,32 @@
         </where>
     </select>
 
+    <select id="getGroupCodeListKeyword" resultType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO" parameterType="com.gs.bbs.util.SearchDTO">
+        SELECT
+            GROUP_CODE_ID,
+            NAME,
+            USE_YN,
+            CREATE_USER,
+            CREATE_DATE,
+            UPDATE_USER,
+            UPDATE_DATE
+        FROM GS_GROUP_CODE
+        <where>
+            AND USE_YN = 'Y'
+
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(searchKey)">
+                <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(keyword)">
+                    <if test="searchKey == 'GSO001'">
+                        AND CAST(GROUP_CODE_ID AS CHAR(10)) = #{keyword}
+                    </if>
+                    <if test="searchKey == 'GSO002'">
+                        AND NAME LIKE CONCAT('%', #{keyword}, '%')
+                    </if>
+                </if>
+            </if>
+        </where>
+    </select>
+
     <select id="getGroupCode" parameterType="int" resultType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO">
         SELECT
             GROUP_CODE_ID,

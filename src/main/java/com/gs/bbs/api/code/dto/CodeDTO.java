@@ -12,6 +12,7 @@ public class CodeDTO extends CommonDTO {
 
     private int codeId;
     private int groupCodeId;
+    private String groupCodeName;
     private String name;
     private String value1;
     private String value2;

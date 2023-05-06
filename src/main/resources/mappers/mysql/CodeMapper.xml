@@ -5,57 +5,66 @@
 
     <select id="getCodeList" resultType="com.gs.bbs.api.code.dto.CodeDTO" parameterType="com.gs.bbs.api.code.dto.CodeDTO">
         SELECT
-            CODE_ID,
-            GROUP_CODE_ID,
-            NAME,
-            VALUE1,
-            VALUE2,
-            VALUE3,
-            VALUE4,
-            VALUE5,
-            USE_YN,
-            SORT,
-            CREATE_USER,
-            CREATE_DATE,
-            UPDATE_USER,
-            UPDATE_DATE
-        FROM GS_CODE
+            A.CODE_ID,
+            A.GROUP_CODE_ID,
+            B.NAME AS GROUP_CODE_NAME,
+            A.NAME,
+            A.VALUE1,
+            A.VALUE2,
+            A.VALUE3,
+            A.VALUE4,
+            A.VALUE5,
+            A.USE_YN,
+            A.SORT,
+            A.CREATE_USER,
+            A.CREATE_DATE,
+            A.UPDATE_USER,
+            A.UPDATE_DATE
+        FROM            GS_CODE A
+        LEFT OUTER JOIN GS_GROUP_CODE B
+        ON              A.GROUP_CODE_ID = B.GROUP_CODE_ID
         <where>
             <if test="codeId != 0">
-                AND CODE_ID = #{codeId}
+                AND A.CODE_ID = #{codeId}
             </if>
             <if test="groupCodeId != 0">
-                AND GROUP_CODE_ID = #{groupCodeId}
+                AND A.GROUP_CODE_ID = #{groupCodeId}
+            </if>
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(groupCodeName)">
+                AND B.NAME = #{groupCodeName}
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(name)">
-                AND NAME LIKE CONCAT('%', #{name}, '%')
+                AND A.NAME LIKE CONCAT('%', #{name}, '%')
             </if>
             <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(useYn)">
-                AND USE_YN = #{useYn}
+                AND A.USE_YN = #{useYn}
             </if>
         </where>
     </select>
 
     <select id="getCode" parameterType="int" resultType="com.gs.bbs.api.code.dto.CodeDTO">
         SELECT
-            CODE_ID,
-            GROUP_CODE_ID,
-            NAME,
-            VALUE1,
-            VALUE2,
-            VALUE3,
-            VALUE4,
-            VALUE5,
-            USE_YN,
-            SORT,
-            CREATE_USER,
-            CREATE_DATE,
-            UPDATE_USER,
-            UPDATE_DATE
-        FROM GS_CODE
+            A.CODE_ID,
+            A.GROUP_CODE_ID,
+            B.NAME AS GROUP_CODE_NAME,
+            A.NAME,
+            A.VALUE1,
+            A.VALUE2,
+            A.VALUE3,
+            A.VALUE4,
+            A.VALUE5,
+            A.USE_YN,
+            A.SORT,
+            A.CREATE_USER,
+            A.CREATE_DATE,
+            A.UPDATE_USER,
+            A.UPDATE_DATE
+        FROM            GS_CODE A
+        LEFT OUTER JOIN GS_GROUP_CODE B
+        ON              A.GROUP_CODE_ID = B.GROUP_CODE_ID
         <where>
             <if test="codeId != 0">
-                AND CODE_ID = #{codeId}
+                AND A.CODE_ID = #{codeId}
             </if>
         </where>
     </select>
