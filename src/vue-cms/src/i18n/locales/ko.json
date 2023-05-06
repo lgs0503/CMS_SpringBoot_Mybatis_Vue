@@ -3,6 +3,11 @@
     "alert_confirm": {
       "ok": "확인",
       "cancel": "취소"
+    },
+    "searchForm": {
+      "select": "선택",
+      "keyword_placeholder" : "입력하세요.",
+      "search": "조회"
     }
   },
   "admin": {

@@ -3,6 +3,11 @@
     "alert_confirm": {
       "ok": "OK",
       "cancel": "Cancel"
+    },
+    "searchForm": {
+      "select": "Select",
+      "keyword_placeholder" : "Please enter.",
+      "search": "Search"
     }
   },
   "admin": {
