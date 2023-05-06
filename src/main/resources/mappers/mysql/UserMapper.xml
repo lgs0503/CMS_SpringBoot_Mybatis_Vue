@@ -90,11 +90,16 @@
         </where>
     </select>
 
-    <select id="getUserPassword" parameterType="String" resultType="String">
+    <select id="getUserPassword" parameterType="com.gs.bbs.api.user.dto.LoginDTO" resultType="String">
         SELECT  PASSWORD
         FROM    GS_USER
-        WHERE   USER_ID = #{userId}
-        AND     USE_YN = 'Y'
+        <where>
+            <if test="roleId != 0">
+                AND ROLE_ID = #{roleId}
+            </if>
+            AND   USER_ID = #{userId}
+            AND   USE_YN = 'Y'
+        </where>
     </select>
 
     <select id="getUserCount" parameterType="String" resultType="int">

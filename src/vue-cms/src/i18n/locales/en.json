@@ -1,0 +1,84 @@
+{
+  "common": {
+    "alert_confirm": {
+      "ok": "OK",
+      "cancel": "Cancel"
+    },
+    "searchForm": {
+      "select": "Select",
+      "keyword_placeholder" : "Please enter.",
+      "search": "Search"
+    }
+  },
+  "admin": {
+    "login": {
+      "input": {
+        "placeholder": {
+          "id": "ID Input.",
+          "password": "Password Input."
+        }
+      },
+      "alert": {
+        "login_fail": "Please check your ID and password.",
+        "login_success": "Login succeed"
+      }
+    },
+    "signup": {
+      "input": {
+        "placeholder": {
+          "id": "Enter ID",
+          "password": "Enter your password",
+          "passwordChk": "Check password",
+          "korName": "Enter a name",
+          "engName": "Enter an English name",
+          "birthday": "Enter your date of birth",
+          "address": "Enter address",
+          "addressDtl": "Enter the detailed address",
+          "phoneNum": "Enter contact number",
+          "email": "Enter your email"
+        }
+      },
+      "validationMsg": {
+        "required": "This is a required input.",
+        "id": "id",
+        "password": "your password is",
+        "passwordChk": "Please enter the same password and confirm password.",
+        "korName": "Name is",
+        "birthday": "your date of birth",
+        "gender": "is",
+        "address": "address is",
+        "addressDtl": "Detailed address is",
+        "phoneNum": "Contact Number",
+        "email": "your email is"
+      },
+      "alert": {
+        "signup_success": "The admin account that completed membership registration can log in after approval is complete."
+      },
+      "button": {
+        "addressSearch": "Search Address",
+        "signup": "Sign up",
+        "cancel": "cancel"
+      }
+    },
+    "layout": {
+      "menu": {
+        "code": "Code",
+        "user": "User",
+        "role": "Role",
+        "menu": "Menu",
+        "menuRole": "MenuRole",
+        "file": "File",
+        "board": "Board",
+        "post": "Post",
+        "content": "Content",
+        "comment": "Comment",
+        "like": "Like",
+        "banner": "Banner",
+        "popup": "Popup",
+        "loginHis": "Login History",
+        "fileUpDownHis": "File UpDown History",
+        "menuUseHis": "Menu Use History"
+      }
+    }
+  }
+}

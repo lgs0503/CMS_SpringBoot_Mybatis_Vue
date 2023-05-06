@@ -8,6 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class LoginDTO {
+
     private String userId;
     private String password;
+    private int roleId;
+
 }
