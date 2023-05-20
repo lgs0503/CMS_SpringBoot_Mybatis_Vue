@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Tag(name = "GroupCode", description = "그룹코드 api")
@@ -87,11 +89,17 @@ public class GroupCodeController {
     @Operation(summary = "그룹코드 등록")
     @PostMapping
     public ResponseEntity<ResponseDTO> insertGroupCode(@RequestBody GroupCodeDTO groupCodeDTO) {
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        resultMap.put("result", groupCodeService.insertGroupCode(groupCodeDTO));
+        resultMap.put("groupCode", groupCodeService.maxGroupCodeId());
+
         return ResponseEntity.ok(
                 ResponseDTO.of(
                         HttpStatus.OK,
                         "getGroupCodeList Success",
-                        groupCodeService.insertGroupCode(groupCodeDTO)
+                        resultMap
                 )
         );
     }
