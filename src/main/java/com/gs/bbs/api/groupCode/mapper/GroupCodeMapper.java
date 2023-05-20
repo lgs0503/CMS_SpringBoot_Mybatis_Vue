@@ -15,6 +15,8 @@ public interface GroupCodeMapper {
 
     GroupCodeDTO getGroupCode(int groupCodeId);
 
+    int maxGroupCodeId();
+
     int insertGroupCode(GroupCodeDTO groupCodeDTO);
 
     int updateGroupCode(GroupCodeDTO groupCodeDTO);

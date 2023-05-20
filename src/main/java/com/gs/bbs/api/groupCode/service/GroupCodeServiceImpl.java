@@ -35,6 +35,11 @@ public class GroupCodeServiceImpl implements GroupCodeService {
     }
 
     @Override
+    public int maxGroupCodeId() {
+        return groupCodeMapper.maxGroupCodeId();
+    }
+
+    @Override
     public int insertGroupCode(GroupCodeDTO groupCodeDTO) {
         return groupCodeMapper.insertGroupCode(groupCodeDTO);
     }

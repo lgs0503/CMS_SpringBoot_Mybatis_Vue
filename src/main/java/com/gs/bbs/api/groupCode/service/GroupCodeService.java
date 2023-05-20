@@ -14,6 +14,8 @@ public interface GroupCodeService {
 
     GroupCodeDTO getGroupCode(int groupCodeId);
 
+    int maxGroupCodeId();
+
     int insertGroupCode(GroupCodeDTO groupCodeDTO);
 
     int updateGroupCode(GroupCodeDTO groupCodeDTO);
