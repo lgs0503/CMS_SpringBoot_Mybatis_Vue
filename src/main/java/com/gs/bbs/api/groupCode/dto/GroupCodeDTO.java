@@ -11,8 +11,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class GroupCodeDTO extends CommonDTO {
 
-    public int groupCodeId;
-    public String name;
-    public String useYn;
+    private int groupCodeId;
+    private String name;
+    private String korName;
+    private String description;
+    private String useYn;
     
 }
