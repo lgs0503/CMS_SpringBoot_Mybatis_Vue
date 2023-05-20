@@ -8,6 +8,8 @@ import AdminLayout from '../views/admin/layout/AdminLayout.vue'
 import AdminHomeView from '../views/admin/home/AdminHomeView.vue'
 
 import AdminCodeMgmtView from '../views/admin/code/AdminCodeMgmtView.vue'
+import AdminCodeMgmtDetailView from '../views/admin/code/AdminCodeMgmtDetailView.vue'
+
 import AdminUserMgmtView from '../views/admin/user/AdminUserMgmtView.vue'
 import AdminRoleMgmtView from '../views/admin/role/AdminRoleMgmtView.vue'
 import AdminMenuMgmtView from '../views/admin/menu/AdminMenuMgmtView.vue'
@@ -73,7 +75,12 @@ const router = createRouter({
         {
           path: 'code',
           name: 'adminCode',
-          component: AdminCodeMgmtView
+          component: AdminCodeMgmtView,
+        },
+        {
+          path: 'code/:groupCodeId',
+          name: 'adminCodeDetail',
+          component: AdminCodeMgmtDetailView
         },
         {
           path: 'user',
