@@ -8,7 +8,7 @@ const config = {
 
 const axiosInstance = axios.create(config);
 
-axiosInstance.defaults.timeout = 2500;
+//axiosInstance.defaults.timeout = 2500;
 
 /** 요청 인터셉터 **/
 axiosInstance.interceptors.request.use(
