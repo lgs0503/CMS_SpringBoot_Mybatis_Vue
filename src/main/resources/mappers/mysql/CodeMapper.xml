@@ -9,6 +9,8 @@
             A.GROUP_CODE_ID,
             B.NAME AS GROUP_CODE_NAME,
             A.NAME,
+            A.KOR_NAME,
+            A.DESCRIPTION,
             A.VALUE1,
             A.VALUE2,
             A.VALUE3,
@@ -40,6 +42,7 @@
                 AND A.USE_YN = #{useYn}
             </if>
         </where>
+        ORDER BY SORT
     </select>
 
     <select id="getCode" parameterType="int" resultType="com.gs.bbs.api.code.dto.CodeDTO">
@@ -48,6 +51,8 @@
             A.GROUP_CODE_ID,
             B.NAME AS GROUP_CODE_NAME,
             A.NAME,
+            A.KOR_NAME,
+            A.DESCRIPTION,
             A.VALUE1,
             A.VALUE2,
             A.VALUE3,
@@ -76,6 +81,8 @@
             CODE_ID,
             GROUP_CODE_ID,
             NAME,
+            KOR_NAME,
+            DESCRIPTION,
             VALUE1,
             VALUE2,
             VALUE3,
@@ -95,6 +102,8 @@
             ),
             #{groupCodeId},
             #{name},
+            #{korName},
+            #{description},
             #{value1},
             #{value2},
             #{value3},
@@ -113,6 +122,8 @@
                 UPDATE_USER = #{updateUser},
                 UPDATE_DATE = NOW(),
                 NAME = #{name},
+                KOR_NAME = #{korName},
+                DESCRIPTION = #{description},
                 VALUE1 = #{value1},
                 VALUE2 = #{value2},
                 VALUE3 = #{value3},
@@ -128,5 +139,11 @@
         <foreach collection="list" item="codeId" open="(" close=")" separator=",">
             #{codeId}
         </foreach>
+    </delete>
+
+    <delete id="deleteCodeGroupCodeId" parameterType="int">
+        UPDATE  GS_CODE
+        SET     USE_YN = 'N'
+        WHERE   GROUP_CODE_ID = #{groupCodeId}
     </delete>
 </mapper>
