@@ -49,7 +49,7 @@ import {onMounted, ref} from "vue";
 
   select {
     padding : 7px 10px;
-    width: 150px;
+    width: 170px;
     border: 0.5px solid #{$sliver-light-color};
     border-radius: 5px;
     color: #{$sliver-dark-color};
