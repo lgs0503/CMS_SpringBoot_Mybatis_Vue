@@ -1,0 +1,84 @@
+{
+  "common": {
+    "alert_confirm": {
+      "ok": "확인",
+      "cancel": "취소"
+    },
+    "searchForm": {
+      "select": "선택",
+      "keyword_placeholder" : "입력하세요.",
+      "search": "조회"
+    }
+  },
+  "admin": {
+    "login": {
+      "input": {
+        "placeholder": {
+          "id": "아이디 입력",
+          "password": "비밀번호 입력"
+        }
+      },
+      "alert": {
+        "login_fail": "아이디와 비밀번호를 확인해주세요.",
+        "login_success": "로그인 성공"
+      }
+    },
+    "signup": {
+      "input": {
+        "placeholder": {
+          "id": "아이디 입력",
+          "password": "비밀번호 입력",
+          "passwordChk": "비밀번호 확인",
+          "korName": "이름 입력",
+          "engName": "영어 이름 입력",
+          "birthday": "생년월일 입력",
+          "address": "주소 입력",
+          "addressDtl": "상세주소 입력",
+          "phoneNum": "연락처 입력",
+          "email": "이메일 입력"
+        }
+      },
+      "validationMsg": {
+        "required": "필수 입력값입니다.",
+        "id": "아이디는",
+        "password": "비밀번호는",
+        "passwordChk": "비밀번호와 비밀번호 확인을 동일하게 입력해주세요.",
+        "korName": "이름은",
+        "birthday": "생년월일은",
+        "gender": "성별은",
+        "address": "주소는",
+        "addressDtl": "상세주소는",
+        "phoneNum": "연락처는",
+        "email": "이메일은"
+      },
+      "alert": {
+        "signup_success": "회원가입 완료 관리자 계정은 승인완료 이후 로그인이 가능합니다."
+      },
+      "button": {
+        "addressSearch": "주소찾기",
+        "signup": "회원가입",
+        "cancel": "취소"
+      }
+    },
+    "layout": {
+      "menu": {
+        "code": "코드관리",
+        "user": "회원관리",
+        "role": "권한관리",
+        "menu": "메뉴관리",
+        "menuRole": "메뉴별권한관리",
+        "file": "파일관리",
+        "board": "게시판",
+        "post": "게시글",
+        "content": "컨텐츠",
+        "comment": "댓글",
+        "like": "좋아요",
+        "banner": "배너",
+        "popup": "팝업",
+        "loginHis": "로그인이력",
+        "fileUpDownHis": "파일업다운로드이력",
+        "menuUseHis": "메뉴사용이력"
+      }
+    }
+  }
+}

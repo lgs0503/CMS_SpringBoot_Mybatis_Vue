@@ -3,6 +3,7 @@
   import type {LoginModel} from "@/model/user/userModel";
   import router from "@/router";
   import {useAlertConfirmStore} from "@/stores/common/alertConfirmStore";
+  import {useI18n} from "vue-i18n";
 
   let loginModel: LoginModel = {
     userId : "",
@@ -11,6 +12,7 @@
 
   const user = useUserStore();
   const alertConfirm = useAlertConfirmStore();
+  const i18n = useI18n();
 
   const login = async () => {
     const loginResult = await user.login(loginModel);
@@ -18,11 +20,11 @@
     const loginStatus = loginResult.status;
 
     if (loginStatus === 404) {
-      alertConfirm.alert("아이디와 비밀번호를 확인해주세요.");
+      alertConfirm.alert(i18n.t('admin.login.alert.login_fail'));
     } else {
       const token = loginResult.data.data;
       sessionStorage.setItem("loginToken", token);
-      alertConfirm.alert("로그인 성공", () => {
+      alertConfirm.alert(i18n.t('admin.login.alert.login_success'), () => {
         router.push("/admin/home");
       });
     }
@@ -37,10 +39,10 @@
   <div class="loginForm">
     <h1 class="loginFrom-title">CMS ADMIN LOGIN</h1>
     <div class="loginForm-row">
-      <input placeholder="아이디 입력" type="text" v-model="loginModel.userId" @keyup.enter="login"/>
+      <input :placeholder="$t('admin.login.input.placeholder.id')" type="text" v-model="loginModel.userId" @keyup.enter="login"/>
     </div>
     <div class="loginForm-row">
-      <input placeholder="비밀번호 입력" type="password" v-model="loginModel.password"  @keyup.enter="login"/>
+      <input :placeholder="$t('admin.login.input.placeholder.password')" type="password" v-model="loginModel.password"  @keyup.enter="login"/>
     </div>
     <div class="loginForm-row">
       <button @click="login">LOGIN</button>

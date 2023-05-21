@@ -18,4 +18,5 @@ public interface CodeMapper {
 
     int deleteCode(List<Integer> codeIds);
 
+    int deleteCodeGroupCodeId(int groupCodeId);
 }

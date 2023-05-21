@@ -7,11 +7,13 @@
         SELECT
             GROUP_CODE_ID,
             NAME,
+            KOR_NAME,
+            DESCRIPTION,
             USE_YN,
             CREATE_USER,
-            CREATE_DATE,
+            DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') AS CREATE_DATE,
             UPDATE_USER,
-            UPDATE_DATE
+            DATE_FORMAT(UPDATE_DATE, '%Y-%m-%d') AS UPDATE_DATE
         FROM GS_GROUP_CODE
         <where>
             <if test="groupCodeId != 0">
@@ -26,10 +28,43 @@
         </where>
     </select>
 
+    <select id="getGroupCodeListKeyword" resultType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO" parameterType="com.gs.bbs.util.SearchDTO">
+        SELECT
+            GROUP_CODE_ID,
+            NAME,
+            KOR_NAME,
+            DESCRIPTION,
+            USE_YN,
+            CREATE_USER,
+            DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') AS CREATE_DATE,
+            UPDATE_USER,
+            DATE_FORMAT(UPDATE_DATE, '%Y-%m-%d') AS UPDATE_DATE
+        FROM GS_GROUP_CODE
+        <where>
+            AND USE_YN = 'Y'
+
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(searchKey)">
+                <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(keyword)">
+                    <if test="searchKey == 'GSO001'">
+                        AND CAST(GROUP_CODE_ID AS CHAR(10)) = #{keyword}
+                    </if>
+                    <if test="searchKey == 'GSO002'">
+                        AND NAME LIKE CONCAT('%', #{keyword}, '%')
+                    </if>
+                    <if test="searchKey == 'GSO003'">
+                        AND KOR_NAME LIKE CONCAT('%', #{keyword}, '%')
+                    </if>
+                </if>
+            </if>
+        </where>
+    </select>
+
     <select id="getGroupCode" parameterType="int" resultType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO">
         SELECT
             GROUP_CODE_ID,
             NAME,
+            KOR_NAME,
+            DESCRIPTION,
             USE_YN,
             CREATE_USER,
             CREATE_DATE,
@@ -43,12 +78,20 @@
         </where>
     </select>
 
+    <select id="maxGroupCodeId" resultType="int">
+        SELECT
+            IFNULL(MAX(GROUP_CODE_ID),0)
+        FROM GS_GROUP_CODE GS
+    </select>
+
     <insert id="insertGroupCode" parameterType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO">
         INSERT
         INTO GS_GROUP_CODE
         (
             GROUP_CODE_ID,
             NAME,
+            KOR_NAME,
+            DESCRIPTION,
             USE_YN,
             CREATE_USER,
             CREATE_DATE
@@ -61,6 +104,8 @@
                 FROM GS_GROUP_CODE GS
             ),
             #{name},
+            #{korName},
+            #{description},
             'Y',
             #{createUser},
             NOW()
@@ -70,6 +115,8 @@
     <update id="updateGroupCode" parameterType="com.gs.bbs.api.groupCode.dto.GroupCodeDTO">
         UPDATE  GS_GROUP_CODE
         SET     NAME = #{name},
+                KOR_NAME = #{korName},
+                DESCRIPTION = #{description},
                 UPDATE_USER = #{updateUser},
                 UPDATE_DATE = NOW()
         WHERE   GROUP_CODE_ID = #{groupCodeId}

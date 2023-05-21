@@ -4,6 +4,7 @@
   import router from "@/router";
   import {useAlertConfirmStore} from "@/stores/common/alertConfirmStore";
   import {reactive} from "vue";
+  import {useI18n} from "vue-i18n";
 
   const state = reactive({
     validationMsg: {
@@ -18,7 +19,6 @@
       phoneNum: "",
       email: ""
     } as ValidationMsgModel ,
-    passwordChk: "" as string,
     userModel: {
       userNo: 0,
       userId: "",
@@ -34,11 +34,13 @@
       useYn: "",
       fileId: 0,
       roleId: 0
-    } as UserModel
+    } as UserModel,
+    passwordChk: "" as string
   });
 
   const user = useUserStore();
   const alertConfirm = useAlertConfirmStore();
+  const i18n = useI18n();
 
   const validationMsgInit = () => {
     Object.keys(state.validationMsg).forEach((value:string) => {
@@ -52,60 +54,55 @@
 
     let validationResult: boolean = true;
 
-    const requiredMsg: string = "필수 입력값입니다.";
+    const requiredMsg: string = i18n.t('admin.signup.validationMsg.required');
 
     if (state.userModel.userId === "") {
-      state.validationMsg.userId = `아이디는 ${requiredMsg}`;
+      state.validationMsg.userId = i18n.t('admin.signup.validationMsg.id') + requiredMsg;
       validationResult = false;
     }
 
     if (state.userModel.password === "") {
-      state.validationMsg.password = `비밀번호는 ${requiredMsg}`;
+      state.validationMsg.password = i18n.t('admin.signup.validationMsg.password') + requiredMsg;
       validationResult = false;
     } else {
       if (state.userModel.password !== state.passwordChk) {
-        state.validationMsg.passwordChk = "비밀번호와 비밀번호 확인을 동일하게 입력해주세요.";
+        state.validationMsg.passwordChk = i18n.t('admin.signup.validationMsg.passwordChk');
         validationResult = false;
       }
     }
 
     if (state.userModel.korName === "") {
-      state.validationMsg.korName = `이름은 ${requiredMsg}`;
+      state.validationMsg.korName = i18n.t('admin.signup.validationMsg.korName') + requiredMsg;
       validationResult = false;
     }
 
     if (state.userModel.birthday === "") {
-      state.validationMsg.birthday = `생년월일은 ${requiredMsg}`;
-      validationResult = false;
-    }
-
-    if (state.userModel.birthday === "") {
-      state.validationMsg.birthday = `생년월일은 ${requiredMsg}`;
+      state.validationMsg.birthday = i18n.t('admin.signup.validationMsg.birthday') + requiredMsg;
       validationResult = false;
     }
 
     if (state.userModel.gender === "") {
-      state.validationMsg.gender = `성별은 ${requiredMsg}`;
+      state.validationMsg.gender = i18n.t('admin.signup.validationMsg.gender') + requiredMsg;
       validationResult = false;
     }
 
     if (state.userModel.address === "") {
-      state.validationMsg.address = `주소는 ${requiredMsg}`;
+      state.validationMsg.address = i18n.t('admin.signup.validationMsg.address') + requiredMsg;
       validationResult = false;
     }
 
     if (state.userModel.addressDtl === "") {
-      state.validationMsg.addressDtl = `상세주소는 ${requiredMsg}`;
+      state.validationMsg.addressDtl = i18n.t('admin.signup.validationMsg.addressDtl') + requiredMsg;
       validationResult = false;
     }
 
     if (state.userModel.phoneNum === "") {
-      state.validationMsg.phoneNum = `연락처는 ${requiredMsg}`;
+      state.validationMsg.phoneNum = i18n.t('admin.signup.validationMsg.phoneNum') + requiredMsg;
       validationResult = false;
     }
 
     if (state.userModel.email === "") {
-      state.validationMsg.email = `이메일은 ${requiredMsg}`;
+      state.validationMsg.email = i18n.t('admin.signup.validationMsg.email') + requiredMsg;
       validationResult = false;
     }
 
@@ -123,7 +120,7 @@
       const loginStatus = insertResult.status;
 
       if (loginStatus === 200) {
-        alertConfirm.alert("회원가입 완료 관리자 계정은 승인완료 이후 로그인이 가능합니다.", () => {
+        alertConfirm.alert(i18n.t('admin.signup.alert.signup_success'), () => {
           router.push("/admin/login");
         });
       }
@@ -140,31 +137,31 @@
     <h1 class="signupForm-title">CMS ADMIN SIGNUP</h1>
     <div class="signupForm-row">
       <label>ID</label>
-      <input type="text" placeholder="아이디 입력" v-model="state.userModel.userId"/>
+      <input type="text" :placeholder="$t('admin.signup.input.placeholder.id')" v-model="state.userModel.userId"/>
       <div class="validation-msg">{{ state.validationMsg.userId }}</div>
     </div>
     <div class="signupForm-row">
       <label>PASSWORD</label>
-      <input type="password" placeholder="비밀번호 입력" v-model="state.userModel.password"/>
+      <input type="password" :placeholder="$t('admin.signup.input.placeholder.password')" v-model="state.userModel.password"/>
       <div class="validation-msg">{{ state.validationMsg.password }}</div>
     </div>
     <div class="signupForm-row">
       <label>PASSWORD CHECK</label>
-      <input type="password" placeholder="비밀번호 확인" v-model="state.passwordChk"/>
+      <input type="password" :placeholder="$t('admin.signup.input.placeholder.passwordChk')" v-model="state.passwordChk"/>
       <div class="validation-msg">{{ state.validationMsg.passwordChk }}</div>
     </div>
     <div class="signupForm-row">
       <label>NAME</label>
-      <input type="text" placeholder="이름 입력" v-model="state.userModel.korName"/>
+      <input type="text" :placeholder="$t('admin.signup.input.placeholder.korName')" v-model="state.userModel.korName"/>
       <div class="validation-msg">{{ state.validationMsg.korName }}</div>
     </div>
     <div class="signupForm-row">
       <label>ENG NAME</label>
-      <input type="text" placeholder="영어 이름 입력" v-model="state.userModel.engName"/>
+      <input type="text" :placeholder="$t('admin.signup.input.placeholder.engName')" v-model="state.userModel.engName"/>
     </div>
     <div class="signupForm-row">
       <label>BIRTHDAY</label>
-      <input type="date" placeholder="생년월일" v-model="state.userModel.birthday"/>
+      <input type="date" :placeholder="$t('admin.signup.input.placeholder.birthday')" v-model="state.userModel.birthday"/>
       <div class="validation-msg">{{ state.validationMsg.birthday }}</div>
     </div>
     <div class="signupForm-row">
@@ -178,23 +175,23 @@
     </div>
     <div class="signupForm-row">
       <label>ADDRESS</label>
-      <input type="text" placeholder="주소 입력" v-model="state.userModel.address"/>
-      <button>주소찾기</button>
+      <input type="text" :placeholder="$t('admin.signup.input.placeholder.address')" v-model="state.userModel.address"/>
+      <button>{{ $t("admin.signup.button.addressSearch") }}</button>
       <div class="validation-msg">{{ state.validationMsg.address }}</div>
     </div>
     <div class="signupForm-row">
       <label>ADDRESS DETAIL</label>
-      <input type="text" placeholder="상세주소 입력" v-model="state.userModel.addressDtl"/>
+      <input type="text" :placeholder="$t('admin.signup.input.placeholder.addressDtl')" v-model="state.userModel.addressDtl"/>
       <div class="validation-msg">{{ state.validationMsg.addressDtl }}</div>
     </div>
     <div class="signupForm-row">
       <label>PHONE NUMBER</label>
-      <input type="text" placeholder="연락처 입력" v-model="state.userModel.phoneNum"/>
+      <input type="text" :placeholder="$t('admin.signup.input.placeholder.phoneNum')" v-model="state.userModel.phoneNum"/>
       <div class="validation-msg">{{ state.validationMsg.phoneNum }}</div>
     </div>
     <div class="signupForm-row">
       <label>E-MAIL</label>
-      <input type="text" placeholder="이메일 입력" v-model="state.userModel.email"/>
+      <input type="text" :placeholder="$t('admin.signup.input.placeholder.email')" v-model="state.userModel.email"/>
       <div class="validation-msg">{{ state.validationMsg.email }}</div>
     </div>
     <div class="signupForm-row">
@@ -205,8 +202,8 @@
     </div>
     <input type="hidden" v-model="state.userModel.roleId"/>
     <div class="signupForm-row buttonForm">
-      <button @click="signup">회원가입</button>
-      <button @click="back">취소</button>
+      <button @click="signup">{{ $t("admin.signup.button.signup") }}</button>
+      <button @click="back">{{ $t("admin.signup.button.cancel") }}</button>
     </div>
   </div>
 </template>
@@ -294,8 +291,5 @@
         font-size: 12px;
       }
     }
-
   }
-
-
 </style>

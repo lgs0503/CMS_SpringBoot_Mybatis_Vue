@@ -10,9 +10,9 @@ import java.util.Date;
 public class CommonDTO {
 
     private String createUser;
-    private Date createDate;
+    private String createDate;
 
     private String updateUser;
-    private Date updateDate;
+    private String updateDate;
 
 }

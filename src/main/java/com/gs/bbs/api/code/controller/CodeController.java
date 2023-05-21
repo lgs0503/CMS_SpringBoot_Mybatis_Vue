@@ -30,20 +30,18 @@ public class CodeController {
     @Operation(summary = "코드 리스트 조회")
     @GetMapping
     public ResponseEntity<ResponseDTO> getCodeList(
-            @RequestParam(value = "codeId", defaultValue = "0") String codeId,
-            @RequestParam(value = "groupCodeId", defaultValue = "0") String groupCodeId,
+            @RequestParam(value = "codeId", defaultValue = "0") int codeId,
+            @RequestParam(value = "groupCodeId", defaultValue = "0") int groupCodeId,
+            @RequestParam(value = "groupCodeName", defaultValue = "") String groupCodeName,
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "useYn", defaultValue = "Y") String useYn
     ) {
 
         CodeDTO codeDTO = new CodeDTO();
 
-        if (StringUtil.isNotEmpty(codeId))
-            codeDTO.setCodeId(Integer.parseInt(codeId));
-
-        if (StringUtil.isNotEmpty(groupCodeId))
-            codeDTO.setGroupCodeId(Integer.parseInt(groupCodeId));
-
+        codeDTO.setCodeId(codeId);
+        codeDTO.setGroupCodeName(groupCodeName);
+        codeDTO.setGroupCodeId(groupCodeId);
         codeDTO.setName(name);
         codeDTO.setUseYn(useYn);
 
@@ -100,6 +98,18 @@ public class CodeController {
                         HttpStatus.OK,
                         "deleteCode Success",
                         codeService.deleteCode(codeIds)
+                )
+        );
+    }
+
+    @Operation(summary = "그룹코드 아이디로 코드 삭제")
+    @DeleteMapping("/groupCodeId")
+    public ResponseEntity<ResponseDTO> deleteCodeGroupCodeId(@RequestBody int groupCodeId) {
+        return ResponseEntity.ok(
+                ResponseDTO.of(
+                        HttpStatus.OK,
+                        "deleteCodeGroupCodeId Success",
+                        codeService.deleteCodeGroupCodeId(groupCodeId)
                 )
         );
     }

@@ -2,8 +2,9 @@ package com.gs.bbs.api.groupCode.controller;
 
 import com.gs.bbs.api.groupCode.dto.GroupCodeDTO;
 import com.gs.bbs.api.groupCode.service.GroupCodeService;
+import com.gs.bbs.util.InsertResponseDTO;
 import com.gs.bbs.util.ResponseDTO;
-import com.gs.bbs.util.StringUtil;
+import com.gs.bbs.util.SearchDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -30,16 +31,14 @@ public class GroupCodeController {
     @Operation(summary = "그룹코드 리스트 조회")
     @GetMapping
     public ResponseEntity<ResponseDTO> getGroupCodeList(
-            @RequestParam(value = "groupCodeId", defaultValue = "0") String groupCodeId,
+            @RequestParam(value = "groupCodeId", defaultValue = "0") int groupCodeId,
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "useYn", defaultValue = "Y") String useYn
     ) {
 
         GroupCodeDTO groupCodeDTO = new GroupCodeDTO();
 
-        if (StringUtil.isNotEmpty(groupCodeId))
-            groupCodeDTO.setGroupCodeId(Integer.parseInt(groupCodeId));
-
+        groupCodeDTO.setGroupCodeId(groupCodeId);
         groupCodeDTO.setName(name);
         groupCodeDTO.setUseYn(useYn);
 
@@ -48,6 +47,27 @@ public class GroupCodeController {
                         HttpStatus.OK,
                 "getGroupCodeList Success",
                         groupCodeService.getGroupCodeList(groupCodeDTO)
+                )
+        );
+    }
+
+    @Operation(summary = "그룹코드 리스트 조회 keyword")
+    @GetMapping("/keyword")
+    public ResponseEntity<ResponseDTO> getGroupCodeListKeyword(
+            @RequestParam(value = "searchKey", defaultValue = "") String searchKey,
+            @RequestParam(value = "keyword", defaultValue = "") String keyword
+    ) {
+
+        SearchDTO searchDTO = new SearchDTO();
+
+        searchDTO.setSearchKey(searchKey);
+        searchDTO.setKeyword(keyword);
+
+        return ResponseEntity.ok(
+                ResponseDTO.of(
+                        HttpStatus.OK,
+                        "getGroupCodeList Success",
+                        groupCodeService.getGroupCodeListKeyword(searchDTO)
                 )
         );
     }
@@ -67,11 +87,17 @@ public class GroupCodeController {
     @Operation(summary = "그룹코드 등록")
     @PostMapping
     public ResponseEntity<ResponseDTO> insertGroupCode(@RequestBody GroupCodeDTO groupCodeDTO) {
+
+        InsertResponseDTO insertResponseDTO = new InsertResponseDTO();
+
+        insertResponseDTO.setResult(groupCodeService.insertGroupCode(groupCodeDTO));
+        insertResponseDTO.setInsertKey(groupCodeService.maxGroupCodeId());
+
         return ResponseEntity.ok(
                 ResponseDTO.of(
                         HttpStatus.OK,
                         "getGroupCodeList Success",
-                        groupCodeService.insertGroupCode(groupCodeDTO)
+                        insertResponseDTO
                 )
         );
     }
