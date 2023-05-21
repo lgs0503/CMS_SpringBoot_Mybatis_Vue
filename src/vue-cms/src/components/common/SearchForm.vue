@@ -34,6 +34,7 @@
         @input="$emit('update:keywordModel', $event.target.value)"
         type="text"
         :placeholder="$t('common.searchForm.keyword_placeholder')"
+        @keyup.enter="emit('searchEvent')"
     />
     <button @click="emit('searchEvent')">{{ $t("common.searchForm.search") }}</button>
   </div>
