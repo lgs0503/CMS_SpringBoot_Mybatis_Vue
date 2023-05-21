@@ -2,9 +2,9 @@ package com.gs.bbs.api.groupCode.controller;
 
 import com.gs.bbs.api.groupCode.dto.GroupCodeDTO;
 import com.gs.bbs.api.groupCode.service.GroupCodeService;
+import com.gs.bbs.util.InsertResponseDTO;
 import com.gs.bbs.util.ResponseDTO;
 import com.gs.bbs.util.SearchDTO;
-import com.gs.bbs.util.StringUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Tag(name = "GroupCode", description = "그룹코드 api")
@@ -56,7 +54,7 @@ public class GroupCodeController {
     @Operation(summary = "그룹코드 리스트 조회 keyword")
     @GetMapping("/keyword")
     public ResponseEntity<ResponseDTO> getGroupCodeListKeyword(
-            @RequestParam(value = "searchKey") String searchKey,
+            @RequestParam(value = "searchKey", defaultValue = "") String searchKey,
             @RequestParam(value = "keyword", defaultValue = "") String keyword
     ) {
 
@@ -90,16 +88,16 @@ public class GroupCodeController {
     @PostMapping
     public ResponseEntity<ResponseDTO> insertGroupCode(@RequestBody GroupCodeDTO groupCodeDTO) {
 
-        Map<String, Object> resultMap = new HashMap<>();
+        InsertResponseDTO insertResponseDTO = new InsertResponseDTO();
 
-        resultMap.put("result", groupCodeService.insertGroupCode(groupCodeDTO));
-        resultMap.put("groupCode", groupCodeService.maxGroupCodeId());
+        insertResponseDTO.setResult(groupCodeService.insertGroupCode(groupCodeDTO));
+        insertResponseDTO.setInsertKey(groupCodeService.maxGroupCodeId());
 
         return ResponseEntity.ok(
                 ResponseDTO.of(
                         HttpStatus.OK,
                         "getGroupCodeList Success",
-                        resultMap
+                        insertResponseDTO
                 )
         );
     }
