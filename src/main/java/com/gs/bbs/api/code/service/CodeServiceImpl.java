@@ -41,4 +41,9 @@ public class CodeServiceImpl implements CodeService{
     public int deleteCode(List<Integer> codeIds) {
         return codeMapper.deleteCode(codeIds);
     }
+
+    @Override
+    public int deleteCodeGroupCodeId(int groupCodeId) {
+        return codeMapper.deleteCodeGroupCodeId(groupCodeId);
+    }
 }

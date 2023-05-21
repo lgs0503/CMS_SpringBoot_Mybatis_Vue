@@ -15,4 +15,6 @@ public interface CodeService {
     int updateCode(CodeDTO codeDTO);
 
     int deleteCode(List<Integer> codeIds);
+
+    int deleteCodeGroupCodeId(int groupCodeId);
 }
