@@ -20,19 +20,17 @@
   ]);
 
   const rowClickEvent = (index:number) => {
-
-    console.log(props.data[index-1][`${props.mainKey}`]);
-
-    emit('rowClickEvent',{
-      indexKey: props.data[index-1][`${props.mainKey}`]
-    })
+    emit('rowClickEvent', index)
   }
 </script>
 
 <template>
   <table>
     <colgroup>
-      <col v-for="col in props.column" :style="`width:${col.width}px`"/>
+      <col
+          v-for="col in props.column"
+          :style="`width:${col.width}`"
+          v-show="col.visible"/>
     </colgroup>
     <thead>
       <tr>
@@ -42,21 +40,19 @@
       </tr>
     </thead>
     <tbody>
-
       <tr v-if="props.data.length === 0" >
         <td :colspan="props.column.length">
           조회 데이터가 없습니다.
         </td>
       </tr>
-
       <tr
           v-else
           v-for="row in props.data"
           class="rowOver">
         <td
-            v-for="(col, index) in props.column"
-            :key="index"
-            @click="rowClickEvent(index)"
+            v-for="(col) in props.column"
+            @click="rowClickEvent(row[props.mainKey])"
+            v-show="col.visible"
         >
           {{ row[col.field] }}
         </td>
@@ -68,9 +64,7 @@
   @import "../src/assets/variables.scss";
 
   table {
-
     width: 100%;
-    border: 1px solid #{$black-color};
     font-size: 10px;
 
     thead {
@@ -80,7 +74,10 @@
           color: white;
           font-weight: bold;
           padding: 7px 0;
+          border: 1px solid #{$blue-dark-color};
+          vertical-align: middle;
         }
+
         th:nth-child(even) {
           background-color: #{$blue-deep-dark-color};
         }
@@ -95,10 +92,15 @@
           font-weight: bold;
           padding: 7px;
           text-align: center;
+          border: 1px solid #{$sliver-light-color};
+          vertical-align: middle;
         }
+      }
 
-        td:nth-child(even) {
+      tr:nth-child(even){
+        td {
           background-color: #{$sliver-bright-color};
+          color: #{$sliver-dark-color};
         }
       }
 
