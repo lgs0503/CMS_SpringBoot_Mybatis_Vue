@@ -51,6 +51,9 @@
                     <if test="searchKey == 'GSO002'">
                         AND NAME LIKE CONCAT('%', #{keyword}, '%')
                     </if>
+                    <if test="searchKey == 'GSO003'">
+                        AND KOR_NAME LIKE CONCAT('%', #{keyword}, '%')
+                    </if>
                 </if>
             </if>
         </where>
