@@ -158,7 +158,7 @@ const changeLocale = () => {
     .admin-menu {
       display: inline-block;
       width: 300px;
-      min-height: 1000px;
+      min-height: calc( 100vh - 100px );
       border-right: 0.3px solid #{$sliver-dark-color};
 
       .menu-tab {
@@ -205,7 +205,7 @@ const changeLocale = () => {
     }
 
     .admin-content {
-      min-height: 1000px;
+      min-height: calc( 100vh - 100px );
       display: inline-block;
       background: #{$white-color};
       width: 100%;
@@ -264,6 +264,10 @@ const changeLocale = () => {
           }
         }
       }
+    }
+
+    .content {
+      background-color: #{$sliver-bright-color};
     }
   }
 
