@@ -7,6 +7,7 @@
         SELECT
             ROLE_ID,
             NAME,
+            DESCRIPTION,
             USE_YN,
             CREATE_USER,
             CREATE_DATE,
@@ -30,6 +31,7 @@
         SELECT
             ROLE_ID,
             NAME,
+            DESCRIPTION,
             USE_YN,
             CREATE_USER,
             CREATE_DATE,
@@ -49,6 +51,7 @@
         (
             ROLE_ID,
             NAME,
+            DESCRIPTION,
             USE_YN,
             CREATE_USER,
             CREATE_DATE
@@ -61,6 +64,7 @@
                 FROM GS_ROLE GR
             ),
             #{name},
+            #{description},
             'Y',
             #{createUser},
             NOW()
@@ -70,6 +74,7 @@
     <update id="updateRole" parameterType="com.gs.bbs.api.role.dto.RoleDTO">
         UPDATE  GS_ROLE
         SET     NAME = #{name},
+                DESCRIPTION = #{description},
                 UPDATE_USER = #{updateUser},
                 UPDATE_DATE = NOW()
         WHERE   ROLE_ID = #{roleId}

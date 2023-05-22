@@ -9,7 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class RoleDTO extends CommonDTO {
+
     private int roleId;
     private String name;
+    private String description;
     private String useYn;
+
 }
