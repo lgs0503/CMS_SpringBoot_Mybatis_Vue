@@ -33,7 +33,7 @@
   @import "../src/assets/variables.scss";
 
   .commonAlertConfirm {
-    position: absolute;
+    position: fixed;
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -80,7 +80,7 @@
   }
 
   .commonAlertConfirm-Background {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
