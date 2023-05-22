@@ -39,10 +39,20 @@
   <div class="loginForm">
     <h1 class="loginFrom-title">CMS ADMIN LOGIN</h1>
     <div class="loginForm-row">
-      <input :placeholder="$t('admin.login.input.placeholder.id')" type="text" v-model="loginModel.userId" @keyup.enter="login"/>
+      <input
+          :placeholder="$t('admin.login.input.placeholder.id')"
+          type="text"
+          v-model="loginModel.userId"
+          @keyup.enter="login"
+      />
     </div>
     <div class="loginForm-row">
-      <input :placeholder="$t('admin.login.input.placeholder.password')" type="password" v-model="loginModel.password"  @keyup.enter="login"/>
+      <input
+          :placeholder="$t('admin.login.input.placeholder.password')"
+          type="password"
+          v-model="loginModel.password"
+          @keyup.enter="login"
+      />
     </div>
     <div class="loginForm-row">
       <button @click="login">LOGIN</button>
