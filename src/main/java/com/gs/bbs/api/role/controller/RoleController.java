@@ -3,6 +3,7 @@ package com.gs.bbs.api.role.controller;
 import com.gs.bbs.api.role.dto.RoleDTO;
 import com.gs.bbs.api.role.service.RoleService;
 import com.gs.bbs.util.ResponseDTO;
+import com.gs.bbs.util.SearchDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,27 @@ public class RoleController {
                         HttpStatus.OK,
                         "getRole Success",
                         roleService.getRoleList(roleDTO)
+                )
+        );
+    }
+
+    @Operation(summary = "권한 리스트 조회 keyword")
+    @GetMapping("/keyword")
+    public ResponseEntity<ResponseDTO> getRoleListKeyword(
+            @RequestParam(value = "searchKey", defaultValue = "") String searchKey,
+            @RequestParam(value = "keyword", defaultValue = "") String keyword
+    ) {
+
+        SearchDTO searchDTO = new SearchDTO();
+
+        searchDTO.setSearchKey(searchKey);
+        searchDTO.setKeyword(keyword);
+
+        return ResponseEntity.ok(
+                ResponseDTO.of(
+                        HttpStatus.OK,
+                        "getRole Success",
+                        roleService.getRoleListKeyword(searchDTO)
                 )
         );
     }

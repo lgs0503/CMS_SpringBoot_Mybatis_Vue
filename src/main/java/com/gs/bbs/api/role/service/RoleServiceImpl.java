@@ -2,6 +2,7 @@ package com.gs.bbs.api.role.service;
 
 import com.gs.bbs.api.role.dto.RoleDTO;
 import com.gs.bbs.api.role.mapper.RoleMapper;
+import com.gs.bbs.util.SearchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,11 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public List<RoleDTO> getRoleList(RoleDTO roleDTO) {
         return roleMapper.getRoleList(roleDTO);
+    }
+
+    @Override
+    public List<RoleDTO> getRoleListKeyword(SearchDTO searchDTO) {
+        return roleMapper.getRoleListKeyword(searchDTO);
     }
 
     @Override

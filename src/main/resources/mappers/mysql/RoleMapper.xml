@@ -27,6 +27,34 @@
         </where>
     </select>
 
+    <select id="getRoleListKeyword" resultType="com.gs.bbs.api.role.dto.RoleDTO" parameterType="com.gs.bbs.util.SearchDTO">
+        SELECT
+        ROLE_ID,
+        NAME,
+        DESCRIPTION,
+        USE_YN,
+        CREATE_USER,
+        CREATE_DATE,
+        UPDATE_USER,
+        UPDATE_DATE
+        FROM    GS_ROLE
+        <where>
+            AND USE_YN = 'Y'
+
+            <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(searchKey)">
+                <if test="@com.gs.bbs.util.StringUtil@isNotEmpty(keyword)">
+                    <if test="searchKey == 'RSO001'">
+                        AND CAST(ROLE_ID AS CHAR(10)) = #{keyword}
+                    </if>
+                    <if test="searchKey == 'RSO002'">
+                        AND NAME LIKE CONCAT('%', #{keyword}, '%')
+                    </if>
+                </if>
+            </if>
+        </where>
+    </select>
+
+
     <select id="getRole" parameterType="int" resultType="com.gs.bbs.api.role.dto.RoleDTO">
         SELECT
             ROLE_ID,
