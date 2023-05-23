@@ -15,7 +15,7 @@
   const keyword:Ref<string> = ref("");
   const groupCodeList:Ref<Array<GroupCodeModel>> = ref([]);
 
-  const code = useCodeStore();
+  const codeStore = useCodeStore();
 
   const groupCodeCol:Ref<Array<Object>> = ref([
     {
@@ -52,7 +52,7 @@
 
   const searchEvent = async () => {
 
-    const result = await code.getGroupCodeListKeyword(searchKey.value, keyword.value);
+    const result = await codeStore.getGroupCodeListKeyword(searchKey.value, keyword.value);
 
     if (result.status === API_RESULT_STATUS.SUCCESS) {
       groupCodeList.value = result.data;
@@ -100,8 +100,8 @@
 @import "../src/assets/variables.scss";
 
 .from{
+  height: 100%;
   padding: 30px;
-  min-height: 1000px;
   background-color: #{$sliver-bright-color};
 
   .search-form{

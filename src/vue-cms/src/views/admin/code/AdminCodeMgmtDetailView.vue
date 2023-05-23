@@ -586,8 +586,7 @@
 
 .from{
   padding: 30px;
-  min-height: 1000px;
-  background-color: #{$sliver-bright-color};
+  height: 100%;
 
   .button-from {
     margin-top: 10px;
