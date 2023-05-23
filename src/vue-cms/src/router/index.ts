@@ -11,7 +11,11 @@ import AdminCodeMgmtView from '../views/admin/code/AdminCodeMgmtView.vue'
 import AdminCodeMgmtDetailView from '../views/admin/code/AdminCodeMgmtDetailView.vue'
 
 import AdminUserMgmtView from '../views/admin/user/AdminUserMgmtView.vue'
+import AdminUserMgmtDetailView from  '../views/admin/user/AdminUserMgmtDetailView.vue'
+
 import AdminRoleMgmtView from '../views/admin/role/AdminRoleMgmtView.vue'
+import AdminRoleMgmtDetailView from  '../views/admin/role/AdminRoleMgmtDetailView.vue'
+
 import AdminMenuMgmtView from '../views/admin/menu/AdminMenuMgmtView.vue'
 import AdminMenuRoleMgmtView from '../views/admin/menuRole/AdminMenuRoleMgmtView.vue'
 import AdminFileMgmtView from '../views/admin/file/AdminFileMgmtView.vue'
@@ -88,9 +92,19 @@ const router = createRouter({
           component: AdminUserMgmtView
         },
         {
+          path: 'user/:userNo',
+          name: 'adminUserDetail',
+          component: AdminUserMgmtDetailView
+        },
+        {
           path: 'role',
           name: 'adminRole',
           component: AdminRoleMgmtView
+        },
+        {
+          path: 'role/:roleId',
+          name: 'adminRoleDetail',
+          component: AdminRoleMgmtDetailView
         },
         {
           path: 'menu',
