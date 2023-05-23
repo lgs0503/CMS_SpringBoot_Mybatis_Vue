@@ -4,8 +4,10 @@ import AlertConfirm from "@/components/common/AlertConfirm.vue";
 </script>
 
 <template>
-  <RouterView />
-  <AlertConfirm/>
+  <div>
+    <RouterView />
+    <AlertConfirm/>
+  </div>
 </template>
 
 <style scoped>
