@@ -2,7 +2,7 @@ package com.gs.bbs.api.content.controller;
 
 import com.gs.bbs.api.content.dto.ContentDTO;
 import com.gs.bbs.api.content.serivce.ContentService;
-import com.gs.bbs.util.ResponseDto;
+import com.gs.bbs.util.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class ContentController {
 
     @GetMapping
     @Operation(summary = "컨텐츠 리스트 조회")
-    public ResponseEntity<ResponseDto> getContentList(
+    public ResponseEntity<ResponseDTO> getContentList(
             @RequestParam(value = "contentId", defaultValue = "0") int contentId,
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "useYn", defaultValue = "Y") String useYn
@@ -40,7 +40,7 @@ public class ContentController {
         contentDTO.setUseYn(useYn);
 
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getContentList Success",
                         contentService.getContentList(contentDTO)
@@ -50,9 +50,9 @@ public class ContentController {
 
     @GetMapping("/{contentId}")
     @Operation(summary = "컨텐츠 조회")
-    public ResponseEntity<ResponseDto> getContent(@PathVariable int contentId){
+    public ResponseEntity<ResponseDTO> getContent(@PathVariable int contentId){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "getContent Success",
                         contentService.getContent(contentId)
@@ -62,9 +62,9 @@ public class ContentController {
 
     @PostMapping
     @Operation(summary = "컨텐츠 추가")
-    public ResponseEntity<ResponseDto> insertContent(@RequestBody ContentDTO contentDTO){
+    public ResponseEntity<ResponseDTO> insertContent(@RequestBody ContentDTO contentDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "insertContent Success",
                         contentService.insertContent(contentDTO)
@@ -74,9 +74,9 @@ public class ContentController {
 
     @PutMapping
     @Operation(summary = "컨텐츠 수정")
-    public ResponseEntity<ResponseDto> updateContent(@RequestBody ContentDTO contentDTO){
+    public ResponseEntity<ResponseDTO> updateContent(@RequestBody ContentDTO contentDTO){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "updateContent Success",
                         contentService.updateContent(contentDTO)
@@ -86,9 +86,9 @@ public class ContentController {
 
     @DeleteMapping
     @Operation(summary = "컨텐츠 삭제")
-    public ResponseEntity<ResponseDto> deleteContent(@RequestBody List<Integer> contentIds){
+    public ResponseEntity<ResponseDTO> deleteContent(@RequestBody List<Integer> contentIds){
         return ResponseEntity.ok(
-                ResponseDto.of(
+                ResponseDTO.of(
                         HttpStatus.OK,
                         "deleteContent Success",
                         contentService.deleteContent(contentIds)
